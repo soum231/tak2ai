@@ -31,10 +31,8 @@ router.post('/signup', async (req, res) => {
     const { error: profileError } = await supabaseAdmin.from('profiles').insert([{
       id: authUser.user.id,
       name,
-      email,
       phone: phone || null,
-      company: company || null,
-      role: 'user',
+      company_name: company || null,
       created_at: new Date().toISOString()
     }]);
 
@@ -188,9 +186,7 @@ router.get('/callback', async (req, res) => {
       await supabaseAdmin.from('profiles').insert([{
         id: data.user.id,
         name: metadata.full_name || metadata.name || data.user.email?.split('@')[0] || 'User',
-        email: data.user.email,
         avatar_url: metadata.avatar_url || data.user.avatar_url || null,
-        role: 'user',
         created_at: new Date().toISOString()
       }]);
     }
