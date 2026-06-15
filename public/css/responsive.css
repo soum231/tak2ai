@@ -45,45 +45,6 @@
 
 /* === 900px (small tablet) === */
 @media(max-width:900px){
-  /* Navbar base — keep visible but lower z-index when menu is open */
-  .navbar{z-index:900}
-  .navbar.menu-open{z-index:auto}
-
-  /* Hide desktop menu, show toggle */
-  .nav-menu{display:none}
-  .nav-toggle{display:flex}
-
-  /* Full-screen mobile menu overlay — above navbar */
-  .nav-menu.open{display:flex;flex-direction:column;position:fixed;inset:0;z-index:1001;background:rgba(5,8,22,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:72px 20px 24px;gap:2px;overflow-y:auto}
-  [data-theme="light"] .nav-menu.open{background:rgba(248,250,252,.98)}
-
-  /* Close button — fixed at top-right, above overlay */
-  .nav-menu-close{display:flex;position:fixed;top:16px;right:16px;width:36px;height:36px;align-items:center;justify-content:center;font-size:1.6rem;color:var(--text-primary);background:var(--bg-glass);border:1px solid var(--border-color);border-radius:50%;z-index:1002;transition:all .2s}
-  .nav-menu-close:hover{background:var(--bg-card);border-color:var(--border-light)}
-
-  /* Nav links in mobile menu */
-  .nav-menu.open .nav-link{padding:14px 16px;font-size:1rem;border-radius:var(--radius-sm);color:var(--text-secondary);font-weight:500;transition:all .15s}
-  .nav-menu.open .nav-link:hover,.nav-menu.open .nav-link.active{color:var(--text-primary);background:rgba(255,255,255,.06)}
-  .nav-menu.open .nav-link.active{font-weight:600}
-
-  /* Dropdown trigger — arrow icon */
-  .nav-menu.open .nav-dropdown .dropdown-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;font-size:1rem;color:var(--text-secondary);font-weight:500;border-radius:var(--radius-sm);cursor:pointer}
-  .nav-menu.open .nav-dropdown .dropdown-trigger:hover{color:var(--text-primary);background:rgba(255,255,255,.06)}
-  .nav-menu.open .nav-dropdown .dropdown-trigger i{transition:transform .2s}
-  .nav-menu.open .nav-dropdown.open .dropdown-trigger i{transform:rotate(180deg)}
-
-  /* Dropdown content — inline expandable */
-  .nav-menu.open .nav-dropdown-content{display:none;position:static;opacity:1;visibility:visible;transform:none;background:transparent;border:none;box-shadow:none;padding:0 0 4px 20px}
-  .nav-menu.open .nav-dropdown.open .nav-dropdown-content{display:flex;flex-direction:column;gap:2px}
-  .nav-menu.open .nav-dropdown-content .nav-link{padding:10px 16px;font-size:.9rem;border-radius:var(--radius-sm);color:var(--text-tertiary)}
-  .nav-menu.open .nav-dropdown-content .nav-link:hover{color:var(--text-primary);background:rgba(255,255,255,.06)}
-
-  /* Mobile actions (login/register) */
-  .nav-menu.open .nav-mobile-actions{display:flex;flex-direction:column;gap:10px;padding:20px 0 0;border-top:1px solid var(--border-color);margin-top:auto}
-  .nav-menu.open .nav-mobile-actions .btn{width:100%;justify-content:center;padding:12px 20px;font-size:.95rem}
-
-  /* Hide desktop-only elements */
-  .nav-desktop-only{display:none!important}
   .contact-wrap{grid-template-columns:1fr}
   .detail-grid{grid-template-columns:1fr}
   .compare-modern{grid-template-columns:1fr}
@@ -119,9 +80,6 @@
 /* === 768px (large phone) === */
 @media(max-width:768px){
   .container{padding:0 16px}
-  .navbar{padding:6px 12px;top:10px;width:calc(100% - 16px);border-radius:var(--radius-xl)}
-  .nav-logo-img{height:28px}
-  .nav-actions{gap:4px}
   .hero-modern .hero-title{font-size:1.75rem}
   .hero-modern .hero-subtitle{font-size:1rem}
   .section-title{font-size:1.6rem}
@@ -218,10 +176,6 @@
 /* === 640px (small phone) === */
 @media(max-width:640px){
   .container{padding:0 14px}
-  .navbar{padding:4px 10px;top:8px;width:calc(100% - 12px);border-radius:var(--radius-lg)}
-  .nav-logo-img{height:24px}
-  .nav-toggle{padding:6px}
-  .theme-toggle{width:32px;height:32px}
   .hero-modern .hero-title{font-size:1.5rem}
   .hero-modern .hero-subtitle{font-size:.9rem;margin-bottom:24px}
   .hero-modern .hero-buttons{gap:8px;flex-direction:column;align-items:center}
@@ -317,9 +271,6 @@
 /* === 480px (very small phone) === */
 @media(max-width:480px){
   .container{padding:0 12px}
-  .navbar{padding:4px 8px;top:6px;width:calc(100% - 8px);border-radius:var(--radius-lg)}
-  .nav-logo-img{height:22px}
-  .theme-toggle{width:28px;height:28px}
   .hero-modern{min-height:auto;padding-top:80px;padding-bottom:60px}
   .hero-modern .hero-title{font-size:1.35rem}
   .hero-modern .hero-subtitle{font-size:.82rem}

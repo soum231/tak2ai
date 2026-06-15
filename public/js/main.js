@@ -23,11 +23,11 @@
   var navMenuClose = document.getElementById('navMenuClose');
   var navbar = document.querySelector('.navbar');
   if (navToggle && navMenu) {
-    function openMenu() { navMenu.classList.add('open'); if (navbar) navbar.classList.add('menu-open'); }
-    function closeMenu() { navMenu.classList.remove('open'); if (navbar) navbar.classList.remove('menu-open'); }
+    function openMenu() { navMenu.classList.add('open'); if (navbar) navbar.classList.add('menu-open'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { navMenu.classList.remove('open'); if (navbar) navbar.classList.remove('menu-open'); document.body.style.overflow = ''; }
     navToggle.addEventListener('click', openMenu);
     if (navMenuClose) navMenuClose.addEventListener('click', closeMenu);
-    navMenu.querySelectorAll('.nav-link').forEach(function (link) {
+    navMenu.querySelectorAll('a.nav-link').forEach(function (link) {
       link.addEventListener('click', closeMenu);
     });
     document.addEventListener('click', function (e) {

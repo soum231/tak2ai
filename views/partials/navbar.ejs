@@ -8,9 +8,10 @@
       <div class="nav-dropdown">
         <a class="nav-link dropdown-trigger">Services <i data-lucide="chevron-down"></i></a>
         <div class="nav-dropdown-content">
-          <a href="/voice-ai" class="nav-link <%= currentPage === 'voice-ai' ? 'active' : '' %>">AI Voice Calling</a>
-
-          <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>">AI Chatbot</a>
+          <div class="dd-inner">
+            <a href="/voice-ai" class="nav-link <%= currentPage === 'voice-ai' ? 'active' : '' %>"><i data-lucide="phone" style="width:16px;height:16px"></i> AI Voice Calling</a>
+            <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>"><i data-lucide="bot" style="width:16px;height:16px"></i> AI Chatbot</a>
+          </div>
         </div>
       </div>
       <a href="/pricing" class="nav-link <%= currentPage === 'pricing' ? 'active' : '' %>">Pricing</a>
