@@ -2,8 +2,7 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session);
+const cookieSession = require('cookie-session');
 
 const pagesRouter = require('./routes/pages');
 const authRouter = require('./routes/auth');
@@ -33,13 +32,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Session
-app.use(session({
-  store: new SQLiteStore({ db: 'sessions.db', dir: path.join(__dirname) }),
+// Cookie-based session (works on Vercel serverless)
+app.use(cookieSession({
+  name: 'tak2ai_session',
   secret: process.env.SESSION_SECRET || 'tak2ai-secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 }
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+  httpOnly: true,
+  sameSite: 'lax'
 }));
 
 // Routes
@@ -63,6 +62,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke! ' + err.message);
 });
 
-app.listen(PORT, () => {
-  console.log(`Tak2ai Node server running on http://localhost:${PORT}`);
-});
+// Only listen when run directly (not as Vercel serverless function)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Tak2ai Node server running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
