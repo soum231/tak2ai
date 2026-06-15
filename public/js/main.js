@@ -31,13 +31,13 @@
     });
   }
 
-  var navbar = document.querySelector('.navbar');
-  if (navbar) {
+  var navWrapper = document.querySelector('.nav-wrapper');
+  if (navWrapper) {
     var ticking = false;
     window.addEventListener('scroll', function () {
       if (!ticking) {
         window.requestAnimationFrame(function () {
-          navbar.classList.toggle('scrolled', window.scrollY > 50);
+          navWrapper.classList.toggle('scrolled', window.scrollY > 50);
           ticking = false;
         });
         ticking = true;
