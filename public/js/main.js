@@ -21,9 +21,18 @@
   var navToggle = document.getElementById('navToggle');
   var navMenu = document.getElementById('navMenu');
   var navMenuClose = document.getElementById('navMenuClose');
+  var navbar = document.querySelector('.navbar');
   if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function () { navMenu.classList.add('open'); });
-    if (navMenuClose) navMenuClose.addEventListener('click', function () { navMenu.classList.remove('open'); });
+    function openMenu() { navMenu.classList.add('open'); if (navbar) navbar.classList.add('menu-open'); }
+    function closeMenu() { navMenu.classList.remove('open'); if (navbar) navbar.classList.remove('menu-open'); }
+    navToggle.addEventListener('click', openMenu);
+    if (navMenuClose) navMenuClose.addEventListener('click', closeMenu);
+    navMenu.querySelectorAll('.nav-link').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('click', function (e) {
+      if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) closeMenu();
+    });
   }
 
   var navbar = document.querySelector('.navbar');
