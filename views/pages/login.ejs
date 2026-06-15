@@ -1,0 +1,165 @@
+<%- include('../partials/head', { title: 'Sign In', description: 'Sign in to your Tak2ai account to manage AI voice agents, WhatsApp bots, and more.', canonical: '/login' }) %>
+</head>
+<body class="auth-page">
+
+<%- include('../partials/navbar', { currentPage: 'login' }) %>
+
+<div class="auth-hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="container">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <a href="/" class="auth-logo"><img src="/assets/final logo dark.png" alt="Tak2ai"></a>
+        <h1>Welcome Back</h1>
+        <p>Sign in to your Tak2ai account</p>
+      </div>
+
+      <form class="auth-form" id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <div class="input-group">
+            <span class="input-icon"><i data-lucide="mail" style="width:18px;height:18px"></i></span>
+            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-group">
+            <span class="input-icon"><i data-lucide="lock" style="width:18px;height:18px"></i></span>
+            <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="password-toggle" id="pwToggle" aria-label="Toggle password visibility" tabindex="-1">
+              <i data-lucide="eye" style="width:18px;height:18px"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox-label">
+            <input type="checkbox" name="remember" id="rememberMe">
+            <span class="checkbox-custom"></span>
+            Remember me
+          </label>
+          <a href="/forgot-password" class="auth-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-loader" style="display:none"><i data-lucide="loader-2" class="spin" style="width:18px;height:18px"></i></span>
+        </button>
+        <div class="auth-error" id="loginError" style="display:none"></div>
+      </form>
+
+      <div class="auth-divider"><span>or continue with</span></div>
+
+      <div class="auth-social">
+        <a href="/api/auth/google" class="btn btn-social btn-google">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='20' height='20'%3E%3Cpath fill='%23FFC107' d='M43.6 20.6H42V20.5H24v7.2h11.3c-1.2 3.4-4.6 5.9-8.5 5.9-2.1 0-4-.7-5.5-1.9l-6.2 4.8c3 2.6 7.1 4.1 11.7 4.1 9.3 0 16.7-6.9 16.7-16.5 0-1.1-.1-2.2-.3-3.2z'/%3E%3Cpath fill='%23FF3D00' d='M6.2 16.1c-1.1 2.1-1.7 4.5-1.7 6.9s.6 4.8 1.7 6.9l6.2-4.8c-.4-1.2-.6-2.5-.6-3.8s.2-2.6.6-3.8l-6.2-4.8z'/%3E%3Cpath fill='%234CAF50' d='M24 9.8c3.9 0 7.4 1.4 10.2 3.7l5.3-5.3C35.4 4.4 30 2 24 2 14.7 2 6.6 7.8 2.9 15.4l6.2 4.8C11.2 14.6 17 9.8 24 9.8z'/%3E%3Cpath fill='%231976D2' d='M2.1 12.2C.8 15.9 0 19.9 0 24c0 4.1.8 8.1 2.1 11.8l6.2-4.8C7.4 29.7 6.8 27.1 6.8 24s.6-5.7 1.6-8.3l-6.3-3.5z'/%3E%3C/svg%3E" alt="Google" class="social-icon">
+          Continue with Google
+        </a>
+        <button type="button" class="btn btn-social btn-magic" id="magicLinkBtn">
+          <i data-lucide="wand-2" style="width:18px;height:18px"></i>
+          Send Magic Link
+        </button>
+      </div>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="/register" class="auth-link">Register</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const pwToggle = document.getElementById('pwToggle');
+  const pwInput = document.getElementById('loginPassword');
+  const loginForm = document.getElementById('loginForm');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginError = document.getElementById('loginError');
+  const magicLinkBtn = document.getElementById('magicLinkBtn');
+
+  pwToggle.addEventListener('click', function() {
+    const type = pwInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    pwInput.setAttribute('type', type);
+    this.querySelector('i').setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+    lucide.createIcons();
+  });
+
+  loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    loginError.style.display = 'none';
+    loginBtn.querySelector('.btn-text').style.display = 'none';
+    loginBtn.querySelector('.btn-loader').style.display = 'inline-flex';
+    loginBtn.disabled = true;
+
+    const formData = new FormData(loginForm);
+    try {
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.get('email'),
+          password: formData.get('password')
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = data.redirect || '/dashboard';
+      } else {
+        loginError.textContent = data.error || 'Invalid email or password';
+        loginError.style.display = 'block';
+      }
+    } catch (err) {
+      loginError.textContent = 'Something went wrong. Please try again.';
+      loginError.style.display = 'block';
+    } finally {
+      loginBtn.querySelector('.btn-text').style.display = 'inline';
+      loginBtn.querySelector('.btn-loader').style.display = 'none';
+      loginBtn.disabled = false;
+    }
+  });
+
+  magicLinkBtn.addEventListener('click', async function() {
+    const email = document.getElementById('loginEmail').value;
+    if (!email) {
+      loginError.textContent = 'Please enter your email first';
+      loginError.style.display = 'block';
+      return;
+    }
+    this.disabled = true;
+    this.innerHTML = '<i data-lucide="loader-2" class="spin" style="width:18px;height:18px"></i> Sending...';
+    lucide.createIcons();
+    try {
+      const res = await fetch('/api/auth/magic-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (data.success) {
+        this.innerHTML = '<i data-lucide="check" style="width:18px;height:18px"></i> Magic link sent!';
+      } else {
+        this.innerHTML = '<i data-lucide="wand-2" style="width:18px;height:18px"></i> Try Again';
+        loginError.textContent = data.error || 'Failed to send magic link';
+        loginError.style.display = 'block';
+      }
+      lucide.createIcons();
+    } catch {
+      this.innerHTML = '<i data-lucide="wand-2" style="width:18px;height:18px"></i> Try Again';
+      loginError.textContent = 'Something went wrong';
+      loginError.style.display = 'block';
+      lucide.createIcons();
+    }
+  });
+});
+</script>
+
+</body>
+</html>

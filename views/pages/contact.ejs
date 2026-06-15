@@ -1,0 +1,128 @@
+<%- include('../partials/head', { title: 'Contact Us', description: 'Get in touch with Tak2ai. Request a demo, ask questions, or start your AI automation journey. Free 15-minute AI consultation call available.', canonical: '/contact' }) %>
+</head>
+<body>
+
+<%- include('../partials/navbar', { currentPage: 'contact' }) %>
+
+<section class="page-hero">
+  <div class="hero-bg">
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+  </div>
+  <div class="container">
+    <span class="hero-subtitle animate-on-scroll">Get In Touch</span>
+    <h1 class="page-hero-title animate-on-scroll">Let's <span class="heading-gradient">Automate</span> Your Business</h1>
+    <p class="page-hero-text animate-on-scroll">Tell us about your needs and we'll show you how Tak2ai can transform your communication and content.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
+      <div class="glass-card animate-on-scroll" style="padding:32px;">
+        <h3 style="margin-bottom:24px;">Send us a message</h3>
+        <form id="contactForm" action="/api/leads" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cName">Full Name <span class="required">*</span></label>
+              <input type="text" id="cName" name="name" class="form-input" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label for="cEmail">Email Address <span class="required">*</span></label>
+              <input type="email" id="cEmail" name="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cPhone">Phone Number <span class="required">*</span></label>
+              <input type="tel" id="cPhone" name="phone" class="form-input" placeholder="+91 90880 11999" required>
+            </div>
+            <div class="form-group">
+              <label for="cIndustry">Category of Business</label>
+              <select id="cIndustry" name="category" class="form-select">
+                <option value="">Select category</option>
+                <option>Travel & Tourism</option>
+                <option>School</option>
+                <option>Telecommunications</option>
+                <option>Jewellery</option>
+                <option>Manufacturing</option>
+                <option>IT & ITES</option>
+                <option>Shops & Showrooms</option>
+                <option>Automobile Sales</option>
+                <option>Automobile Service</option>
+                <option>Life Insurance</option>
+                <option>Health Insurance</option>
+                <option>Astrology</option>
+                <option>Solicitor Firm</option>
+                <option>Sports</option>
+                <option>Driver Centre</option>
+                <option>Nursing Centre</option>
+                <option>Garments</option>
+                <option>Mobile Sales & Service</option>
+                <option>Digital Marketing</option>
+                <option>Banquet Hall</option>
+                <option>Wedding Planners</option>
+                <option>Decorators</option>
+                <option>Catering Services</option>
+                <option>Production House</option>
+                <option>Clubs & Memberships</option>
+                <option>House Keeping Agency</option>
+                <option>Security Guard</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cMessage">Message <span class="optional">(optional)</span></label>
+            <textarea id="cMessage" name="message" class="form-textarea" rows="3" placeholder="Tell us about your automation needs..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;"><i data-lucide="send"></i> Submit Enquiry</button>
+        </form>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="glass-card animate-on-scroll" style="padding:24px;text-align:center;">
+          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:rgba(37,211,102,0.1);color:#25D366;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="message-circle" style="width:24px;height:24px"></i></span>
+          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">WhatsApp</h4>
+          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:12px;">Quickest way to reach us</p>
+          <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp btn-sm"><i data-lucide="message-circle" style="width:14px;height:14px"></i> Message on WhatsApp</a>
+        </div>
+        <div class="glass-card animate-on-scroll delay-100" style="padding:24px;text-align:center;">
+          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:rgba(0,229,255,0.1);color:#00E5FF;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="mail" style="width:24px;height:24px"></i></span>
+          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">Email Us</h4>
+          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:4px;">We reply within 24 hours</p>
+          <a href="mailto:connect@tak2ai.com" style="color:#00E5FF;font-weight:500;font-size:0.875rem;">connect@tak2ai.com</a>
+        </div>
+        <div class="glass-card animate-on-scroll delay-200" style="padding:24px;text-align:center;">
+          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:rgba(167,139,250,0.1);color:#A78BFA;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="phone" style="width:24px;height:24px"></i></span>
+          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">Phone</h4>
+          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:4px;">Mon–Sat, 10 AM – 7 PM IST</p>
+          <a href="tel:+917001234567" style="color:#00E5FF;font-weight:500;font-size:0.875rem;">+91 70012 34567</a>
+        </div>
+        <div class="glass-card animate-on-scroll delay-300" style="padding:24px;text-align:center;background:linear-gradient(135deg,rgba(0,229,255,0.04),rgba(124,255,107,0.02));border:1px solid rgba(0,229,255,0.15);">
+          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(124,255,107,0.1));color:#7CFF6B;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="calendar-check" style="width:24px;height:24px"></i></span>
+          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">Free AI Consultation</h4>
+          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:12px;">Not sure where to start?</p>
+          <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp btn-sm"><i data-lucide="zap" style="width:14px;height:14px"></i> Claim Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="animate-on-scroll">
+      <h2 class="cta-title">Ready to transform <span class="heading-gradient">your business</span>?</h2>
+      <p class="cta-desc">Start your AI automation journey today.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp"><i data-lucide="message-circle"></i> Chat on WhatsApp</a>
+        <a href="mailto:connect@tak2ai.com" class="btn btn-secondary"><i data-lucide="mail"></i> Email Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/modal') %>
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+.features-grid.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:32px;transition:all .3s}
+.service-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+.service-card h3{font-size:1.15rem;margin-bottom:8px;margin-top:0}
+.service-card p{font-size:.875rem;color:var(--text-secondary);line-height:1.6}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.team-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-xl);overflow:hidden;transition:all .3s}
+.team-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+.team-image{padding:32px 20px;display:flex;align-items:center;justify-content:center}
+.team-info{padding:0 20px 24px;text-align:center}
+.team-info h4{font-size:1rem;margin-bottom:2px}
+.team-info .role{font-size:.82rem;color:var(--text-tertiary);margin-bottom:10px}
+.team-social{display:flex;justify-content:center;gap:8px}
+.team-social a{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--bg-glass);border:1px solid var(--border-color);color:var(--text-tertiary);transition:all .2s;font-size:.8rem}
+.team-social a:hover{background:rgba(0,229,255,.08);color:var(--primary)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat-card{text-align:center;padding:28px 16px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);transition:all .3s}
+.stat-card:hover{border-color:var(--border-light)}
+.stat-card .stat-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:rgba(0,229,255,.08);border-radius:var(--radius-sm);color:var(--primary)}
+.stat-card .stat-number{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:2px}
+.stat-card .stat-label{font-size:.85rem;color:var(--text-tertiary)}

@@ -1,0 +1,53 @@
+<nav class="navbar">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between">
+    <a href="/" class="nav-logo"><img src="/assets/final logo dark.png" alt="Tak2ai" class="nav-logo-img"></a>
+
+    <div class="nav-menu" id="navMenu">
+      <button class="nav-menu-close" id="navMenuClose">&times;</button>
+      <a href="/" class="nav-link <%= currentPage === 'home' ? 'active' : '' %>">Home</a>
+      <div class="nav-dropdown">
+        <a class="nav-link dropdown-trigger">Services <i data-lucide="chevron-down"></i></a>
+        <div class="nav-dropdown-content">
+          <a href="/voice-ai" class="nav-link <%= currentPage === 'voice-ai' ? 'active' : '' %>">AI Voice Calling</a>
+
+          <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>">AI Chatbot</a>
+        </div>
+      </div>
+      <a href="/pricing" class="nav-link <%= currentPage === 'pricing' ? 'active' : '' %>">Pricing</a>
+      <a href="/about" class="nav-link <%= currentPage === 'about' ? 'active' : '' %>">About</a>
+      <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">Contact</a>
+      <div class="nav-mobile-actions">
+        <% if (locals.user) { %>
+          <a href="/dashboard" class="btn btn-sm btn-primary"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+          <a href="/api/auth/logout" class="btn btn-sm btn-secondary">Logout</a>
+        <% } else { %>
+          <a href="/login" class="btn btn-sm btn-secondary">Login</a>
+          <a href="/register" class="btn btn-sm btn-primary">Get Started</a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i data-lucide="moon"></i>
+      </button>
+      <% if (locals.user) { %>
+        <div class="nav-user">
+          <img src="<%= user.avatar_url || '/assets/default-avatar.png' %>" alt="<%= user.name %>" class="nav-avatar">
+          <div class="nav-user-dropdown">
+            <a href="/dashboard" class="nav-user-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+            <a href="/profile" class="nav-user-link"><i data-lucide="user"></i> Profile</a>
+            <hr class="nav-user-divider">
+            <a href="/api/auth/logout" class="nav-user-link nav-user-logout"><i data-lucide="log-out"></i> Logout</a>
+          </div>
+        </div>
+      <% } else { %>
+        <a href="/login" class="btn btn-sm btn-secondary nav-desktop-only">Login</a>
+        <a href="/register" class="btn btn-sm btn-primary nav-desktop-only">Get Started</a>
+      <% } %>
+    </div>
+  </div>
+</nav>

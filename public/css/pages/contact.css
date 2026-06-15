@@ -1,0 +1,5 @@
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.contact-wrap .form-group input,.contact-wrap .form-group select,.contact-wrap .form-group textarea{width:100%;padding:12px 14px;background:var(--bg-glass);border:1px solid var(--border-color);border-radius:var(--radius-md);color:var(--text-primary);outline:none;transition:border-color .2s}
+.contact-wrap .form-group input:focus,.contact-wrap .form-group select:focus,.contact-wrap .form-group textarea:focus{border-color:var(--primary)}
+.contact-wrap .form-group textarea{resize:vertical}
+.contact-wrap .form-group select{appearance:none}

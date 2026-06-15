@@ -1,0 +1,139 @@
+<%- include('../partials/head', { title: 'AI Chatbot for Websites & Apps', description: 'AI chatbot for websites and apps. Integrate intelligent conversational AI that answers queries, captures leads, and supports customers 24/7.', canonical: '/chatbot' }) %>
+</head>
+<body>
+
+<%- include('../partials/navbar', { currentPage: 'chatbot' }) %>
+
+<section class="page-hero">
+  <div class="hero-bg">
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+  </div>
+  <div class="container">
+    <span class="hero-subtitle animate-on-scroll">AI Chatbot</span>
+    <h1 class="page-hero-title animate-on-scroll">Your AI Assistant, Available <span class="heading-gradient">24/7</span></h1>
+    <p class="page-hero-text animate-on-scroll">Add a smart conversational AI to your website or app that answers queries, captures leads, and supports customers around the clock.</p>
+    <div class="animate-on-scroll" style="margin-bottom:32px;text-align:center">
+      <div id="chatbot-demo-container">
+        <div class="cd-header">
+          <div class="cd-avatar">T</div>
+          <div class="cd-info"><h4>Tak2ai Assistant</h4><p>Online</p></div>
+        </div>
+        <div id="chatbot-messages">
+          <div class="msg bot">Hi there! I'm Tak2ai's AI assistant. How can I help you today?</div>
+        </div>
+        <div class="cd-suggestions">
+          <button>What is Tak2ai?</button>
+          <button>Pricing plans</button>
+          <button>Services</button>
+          <button>Contact support</button>
+        </div>
+        <div class="cd-input-wrap">
+          <input type="text" id="chatbot-input" placeholder="Type your message..." autocomplete="off">
+          <button id="chatbot-send" aria-label="Send message"><i data-lucide="send" style="width:16px;height:16px"></i></button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="openGsModalBtn"><i data-lucide="bot"></i> Get Chatbot Demo</button>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">Features</span>
+      <h2>Powerful <span class="heading-gradient">Chatbot</span> Features</h2>
+      <p>Enterprise-grade conversational AI for your digital presence.</p>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="zap"></i></div><h3>Instant Responses</h3><p>AI answers customer queries instantly with context-aware responses based on your knowledge base.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="users"></i></div><h3>Lead Capture</h3><p>Qualify visitors, collect contact details, and sync leads to your CRM automatically.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="message-circle"></i></div><h3>Multi-Platform</h3><p>Deploy on website, mobile app, WhatsApp, and Telegram from a single AI backend.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="brain"></i></div><h3>Train on Your Data</h3><p>Upload PDFs, website links, or docs. AI learns your business inside out.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="headphones"></i></div><h3>Human Handoff</h3><p>Seamless transfer to human agents with full conversation history when needed.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="bar-chart-3"></i></div><h3>Analytics Dashboard</h3><p>Track conversations, satisfaction scores, popular questions, and conversion metrics.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="globe"></i></div><h3>Multilingual</h3><p>AI auto-detects and responds in Hindi, English, Tamil, Bengali, and more.</p></div>
+      <div class="detail-card animate-on-scroll"><div class="detail-card-icon"><i data-lucide="code"></i></div><h3>Easy Integration</h3><p>Deploy with one line of JavaScript or use our API for custom integrations.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">Integration Code</span>
+      <h2>Add to Your Site in <span class="heading-gradient">One Line</span></h2>
+      <p>Copy and paste this script before the closing &lt;/body&gt; tag.</p>
+    </div>
+    <div class="code-block animate-on-scroll">
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('<script src=\'https://tak2ai.com/chatbot/embed.js\' data-chat-id=\'YOUR_CHAT_ID\'><\/script>')">Copy</button>
+      <pre><code>&lt;script src='https://tak2ai.com/chatbot/embed.js' data-chat-id='YOUR_CHAT_ID'&gt;&lt;/script&gt;</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">How It Works</span>
+      <h2>Go Live in <span class="heading-gradient">3 Simple Steps</span></h2>
+      <p>From setup to live in minutes, not days.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step animate-on-scroll"><div class="step-num">1</div><h4>Create Your Bot</h4><p>Name your chatbot, upload your knowledge base, and customise its appearance and tone.</p></div>
+      <div class="process-step animate-on-scroll"><div class="step-num">2</div><h4>Train the AI</h4><p>Upload FAQs, product docs, or website links. AI learns your business overnight.</p></div>
+      <div class="process-step animate-on-scroll"><div class="step-num">3</div><h4>Deploy Everywhere</h4><p>Add the script to your website, embed in your app, or connect to WhatsApp. Go live instantly.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">FAQ</span>
+      <h2>Chatbot <span class="heading-gradient">Questions</span></h2>
+      <p>Common questions about our AI chatbot service.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">How do I add the chatbot to my website?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Simply copy the embed script above and paste it before the closing &lt;/body&gt; tag on your website. The widget appears automatically. No coding required.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Can I train the AI on my own content?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Yes. Upload PDFs, Word docs, website URLs, or paste text directly. The AI indexes your content and uses it to answer customer queries accurately.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Does it support Indian languages?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Absolutely. The chatbot auto-detects the visitor's language and responds in Hindi, English, Tamil, Telugu, Bengali, Marathi, and more.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Can I customise the chatbot's appearance?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Yes. Change colours, position, icon, welcome message, and avatar from the dashboard. Match it to your brand identity perfectly.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Does it work with my CRM?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Yes. We integrate with Zoho CRM, Salesforce, HubSpot, and more. Captured leads are synced automatically in real time.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="animate-on-scroll">
+      <h2 class="cta-title">Add AI chatbot to <span class="heading-gradient">your site</span> today</h2>
+      <p class="cta-desc">Get a personalised demo of Tak2ai Chatbot for your business.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-primary" id="openGsModalBtn"><i data-lucide="bot"></i> Get Chatbot Demo</button>
+        <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp"><i data-lucide="message-circle"></i> Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/modal') %>
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
+
+</body>
+</html>

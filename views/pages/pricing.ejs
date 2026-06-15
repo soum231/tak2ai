@@ -1,0 +1,123 @@
+<%- include('../partials/head', { title: 'Simple, Transparent Pricing', description: 'Start free, scale as you grow. Transparent pricing for AI voice calling, WhatsApp bots, and AI video generation. No hidden fees, cancel anytime.', canonical: '/pricing' }) %>
+</head>
+<body>
+
+<%- include('../partials/navbar', { currentPage: 'pricing' }) %>
+
+<section class="page-hero">
+  <div class="hero-bg">
+    <div class="particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+  </div>
+  <div class="container">
+    <span class="hero-subtitle animate-on-scroll">Pricing</span>
+    <h1 class="page-hero-title animate-on-scroll">Simple, <span class="heading-gradient">transparent</span> pricing</h1>
+    <p class="page-hero-text animate-on-scroll">Start free, scale as you grow. No hidden fees, no surprises.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="pricing-toggle animate-on-scroll">
+      <span class="toggle-label active" data-period="monthly">Monthly</span>
+      <div class="toggle-switch"></div>
+      <span class="toggle-label" data-period="annual">Annual</span>
+      <span class="save-badge">Save 20%</span>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card animate-on-scroll">
+        <h3>Starter</h3>
+        <p>Perfect for small businesses exploring AI automation</p>
+        <div class="price"><span class="price-amount">Free</span></div>
+        <ul class="pricing-features">
+          <li>100 AI chat messages / mo</li>
+          <li>10 min voice calling</li>
+          <li>Email support</li>
+          <li>Basic analytics</li>
+        </ul>
+        <button class="btn btn-outline" id="openGsModalBtn" style="width:100%;"><i data-lucide="rocket" style="width:16px;height:16px"></i> Get Started Free</button>
+      </div>
+      <div class="pricing-card featured animate-on-scroll delay-100">
+        <h3>Growth</h3>
+        <p>For growing teams that need serious AI automation</p>
+        <div class="price">
+          <span class="price-amount">₹2,999</span>
+          <span class="price-period">/month</span>
+        </div>
+        <ul class="pricing-features">
+          <li>5,000 AI chat messages / mo</li>
+          <li>500 min voice calling</li>
+          <li>Priority support</li>
+          <li>Advanced analytics</li>
+          <li>Custom integrations</li>
+        </ul>
+        <button class="btn btn-primary" id="openGsModalBtn" style="width:100%;"><i data-lucide="zap" style="width:16px;height:16px"></i> Start Free Trial</button>
+      </div>
+      <div class="pricing-card animate-on-scroll delay-200">
+        <h3>Enterprise</h3>
+        <p>Custom solutions for large-scale operations</p>
+        <div class="price"><span class="price-amount">Custom</span></div>
+        <ul class="pricing-features">
+          <li>Unlimited messages</li>
+          <li>Unlimited voice calling</li>
+          <li>Dedicated support</li>
+          <li>SLA guarantee</li>
+          <li>White-label option</li>
+          <li>Custom AI training</li>
+        </ul>
+        <a href="/contact" class="btn btn-secondary" style="width:100%;"><i data-lucide="headphones" style="width:16px;height:16px"></i> Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header animate-on-scroll">
+      <span class="section-label">FAQs</span>
+      <h2 class="section-title">Pricing & Billing <span class="heading-gradient">Questions</span></h2>
+      <p class="section-desc">Everything you need to know about our plans and billing.</p>
+    </div>
+    <div class="faq-list" style="max-width:700px;margin:0 auto;">
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Can I switch plans anytime?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Yes, you can upgrade or downgrade your plan at any time. Upgrades take effect immediately, and we prorate the billing. Downgrades apply at the start of your next billing cycle.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Is there a free trial for paid plans?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Absolutely. You can start a 14-day free trial of the Growth plan with no credit card required. Experience all features before committing.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">What happens when I exceed my usage limits?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>We'll notify you before you hit your limits. You can purchase additional usage at affordable rates or upgrade to a higher plan. No service interruptions without prior notice.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Do you offer refunds?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Yes, we offer a 7-day money-back guarantee on all paid plans. If you are not satisfied, we'll provide a full refund within the first week.</p></div>
+      </div>
+      <div class="faq-item animate-on-scroll">
+        <button class="faq-question">Can I use Tak2ai for my agency or multiple clients?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
+        <div class="faq-answer"><p>Yes, our Enterprise plan includes white-label options and multi-tenant support for agencies. Contact our sales team for custom pricing based on your scale.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="animate-on-scroll">
+      <h2 class="cta-title">Ready to transform <span class="heading-gradient">your business</span>?</h2>
+      <p class="cta-desc">Start your AI automation journey today with a free trial.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp"><i data-lucide="message-circle"></i> Chat on WhatsApp</a>
+        <a href="mailto:connect@tak2ai.com" class="btn btn-secondary"><i data-lucide="mail"></i> Email Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/modal') %>
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
+
+</body>
+</html>

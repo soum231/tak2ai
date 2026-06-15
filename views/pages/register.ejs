@@ -1,0 +1,203 @@
+<%- include('../partials/head', { title: 'Create Account', description: 'Create your Tak2ai account and start automating your business with AI voice and chatbots.', canonical: '/register' }) %>
+</head>
+<body class="auth-page">
+
+<%- include('../partials/navbar', { currentPage: 'register' }) %>
+
+<div class="auth-hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="container">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <a href="/" class="auth-logo"><img src="/assets/final logo dark.png" alt="Tak2ai"></a>
+        <h1>Create Account</h1>
+        <p>Join 500+ businesses using Tak2ai</p>
+      </div>
+
+      <form class="auth-form" id="registerForm" autocomplete="off">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="regName">Full Name</label>
+            <div class="input-group">
+              <span class="input-icon"><i data-lucide="user" style="width:18px;height:18px"></i></span>
+              <input type="text" id="regName" name="name" placeholder="John Doe" required autocomplete="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <div class="input-group">
+              <span class="input-icon"><i data-lucide="mail" style="width:18px;height:18px"></i></span>
+              <input type="email" id="regEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="regPhone">Phone Number</label>
+            <div class="input-group">
+              <span class="input-icon"><i data-lucide="phone" style="width:18px;height:18px"></i></span>
+              <input type="tel" id="regPhone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regCompany">Company (optional)</label>
+            <div class="input-group">
+              <span class="input-icon"><i data-lucide="building-2" style="width:18px;height:18px"></i></span>
+              <input type="text" id="regCompany" name="company" placeholder="Your Business Name" autocomplete="organization">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <div class="input-group">
+            <span class="input-icon"><i data-lucide="lock" style="width:18px;height:18px"></i></span>
+            <input type="password" id="regPassword" name="password" placeholder="Create a strong password" required autocomplete="new-password" minlength="8">
+            <button type="button" class="password-toggle" id="pwToggle" aria-label="Toggle password visibility" tabindex="-1">
+              <i data-lucide="eye" style="width:18px;height:18px"></i>
+            </button>
+          </div>
+          <div class="password-strength" id="pwStrength">
+            <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwStrengthFill"></div></div>
+            <span class="pw-strength-text" id="pwStrengthText"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regConfirmPassword">Confirm Password</label>
+          <div class="input-group">
+            <span class="input-icon"><i data-lucide="lock" style="width:18px;height:18px"></i></span>
+            <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="Confirm your password" required autocomplete="new-password">
+            <button type="button" class="password-toggle" id="confirmPwToggle" aria-label="Toggle confirm password visibility" tabindex="-1">
+              <i data-lucide="eye" style="width:18px;height:18px"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" name="terms" id="termsCheck" required>
+            <span class="checkbox-custom"></span>
+            I agree to the <a href="/terms" target="_blank" class="auth-link">Terms of Service</a> and <a href="/privacy" target="_blank" class="auth-link">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="registerBtn">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-loader" style="display:none"><i data-lucide="loader-2" class="spin" style="width:18px;height:18px"></i></span>
+        </button>
+        <div class="auth-error" id="registerError" style="display:none"></div>
+      </form>
+
+      <div class="auth-divider"><span>or sign up with</span></div>
+
+      <div class="auth-social">
+        <a href="/api/auth/google" class="btn btn-social btn-google">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='20' height='20'%3E%3Cpath fill='%23FFC107' d='M43.6 20.6H42V20.5H24v7.2h11.3c-1.2 3.4-4.6 5.9-8.5 5.9-2.1 0-4-.7-5.5-1.9l-6.2 4.8c3 2.6 7.1 4.1 11.7 4.1 9.3 0 16.7-6.9 16.7-16.5 0-1.1-.1-2.2-.3-3.2z'/%3E%3Cpath fill='%23FF3D00' d='M6.2 16.1c-1.1 2.1-1.7 4.5-1.7 6.9s.6 4.8 1.7 6.9l6.2-4.8c-.4-1.2-.6-2.5-.6-3.8s.2-2.6.6-3.8l-6.2-4.8z'/%3E%3Cpath fill='%234CAF50' d='M24 9.8c3.9 0 7.4 1.4 10.2 3.7l5.3-5.3C35.4 4.4 30 2 24 2 14.7 2 6.6 7.8 2.9 15.4l6.2 4.8C11.2 14.6 17 9.8 24 9.8z'/%3E%3Cpath fill='%231976D2' d='M2.1 12.2C.8 15.9 0 19.9 0 24c0 4.1.8 8.1 2.1 11.8l6.2-4.8C7.4 29.7 6.8 27.1 6.8 24s.6-5.7 1.6-8.3l-6.3-3.5z'/%3E%3C/svg%3E" alt="Google" class="social-icon">
+          Sign up with Google
+        </a>
+      </div>
+
+      <div class="auth-footer">
+        Already have an account? <a href="/login" class="auth-link">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const pwToggle = document.getElementById('pwToggle');
+  const pwInput = document.getElementById('regPassword');
+  const confirmPwToggle = document.getElementById('confirmPwToggle');
+  const confirmPwInput = document.getElementById('regConfirmPassword');
+  const registerForm = document.getElementById('registerForm');
+  const registerBtn = document.getElementById('registerBtn');
+  const registerError = document.getElementById('registerError');
+  const pwStrengthFill = document.getElementById('pwStrengthFill');
+  const pwStrengthText = document.getElementById('pwStrengthText');
+  const pwStrength = document.getElementById('pwStrength');
+
+  [pwToggle, confirmPwToggle].forEach((toggle, i) => {
+    toggle.addEventListener('click', function() {
+      const input = i === 0 ? pwInput : confirmPwInput;
+      const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+      input.setAttribute('type', type);
+      this.querySelector('i').setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+      lucide.createIcons();
+    });
+  });
+
+  pwInput.addEventListener('input', function() {
+    const val = this.value;
+    if (!val) { pwStrength.style.display = 'none'; return; }
+    pwStrength.style.display = 'flex';
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[a-z]/.test(val) && /[A-Z]/.test(val)) score++;
+    if (/\d/.test(val)) score++;
+    if (/[^a-zA-Z0-9]/.test(val)) score++;
+    const levels = ['Weak', 'Fair', 'Good', 'Strong'];
+    const colors = ['#ff4444', '#ffa726', '#ffeb3b', '#4caf50'];
+    const widths = ['25%', '50%', '75%', '100%'];
+    const idx = Math.min(score, 3);
+    pwStrengthFill.style.width = widths[idx];
+    pwStrengthFill.style.background = colors[idx];
+    pwStrengthText.textContent = levels[idx];
+  });
+
+  registerForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    registerError.style.display = 'none';
+
+    if (pwInput.value !== confirmPwInput.value) {
+      registerError.textContent = 'Passwords do not match';
+      registerError.style.display = 'block';
+      return;
+    }
+
+    registerBtn.querySelector('.btn-text').style.display = 'none';
+    registerBtn.querySelector('.btn-loader').style.display = 'inline-flex';
+    registerBtn.disabled = true;
+
+    const formData = new FormData(registerForm);
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          company: formData.get('company'),
+          password: formData.get('password')
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = data.redirect || '/dashboard';
+      } else {
+        registerError.textContent = data.error || 'Registration failed';
+        registerError.style.display = 'block';
+      }
+    } catch (err) {
+      registerError.textContent = 'Something went wrong. Please try again.';
+      registerError.style.display = 'block';
+    } finally {
+      registerBtn.querySelector('.btn-text').style.display = 'inline';
+      registerBtn.querySelector('.btn-loader').style.display = 'none';
+      registerBtn.disabled = false;
+    }
+  });
+});
+</script>
+
+</body>
+</html>

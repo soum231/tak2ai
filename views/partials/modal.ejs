@@ -1,0 +1,65 @@
+<div class="modal-overlay" id="getStartedModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Get Started with Tak2ai</h3>
+      <p class="modal-subtitle">Tell us about your business and we'll find the perfect AI solution.</p>
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+    </div>
+    <form class="modal-form" id="leadForm" action="/api/leads" method="POST">
+      <div class="form-group">
+        <label for="leadName">Full Name <span class="required">*</span></label>
+        <input type="text" id="leadName" name="name" placeholder="John Doe" required>
+      </div>
+      <div class="form-group">
+        <label for="leadEmail">Email <span class="required">*</span></label>
+        <input type="email" id="leadEmail" name="email" placeholder="john@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="leadPhone">Phone <span class="required">*</span></label>
+        <input type="tel" id="leadPhone" name="phone" placeholder="+91 98765 43210" required>
+      </div>
+      <div class="form-group">
+        <label for="leadCategory">I'm interested in <span class="required">*</span></label>
+        <select id="leadCategory" name="category" required>
+          <option value="" disabled selected>Select a category</option>
+          <option value="AI Voice Calling">AI Voice Calling</option>
+          <option value="WhatsApp AI Bot">WhatsApp AI Bot</option>
+          <option value="AI Video Generation">AI Video Generation</option>
+          <option value="AI Chatbot">AI Chatbot</option>
+          <option value="Lead Generation">Lead Generation</option>
+          <option value="Customer Support">Customer Support</option>
+          <option value="Sales Automation">Sales Automation</option>
+          <option value="Marketing Automation">Marketing Automation</option>
+          <option value="HR Automation">HR Automation</option>
+          <option value="Healthcare AI">Healthcare AI</option>
+          <option value="Education AI">Education AI</option>
+          <option value="E-commerce AI">E-commerce AI</option>
+          <option value="Real Estate AI">Real Estate AI</option>
+          <option value="Hospitality AI">Hospitality AI</option>
+          <option value="Finance AI">Finance AI</option>
+          <option value="Legal AI">Legal AI</option>
+          <option value="Logistics AI">Logistics AI</option>
+          <option value="Manufacturing AI">Manufacturing AI</option>
+          <option value="Agriculture AI">Agriculture AI</option>
+          <option value="Travel AI">Travel AI</option>
+          <option value="Insurance AI">Insurance AI</option>
+          <option value="Media & Entertainment AI">Media & Entertainment AI</option>
+          <option value="Non-Profit AI">Non-Profit AI</option>
+          <option value="Government AI">Government AI</option>
+          <option value="SaaS Integration">SaaS Integration</option>
+          <option value="Custom AI Solution">Custom AI Solution</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="leadMessage">Message (optional)</label>
+        <textarea id="leadMessage" name="message" rows="4" placeholder="Tell us about your requirements..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block modal-submit">
+        <span class="modal-submit-text">Submit</span>
+        <span class="modal-submit-loader" style="display:none"><i data-lucide="loader-2" class="spin"></i></span>
+      </button>
+      <p class="form-footnote">We'll get back to you within 24 hours. No spam, ever.</p>
+    </form>
+  </div>
+</div>

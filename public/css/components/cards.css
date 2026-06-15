@@ -1,0 +1,9 @@
+.glass-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:32px;position:relative;overflow:hidden;transition:all .3s}
+.glass-card:hover{border-color:var(--border-light);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.card-glow{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at 50% 0,rgba(0,229,255,.06),transparent 70%)}
+.glass-card:hover .card-glow{opacity:1}
+.card-icon{width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(0,229,255,.08);border-radius:var(--radius-md);color:var(--primary);margin-bottom:16px;font-size:1.4rem}
+.glass-card h3{font-size:1.15rem;margin-bottom:8px}
+.glass-card p{font-size:.875rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px}
+.card-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;color:var(--primary);transition:gap .2s}
+.card-link:hover{gap:10px}

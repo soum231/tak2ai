@@ -1,0 +1,14 @@
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--radius-pill);font-weight:600;font-size:.9rem;transition:all .3s;white-space:nowrap}
+.btn-primary{background:var(--primary);color:#050816}
+.btn-primary:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:var(--shadow-glow)}
+.btn-secondary{background:var(--bg-glass);border:1px solid var(--border-color);color:var(--text-primary)}
+.btn-secondary:hover{background:rgba(255,255,255,.08);border-color:var(--border-light);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid var(--border-color);color:var(--text-primary)}
+.btn-outline:hover{background:var(--bg-glass);border-color:var(--border-light)}
+.btn-whatsapp{background:#25D366;color:#050816}
+.btn-whatsapp:hover{background:#20BD5A;transform:translateY(-1px)}
+.btn-magic{background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(0,229,255,.08));border:1px solid rgba(167,139,250,.2);color:var(--accent-purple)}
+.btn-magic:hover{background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(0,229,255,.15));border-color:rgba(167,139,250,.3);transform:translateY(-1px)}
+.btn-sm{padding:8px 20px;font-size:.85rem}
+.btn-block{width:100%;justify-content:center}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
