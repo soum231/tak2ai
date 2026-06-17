@@ -1,17 +1,52 @@
-<div class="nav-wrapper">
-  <div class="nav-bar" id="navBar">
-    <a href="/" class="nav-logo"><img src="/assets/final logo dark.png" alt="Tak2ai" class="nav-logo-img"></a>
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a href="/" class="nav-logo" aria-label="Tak2ai Home">
+      <img src="/assets/final logo dark.png" alt="Tak2ai" class="nav-logo-img">
+    </a>
+
+    <!-- Desktop nav links -->
+    <nav class="nav-links" id="navLinks">
+      <a href="/" class="nav-link <%= currentPage === 'home' ? 'active' : '' %>">Home</a>
+      <div class="nav-dd">
+        <button class="nav-link nav-dd-trigger" aria-haspopup="true">
+          Services <i data-lucide="chevron-down" class="nav-dd-icon"></i>
+        </button>
+        <div class="nav-dd-menu">
+          <a href="/voice-ai" class="nav-link <%= currentPage === 'voice-ai' ? 'active' : '' %>">
+            <i data-lucide="phone" class="nav-dd-item-icon"></i> AI Voice Calling
+          </a>
+          <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>">
+            <i data-lucide="bot" class="nav-dd-item-icon"></i> AI Chatbot
+          </a>
+          <a href="/whatsapp-ai" class="nav-link <%= currentPage === 'whatsapp-ai' ? 'active' : '' %>">
+            <i data-lucide="message-circle" class="nav-dd-item-icon"></i> WhatsApp AI
+          </a>
+          <a href="/video-ai" class="nav-link <%= currentPage === 'video-ai' ? 'active' : '' %>">
+            <i data-lucide="video" class="nav-dd-item-icon"></i> AI Video
+          </a>
+          <a href="/automate-leads" class="nav-link <%= currentPage === 'automate-leads' ? 'active' : '' %>">
+            <i data-lucide="users" class="nav-dd-item-icon"></i> Automate Leads
+          </a>
+        </div>
+      </div>
+      <a href="/pricing" class="nav-link <%= currentPage === 'pricing' ? 'active' : '' %>">Pricing</a>
+      <a href="/about" class="nav-link <%= currentPage === 'about' ? 'active' : '' %>">About</a>
+      <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">Contact</a>
+    </nav>
+
+    <!-- Right actions -->
     <div class="nav-actions">
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <button class="nav-theme" id="themeToggle" aria-label="Toggle theme">
         <i data-lucide="moon"></i>
       </button>
+
       <% if (locals.user) { %>
         <div class="nav-user">
-          <img src="<%= user.avatar_url || '/assets/default-avatar.png' %>" alt="<%= user.name %>" class="nav-avatar">
-          <div class="nav-user-dropdown">
+          <button class="nav-user-btn" aria-haspopup="true">
+            <img src="<%= user.avatar_url || '/assets/default-avatar.png' %>" alt="<%= user.name %>" class="nav-avatar">
+          </button>
+          <div class="nav-user-menu">
             <a href="/dashboard" class="nav-user-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
             <a href="/profile" class="nav-user-link"><i data-lucide="user"></i> Profile</a>
             <hr class="nav-user-divider">
@@ -19,38 +54,69 @@
           </div>
         </div>
       <% } else { %>
-        <a href="/login" class="btn btn-sm btn-secondary nav-desktop-only">Login</a>
-        <a href="/register" class="btn btn-sm btn-primary nav-desktop-only">Get Started</a>
+        <a href="/login" class="nav-btn nav-btn-outline">Login</a>
+        <a href="/register" class="nav-btn nav-btn-primary">Get Started</a>
       <% } %>
+
+      <!-- Hamburger (mobile) -->
+      <button class="nav-hamburger" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </div>
 
-  <!-- nav-menu is OUTSIDE .nav-bar (no fixed parent) — no stacking context trap -->
-  <div class="nav-menu" id="navMenu">
-    <button class="nav-menu-close" id="navMenuClose">&times;</button>
-    <div class="nav-menu-body">
-      <a href="/" class="nav-link <%= currentPage === 'home' ? 'active' : '' %>">Home</a>
-      <div class="nav-dropdown">
-        <a class="nav-link dropdown-trigger">Services <i data-lucide="chevron-down"></i></a>
-        <div class="nav-dropdown-content">
-          <div class="dd-inner">
-            <a href="/voice-ai" class="nav-link <%= currentPage === 'voice-ai' ? 'active' : '' %>"><i data-lucide="phone" style="width:16px;height:16px"></i> AI Voice Calling</a>
-            <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>"><i data-lucide="bot" style="width:16px;height:16px"></i> AI Chatbot</a>
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true">
+    <div class="nav-drawer-overlay" id="navDrawerOverlay"></div>
+    <div class="nav-drawer-body">
+      <div class="nav-drawer-header">
+        <img src="/assets/final logo dark.png" alt="Tak2ai" class="nav-logo-img">
+        <button class="nav-drawer-theme" id="themeToggleDrawer" aria-label="Toggle theme">
+          <i data-lucide="moon"></i>
+        </button>
+        <button class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <nav class="nav-drawer-links">
+        <a href="/" class="nav-link <%= currentPage === 'home' ? 'active' : '' %>">Home</a>
+        <div class="nav-dd nav-dd-mobile">
+          <button class="nav-link nav-dd-trigger">
+            Services <i data-lucide="chevron-down" class="nav-dd-icon"></i>
+          </button>
+          <div class="nav-dd-menu">
+            <a href="/voice-ai" class="nav-link <%= currentPage === 'voice-ai' ? 'active' : '' %>">
+              <i data-lucide="phone" class="nav-dd-item-icon"></i> AI Voice Calling
+            </a>
+            <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>">
+              <i data-lucide="bot" class="nav-dd-item-icon"></i> AI Chatbot
+            </a>
+            <a href="/whatsapp-ai" class="nav-link <%= currentPage === 'whatsapp-ai' ? 'active' : '' %>">
+              <i data-lucide="message-circle" class="nav-dd-item-icon"></i> WhatsApp AI
+            </a>
+            <a href="/video-ai" class="nav-link <%= currentPage === 'video-ai' ? 'active' : '' %>">
+              <i data-lucide="video" class="nav-dd-item-icon"></i> AI Video
+            </a>
+            <a href="/automate-leads" class="nav-link <%= currentPage === 'automate-leads' ? 'active' : '' %>">
+              <i data-lucide="users" class="nav-dd-item-icon"></i> Automate Leads
+            </a>
           </div>
         </div>
-      </div>
-      <a href="/pricing" class="nav-link <%= currentPage === 'pricing' ? 'active' : '' %>">Pricing</a>
-      <a href="/about" class="nav-link <%= currentPage === 'about' ? 'active' : '' %>">About</a>
-      <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">Contact</a>
-      <div class="nav-mobile-actions">
+        <a href="/pricing" class="nav-link <%= currentPage === 'pricing' ? 'active' : '' %>">Pricing</a>
+        <a href="/about" class="nav-link <%= currentPage === 'about' ? 'active' : '' %>">About</a>
+        <a href="/contact" class="nav-link <%= currentPage === 'contact' ? 'active' : '' %>">Contact</a>
+      </nav>
+      <div class="nav-drawer-footer">
         <% if (locals.user) { %>
-          <a href="/dashboard" class="btn btn-primary"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-          <a href="/api/auth/logout" class="btn btn-secondary">Logout</a>
+          <a href="/dashboard" class="nav-btn nav-btn-primary"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+          <a href="/api/auth/logout" class="nav-btn nav-btn-outline"><i data-lucide="log-out"></i> Logout</a>
         <% } else { %>
-          <a href="/login" class="btn btn-secondary">Login</a>
-          <a href="/register" class="btn btn-primary">Get Started</a>
+          <a href="/login" class="nav-btn nav-btn-outline">Login</a>
+          <a href="/register" class="nav-btn nav-btn-primary">Get Started</a>
         <% } %>
       </div>
     </div>
   </div>
-</div>
+</header>

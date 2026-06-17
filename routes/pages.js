@@ -7,11 +7,16 @@ const pages = [
   { path: '/voice-ai', view: 'pages/voice-ai', page: 'voice-ai', title: 'AI Voice Calling with Indian Numbers', desc: 'Get Indian virtual numbers with natural AI conversations. Automate lead follow-ups, customer support, and outbound calling 24/7 with Tak2ai Voice AI.' },
 
   { path: '/chatbot', view: 'pages/chatbot', page: 'chatbot', title: 'Your AI Assistant Available 24/7', desc: 'Deploy a ChatGPT-like AI chatbot on your website. Train it on your data and never miss a customer inquiry again.' },
+  { path: '/whatsapp-ai', view: 'pages/whatsapp-ai', page: 'whatsapp-ai', title: 'WhatsApp AI Bot with Automation', desc: 'WhatsApp AI bot for businesses. Automate lead capture, order booking, customer support & broadcasting with AI-powered WhatsApp automation.' },
+  { path: '/video-ai', view: 'pages/video-ai', page: 'video-ai', title: 'AI Video Generation with Avatars', desc: 'AI video generation with realistic avatars. Create professional videos with AI presenters, voiceovers, and automated editing for Indian businesses.' },
+  { path: '/automate-leads', view: 'pages/automate-leads', page: 'automate-leads', title: 'AI Lead Automation for Businesses', desc: 'Automate lead capture, qualification, and follow-ups with AI. Convert every lead automatically with smart routing and CRM integration.' },
   { path: '/pricing', view: 'pages/pricing', page: 'pricing', title: 'Simple Transparent Pricing', desc: 'Choose the perfect plan for your business. AI voice and chatbot solutions at affordable India-friendly pricing.' },
   { path: '/about', view: 'pages/about', page: 'about', title: 'About Tak2ai', desc: 'Learn about Tak2ai — India\'s AI automation platform. Our mission, team, and story.' },
   { path: '/contact', view: 'pages/contact', page: 'contact', title: 'Contact Us', desc: 'Get in touch with the Tak2ai team. We\'re here to help you automate your business with AI.' },
   { path: '/login', view: 'pages/login', page: 'login', title: 'Sign In', desc: 'Sign in to your Tak2ai account to manage AI voice agents and chatbots.' },
   { path: '/register', view: 'pages/register', page: 'register', title: 'Create Account', desc: 'Create your Tak2ai account and start automating your business with AI voice and chatbots.' },
+  { path: '/forgot-password', view: 'pages/forgot-password', page: 'forgot-password', title: 'Reset Password', desc: 'Reset your Tak2ai account password.' },
+  { path: '/reset-password', view: 'pages/reset-password', page: 'reset-password', title: 'Set New Password', desc: 'Set a new password for your Tak2ai account.' },
 ];
 
 pages.forEach(p => {

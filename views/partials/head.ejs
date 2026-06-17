@@ -4,7 +4,13 @@
   <link rel="icon" href="/assets/favicon.png">
   <title><%= title ? title + ' — Tak2ai' : 'Tak2ai — AI Automation Platform' %></title>
   <meta name="description" content="<%= description || 'AI-powered business automation platform for voice calling and chatbots.' %>">
+  <meta name="keywords" content="AI automation, AI voice calling, WhatsApp AI bot, AI video generation, AI chatbots, Indian AI platform, business automation, lead generation AI">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tak2ai.com<%= canonical || '/' %>">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title ? title + ' — Tak2ai' : 'Tak2ai — AI Automation Platform' %>">
+  <meta name="twitter:description" content="<%= description || 'AI-powered business automation platform' %>">
+  <meta name="twitter:image" content="https://tak2ai.com/assets/og-image.png">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_IN">
   <meta property="og:site_name" content="Tak2ai">
@@ -12,15 +18,48 @@
   <meta property="og:description" content="<%= description || 'AI-powered business automation platform' %>">
   <meta property="og:url" content="https://tak2ai.com<%= canonical || '/' %>">
   <meta property="og:image" content="https://tak2ai.com/assets/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#050816">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="dns-prefetch" href="https://formsubmit.co">
   <script>!function(){var t=localStorage.getItem('tak2ai-theme');if(t!=='light'){document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('tak2ai-theme','dark')}}()</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Tak2ai",
+    "url": "https://tak2ai.com/",
+    "logo": "https://tak2ai.com/assets/final%20logo%20dark.png",
+    "description": "AI-powered communication and content automation platform for modern businesses.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-90880-11999",
+      "contactType": "sales",
+      "email": "connect@tak2ai.com"
+    },
+    "sameAs": ["https://wa.me/919088011999"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Tak2ai",
+    "url": "https://tak2ai.com/",
+    "description": "AI automation platform for voice calling, WhatsApp bots, and AI video generation.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://tak2ai.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   <% if (locals.breadcrumbs && breadcrumbs.length) { %>
   <script type="application/ld+json">
   {

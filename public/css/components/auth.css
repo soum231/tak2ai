@@ -34,3 +34,21 @@ body.auth-page{min-height:100vh;display:flex;flex-direction:column;background:va
 .pw-strength-bar{flex:1;height:4px;background:var(--border-color);border-radius:2px;overflow:hidden}
 .pw-strength-fill{height:100%;border-radius:2px;transition:all .3s;width:0}
 .pw-strength-text{font-size:.75rem;color:var(--text-tertiary);min-width:40px;text-align:right}
+
+.input-icon i,.password-toggle i{width:18px;height:18px}
+
+@media(max-width:768px){
+  .auth-hero{padding:100px 16px 60px}
+  .auth-card{padding:32px 24px}
+  .auth-card-header h1{font-size:1.4rem}
+  .auth-form .btn-primary{padding:12px 24px}
+}
+@media(max-width:480px){
+  .auth-card{padding:28px 18px;border-radius:var(--radius-xl)}
+  .auth-logo img{height:32px}
+  .auth-card-header h1{font-size:1.25rem}
+  .auth-card-header p{font-size:.82rem}
+  .auth-form{gap:16px}
+  .form-row,.form-row-2{flex-direction:column}
+  .btn-social{padding:11px;font-size:.82rem}
+}

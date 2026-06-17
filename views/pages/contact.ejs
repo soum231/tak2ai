@@ -17,9 +17,9 @@
 
 <section class="section">
   <div class="container">
-    <div class="contact-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
-      <div class="glass-card animate-on-scroll" style="padding:32px;">
-        <h3 style="margin-bottom:24px;">Send us a message</h3>
+    <div class="contact-wrap">
+      <div class="glass-card animate-on-scroll">
+        <h3>Send us a message</h3>
         <form id="contactForm" action="/api/leads" method="POST">
           <div class="form-row">
             <div class="form-group">
@@ -74,40 +74,41 @@
             <label for="cMessage">Message <span class="optional">(optional)</span></label>
             <textarea id="cMessage" name="message" class="form-textarea" rows="3" placeholder="Tell us about your automation needs..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;"><i data-lucide="send"></i> Submit Enquiry</button>
+          <button type="submit" class="btn btn-primary btn-block"><i data-lucide="send"></i> Submit Enquiry</button>
         </form>
       </div>
       <div class="contact-info-grid">
-        <div class="glass-card animate-on-scroll" style="padding:24px;text-align:center;">
-          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:rgba(37,211,102,0.1);color:#25D366;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="message-circle" style="width:24px;height:24px"></i></span>
-          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">WhatsApp</h4>
-          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:12px;">Quickest way to reach us</p>
-          <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp btn-sm"><i data-lucide="message-circle" style="width:14px;height:14px"></i> Message on WhatsApp</a>
+        <div class="contact-info-card animate-on-scroll" style="--accent-color: #25D366">
+          <span class="info-icon"><i data-lucide="message-circle"></i></span>
+          <h4>WhatsApp</h4>
+          <p class="info-desc">Quickest way to reach us</p>
+          <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp btn-sm"><i data-lucide="message-circle"></i> Message on WhatsApp</a>
         </div>
-        <div class="glass-card animate-on-scroll delay-100" style="padding:24px;text-align:center;">
-          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:rgba(0,229,255,0.1);color:#00E5FF;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="mail" style="width:24px;height:24px"></i></span>
-          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">Email Us</h4>
-          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:4px;">We reply within 24 hours</p>
-          <a href="mailto:connect@tak2ai.com" style="color:#00E5FF;font-weight:500;font-size:0.875rem;">connect@tak2ai.com</a>
+        <div class="contact-info-card animate-on-scroll delay-100" style="--accent-color: #00E5FF">
+          <span class="info-icon"><i data-lucide="mail"></i></span>
+          <h4>Email Us</h4>
+          <p class="info-desc">We reply within 24 hours</p>
+          <a href="mailto:connect@tak2ai.com" class="info-link"><i data-lucide="mail"></i> connect@tak2ai.com</a>
         </div>
-        <div class="glass-card animate-on-scroll delay-200" style="padding:24px;text-align:center;">
-          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:rgba(167,139,250,0.1);color:#A78BFA;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="phone" style="width:24px;height:24px"></i></span>
-          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">Phone</h4>
-          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:4px;">Mon–Sat, 10 AM – 7 PM IST</p>
-          <a href="tel:+917001234567" style="color:#00E5FF;font-weight:500;font-size:0.875rem;">+91 70012 34567</a>
+        <div class="contact-info-card animate-on-scroll delay-200" style="--accent-color: #A78BFA">
+          <span class="info-icon"><i data-lucide="phone"></i></span>
+          <h4>Phone</h4>
+          <p class="info-desc">Mon–Sat, 10 AM – 7 PM IST</p>
+          <a href="tel:+917001234567" class="info-link"><i data-lucide="phone"></i> +91 70012 34567</a>
         </div>
-        <div class="glass-card animate-on-scroll delay-300" style="padding:24px;text-align:center;background:linear-gradient(135deg,rgba(0,229,255,0.04),rgba(124,255,107,0.02));border:1px solid rgba(0,229,255,0.15);">
-          <span style="display:inline-flex;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(124,255,107,0.1));color:#7CFF6B;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:12px;"><i data-lucide="calendar-check" style="width:24px;height:24px"></i></span>
-          <h4 style="font-size:1rem;font-weight:600;margin-bottom:4px;">Free AI Consultation</h4>
-          <p style="font-size:0.8125rem;color:#A1A1AA;margin-bottom:12px;">Not sure where to start?</p>
-          <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp btn-sm"><i data-lucide="zap" style="width:14px;height:14px"></i> Claim Free Consultation</a>
+        <div class="contact-info-card animate-on-scroll delay-300" style="--accent-color: #7CFF6B">
+          <span class="info-icon"><i data-lucide="calendar-check"></i></span>
+          <h4>Free AI Consultation</h4>
+          <p class="info-desc">Not sure where to start?</p>
+          <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp btn-sm"><i data-lucide="zap"></i> Claim Free Consultation</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta-section">
+<section class="cta">
+  <div class="cta-glow"></div>
   <div class="container">
     <div class="animate-on-scroll">
       <h2 class="cta-title">Ready to transform <span class="heading-gradient">your business</span>?</h2>

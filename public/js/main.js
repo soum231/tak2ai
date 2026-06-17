@@ -5,39 +5,67 @@
   );
 
   var themeToggle = document.getElementById('themeToggle');
+  var themeToggleDrawer = document.getElementById('themeToggleDrawer');
+  function toggleTheme() {
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme');
+    var next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('tak2ai-theme', next);
+    var icon = themeToggle ? themeToggle.querySelector('i') : null;
+    var iconDrawer = themeToggleDrawer ? themeToggleDrawer.querySelector('i') : null;
+    var iconName = next === 'dark' ? 'moon' : 'sun';
+    if (icon) icon.setAttribute('data-lucide', iconName);
+    if (iconDrawer) iconDrawer.setAttribute('data-lucide', iconName);
+    if (window.lucide) lucide.createIcons();
+  }
   if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      var html = document.documentElement;
-      var current = html.getAttribute('data-theme');
-      var next = current === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('tak2ai-theme', next);
-      var icon = themeToggle.querySelector('i');
-      if (icon) icon.setAttribute('data-lucide', next === 'dark' ? 'moon' : 'sun');
-      if (window.lucide) lucide.createIcons();
-    });
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+  if (themeToggleDrawer) {
+    themeToggleDrawer.addEventListener('click', toggleTheme);
   }
 
+  var nav = document.getElementById('nav');
   var navToggle = document.getElementById('navToggle');
-  var navMenu = document.getElementById('navMenu');
-  var navMenuClose = document.getElementById('navMenuClose');
-  if (navToggle && navMenu) {
-    function openMenu() { navMenu.classList.add('open'); }
-    function closeMenu() { navMenu.classList.remove('open'); }
-    navToggle.addEventListener('click', openMenu);
-    if (navMenuClose) navMenuClose.addEventListener('click', closeMenu);
-    navMenu.querySelectorAll('a.nav-link').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
+  var navDrawer = document.getElementById('navDrawer');
+  var navDrawerClose = document.getElementById('navDrawerClose');
+  var navDrawerOverlay = document.getElementById('navDrawerOverlay');
+
+  function openDrawer() {
+    navDrawer.classList.add('open');
+    navToggle.classList.add('active');
+    navToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    navDrawer.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  if (navToggle && navDrawer) {
+    navToggle.addEventListener('click', function () {
+      if (navDrawer.classList.contains('open')) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+    if (navDrawerClose) navDrawerClose.addEventListener('click', closeDrawer);
+    if (navDrawerOverlay) navDrawerOverlay.addEventListener('click', closeDrawer);
+    navDrawer.querySelectorAll('a.nav-link').forEach(function (link) {
+      link.addEventListener('click', closeDrawer);
     });
   }
 
-  var navWrapper = document.querySelector('.nav-wrapper');
-  if (navWrapper) {
+  if (nav) {
     var ticking = false;
     window.addEventListener('scroll', function () {
       if (!ticking) {
         window.requestAnimationFrame(function () {
-          navWrapper.classList.toggle('scrolled', window.scrollY > 50);
+          nav.classList.toggle('scrolled', window.scrollY > 50);
           ticking = false;
         });
         ticking = true;
@@ -45,15 +73,11 @@
     });
   }
 
-  document.querySelectorAll('.nav-dropdown').forEach(function (dd) {
-    var trigger = dd.querySelector('.dropdown-trigger');
+  document.querySelectorAll('.nav-dd-mobile').forEach(function (dd) {
+    var trigger = dd.querySelector('.nav-dd-trigger');
     if (trigger) {
-      trigger.addEventListener('click', function (e) {
-        e.preventDefault();
+      trigger.addEventListener('click', function () {
         dd.classList.toggle('open');
-      });
-      document.addEventListener('click', function (e) {
-        if (!dd.contains(e.target)) dd.classList.remove('open');
       });
     }
   });
@@ -68,18 +92,18 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.animate-on-scroll').forEach(function (el) { observer.observe(el); });
 
-  document.querySelectorAll('.faq-question').forEach(function (btn) {
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var item = btn.closest('.faq-item');
-      var answer = item.querySelector('.faq-answer');
-      var icon = btn.querySelector('.faq-icon i');
+      var answer = item.querySelector('.faq-a');
       if (!answer) return;
+      var icon = btn.querySelector('.faq-q-icon i');
       var isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item.open').forEach(function (o) {
         if (o !== item) {
           o.classList.remove('open');
-          var a = o.querySelector('.faq-answer');
-          var i = o.querySelector('.faq-icon i');
+          var a = o.querySelector('.faq-a');
+          var i = o.querySelector('.faq-q-icon i');
           if (a) a.style.maxHeight = null;
           if (i) i.setAttribute('data-lucide', 'plus');
         }
@@ -98,7 +122,7 @@
 
   var modal = document.getElementById('getStartedModal');
   var modalClose = document.getElementById('modalClose');
-  var modalBtns = document.querySelectorAll('#openGsModalBtn, #openGsModalCta');
+  var modalBtns = document.querySelectorAll('#openGsModalBtn, #openGsModalCta, #openGsModalFloat');
   modalBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
       if (modal) modal.classList.add('open');
@@ -128,11 +152,11 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: fd.get('name'),
-          email: fd.get('email'),
-          phone: fd.get('phone'),
-          category: fd.get('category'),
-          message: fd.get('message')
+          name: fd.get('name') || fd.get('Name'),
+          email: fd.get('email') || fd.get('Email'),
+          phone: fd.get('phone') || fd.get('Phone'),
+          category: fd.get('category') || fd.get('Industry'),
+          message: fd.get('message') || fd.get('Message')
         })
       }).then(function (r) { return r.json(); }).then(function (data) {
         if (data.success) {
@@ -166,11 +190,11 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: fd.get('name'),
-          email: fd.get('email'),
-          phone: fd.get('phone'),
-          category: fd.get('category'),
-          message: fd.get('message')
+          name: fd.get('name') || fd.get('Name'),
+          email: fd.get('email') || fd.get('Email'),
+          phone: fd.get('phone') || fd.get('Phone'),
+          category: fd.get('category') || fd.get('Industry'),
+          message: fd.get('message') || fd.get('Message')
         })
       }).then(function (r) { return r.json(); }).then(function (data) {
         if (data.success) {
@@ -192,13 +216,13 @@
   ];
   var responses = [
     { keywords: ['voice', 'calling', 'call'], reply: 'Our AI Voice Calling system uses Indian virtual numbers to handle inbound and outbound calls 24/7. It understands natural speech in multiple languages, follows up on leads, and integrates with your CRM. Would you like a demo?' },
-    { keywords: ['whatsapp'], reply: 'Our WhatsApp AI feature is currently being revamped. Stay tuned for updates!' },
-    { keywords: ['video'], reply: 'Our AI Video feature is currently being revamped. Stay tuned for updates!' },
+    { keywords: ['whatsapp'], reply: 'Our WhatsApp AI bot integrates with your WhatsApp Business API to automatically reply to messages, capture leads, qualify prospects, and even book appointments. It responds in under 2 seconds and works 24/7. It supports CRM integration and multi-language conversations. Would you like a demo?' },
+    { keywords: ['video'], reply: 'Our AI Video Creation turns your scripts into professional marketing videos in minutes with AI voiceovers and auto captions. No camera or studio needed. Great for social media content, ads, and explainer videos. Interested?' },
     { keywords: ['pricing', 'cost', 'price', 'plan', 'expensive', 'free'], reply: 'We have three plans:\n• Free — 100 messages, 10 min voice\n• Growth — ₹2,999/mo: 5K messages, 3 bots, 500 min voice\n• Enterprise — Custom pricing with unlimited everything.\nAll paid plans come with a 14-day free trial!' },
-    { keywords: ['service', 'offer', 'do you do'], reply: 'Tak2ai offers two main products:\n1. AI Voice Calling — Indian numbers, 24/7 calling\n2. AI Chatbots — ChatGPT-like bots for your website\nWhich one interests you the most?' },
+    { keywords: ['service', 'offer', 'do you do'], reply: 'Tak2ai offers four powerful AI services:\n1. AI Voice Calling — Indian numbers, 24/7 calling\n2. WhatsApp AI — automated messaging and lead capture\n3. AI Video Creation — script to video in minutes\n4. AI Chatbots — ChatGPT-like bots for your website\nWhich one interests you the most?' },
     { keywords: ['demo', 'trial', 'try'], reply: 'Great question! You can start with our Free plan or get a 14-day free trial of the Growth plan. We also offer a free 15-minute AI consultation call to help you choose the right solution. Want me to help you get started?' },
     { keywords: ['hello', 'hi', 'hey', 'good morning', 'good evening'], reply: 'Hi there! 👋 Welcome to Tak2ai. I\'m your AI assistant. Ask me about voice calling, AI chatbots, pricing, or anything else about our platform!' },
-    { keywords: ['contact', 'support', 'help', 'human', 'agent'], reply: 'You can reach us at:\n📞 +91 70012 34567\n📧 connect@tak2ai.com\n💬 WhatsApp: wa.me/917001234567\nOur team is available Mon–Sat, 10 AM – 7 PM IST.' },
+    { keywords: ['contact', 'support', 'help', 'human', 'agent'], reply: 'You can reach us at:\n📞 +91 90880 11999\n📧 connect@tak2ai.com\n💬 WhatsApp: wa.me/919088011999\nOur team is available Mon–Sat, 10 AM – 7 PM IST.' },
     { keywords: ['language', 'hindi', 'english', 'india', 'indian'], reply: 'Tak2ai supports Hindi, English, Bengali, Tamil, Telugu, Kannada, Marathi, Gujarati, and more. Our AI handles Hinglish naturally — perfect for Indian businesses!' },
     { keywords: ['setup', 'start', 'how', 'deploy', 'go live'], reply: 'Most businesses go live in 2–5 days! WhatsApp bots in 48 hours, Voice AI in 3–5 days. We handle all the setup — AI training, script configuration, and integration. You just provide your requirements!' },
     { keywords: ['thank', 'thanks', 'great', 'awesome', 'perfect'], reply: 'You\'re welcome! 😊 Is there anything else I can help you with? You can also book a free consultation call through our website.' }
@@ -389,8 +413,8 @@
 
   var testRotater = document.getElementById('testRotater');
   if (testRotater) {
-    var cards = testRotater.querySelectorAll('.t-card');
-    var dotsContainer = testRotater.querySelector('.t-dots');
+    var cards = testRotater.querySelectorAll('.testi-card');
+    var dotsContainer = testRotater.querySelector('.testi-dots');
     var currentIdx = 0;
     var interval;
     if (dotsContainer && cards.length) {

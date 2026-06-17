@@ -13,6 +13,7 @@ h1,h2,h3,h4,h5,h6{font-family:var(--font-display);font-weight:600;line-height:1.
 .heading-gradient{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 .section{padding:80px 0}
+.section--no-pad-top{padding-top:0}
 .section-dark{background:var(--bg-secondary)}
 .section-header{text-align:center;max-width:700px;margin:0 auto 48px}
 .section-label{display:inline-block;padding:4px 14px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.15);border-radius:var(--radius-pill);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:12px}

@@ -1,8 +1,11 @@
-.glass-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:32px;position:relative;overflow:hidden;transition:all .3s}
-.glass-card:hover{border-color:var(--border-light);transform:translateY(-4px);box-shadow:var(--shadow-md)}
-.card-glow{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at 50% 0,rgba(0,229,255,.06),transparent 70%)}
-.glass-card:hover .card-glow{opacity:1}
-.card-icon{width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(0,229,255,.08);border-radius:var(--radius-md);color:var(--primary);margin-bottom:16px;font-size:1.4rem}
+.glass-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:32px;position:relative;overflow:hidden;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.glass-card::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(0,229,255,0),rgba(0,229,255,0));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;pointer-events:none}
+.glass-card::after{content:'';position:absolute;top:-40%;left:-40%;width:180%;height:180%;background:radial-gradient(circle at center,rgba(0,229,255,0.06),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
+.glass-card:hover{border-color:transparent;transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,229,255,0.08),0 4px 16px rgba(0,0,0,0.2)}
+.glass-card:hover::before{background:linear-gradient(135deg,rgba(0,229,255,0.4),rgba(0,229,255,0.05),rgba(124,255,107,0.3));opacity:1}
+.glass-card:hover::after{opacity:1}
+.card-icon{width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,0.12);border-radius:var(--radius-md);color:var(--primary);margin-bottom:16px;font-size:1.4rem;transition:all .35s}
+.glass-card:hover .card-icon{background:rgba(0,229,255,.18);border-color:rgba(0,229,255,0.25);box-shadow:0 0 20px rgba(0,229,255,0.15);transform:scale(1.05)}
 .glass-card h3{font-size:1.15rem;margin-bottom:8px}
 .glass-card p{font-size:.875rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px}
 .card-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;color:var(--primary);transition:gap .2s}

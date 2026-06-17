@@ -102,11 +102,16 @@
   .dash-header{padding:12px 16px}
   .dash-toggle{display:flex}
   .dash-header-right .theme-toggle{display:none}
+  .chat-sidebar-toggle{display:flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:var(--radius-sm);color:var(--text-secondary);background:none;border:none;cursor:pointer;transition:background .2s}
+  .chat-sidebar-toggle:hover{background:var(--bg-glass)}
   .dash-grid-3{grid-template-columns:1fr}
   .dash-grid-2{grid-template-columns:1fr}
-  .chat-layout{flex-direction:column;height:auto}
-  .chat-sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border-color);max-height:200px}
-  .chat-messages{min-height:300px}
+  .chat-layout{flex-direction:column;height:100%}
+  .chat-sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;z-index:200;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-right:none}
+  .chat-sidebar.open{transform:translateX(0)}
+  .chat-messages{min-height:0;flex:1}
+  .chat-mobile-toggle{display:flex}
+  .chat-main-header .chat-sidebar-toggle{display:flex}
   .auth-hero{padding:100px 16px 60px}
   .auth-card{padding:32px 24px}
   .template-grid{grid-template-columns:1fr}
@@ -365,7 +370,7 @@
   .cd-foot button{width:32px!important;height:32px!important}
 
   /* Footer */
-  .footer{margin:8px!important;padding:20px 12px 12px!important;border-radius:var(--radius-lg)!important}
+  .footer{margin:24px;padding:20px 12px 12px!important;border-radius:24px 24px 0px 0px!important; margin-bottom:0px;}
   .footer-brand img{max-width:120px}
   .footer-desc{font-size:.8rem}
   .footer-heading{font-size:.85rem}

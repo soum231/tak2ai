@@ -204,41 +204,74 @@ var Tak2aiDashboard = {
       var sessionsHtml = '';
       sessions.forEach(function (s) {
         var first = s.title && s.title !== 'New Chat' ? s.title.charAt(0).toUpperCase() : '#';
-        sessionsHtml += '<div class="chat-session-item" data-id="' + s.id + '"><div class="chat-session-icon"><span>' + first + '</span></div><div class="chat-session-info"><div class="chat-session-title">' + (s.title || 'New Chat') + '</div><div class="chat-session-date">' + new Date(s.updated_at).toLocaleDateString() + '</div></div><button class="chat-session-del" data-id="' + s.id + '" title="Delete"><i data-lucide="x" style="width:14px;height:14px"></i></button></div>';
+        sessionsHtml += '<div class="chat-session-item" data-id="' + s.id + '">' +
+          '<div class="chat-session-icon"><span>' + first + '</span></div>' +
+          '<div class="chat-session-info">' +
+            '<div class="chat-session-title">' + (s.title || 'New Chat') + '</div>' +
+            '<div class="chat-session-date">' + self._relativeTime(new Date(s.updated_at)) + '</div>' +
+          '</div>' +
+          '<button class="chat-session-del" data-id="' + s.id + '" title="Delete"><i data-lucide="trash-2" style="width:13px;height:13px"></i></button>' +
+        '</div>';
       });
       body.innerHTML =
         '<div class="chat-layout">' +
-          '<div class="chat-sidebar">' +
-            '<div class="chat-sidebar-header"><h3><i data-lucide="message-square" style="width:16px;height:16px"></i>Chats</h3><button class="btn btn-sm btn-primary" id="newChatBtn"><i data-lucide="plus" style="width:14px;height:14px"></i> New</button></div>' +
-            '<div class="chat-sidebar-search"><i data-lucide="search" class="search-icon" style="width:14px;height:14px"></i><input type="text" id="chatSearch" placeholder="Search conversations..."></div>' +
-            '<div class="chat-session-list" id="chatSessionList">' + (sessions.length ? sessionsHtml : '<div class="dash-empty" style="padding:24px"><div class="dash-empty-icon"><i data-lucide="message-circle"></i></div><div class="dash-empty-title">No conversations yet</div><div class="dash-empty-desc">Click "New" to start an AI chat.</div></div>') + '</div>' +
+          '<div class="chat-sidebar-overlay" id="chatSidebarOverlay"></div>' +
+          '<div class="chat-sidebar" id="chatSidebar">' +
+            '<div class="chat-sidebar-header">' +
+              '<h3><i data-lucide="message-square"></i>Chats</h3>' +
+              '<button class="btn btn-sm btn-primary" id="newChatBtn"><i data-lucide="plus" style="width:14px;height:14px"></i> New</button>' +
+            '</div>' +
+            '<div class="chat-sidebar-search">' +
+              '<i data-lucide="search" class="search-icon"></i>' +
+              '<input type="text" id="chatSearch" placeholder="Search conversations...">' +
+            '</div>' +
+            '<div class="chat-session-list" id="chatSessionList">' +
+              (sessions.length ? sessionsHtml :
+                '<div class="dash-empty" style="padding:32px 16px">' +
+                  '<div class="dash-empty-icon"><i data-lucide="message-circle"></i></div>' +
+                  '<div class="dash-empty-title">No conversations yet</div>' +
+                  '<div class="dash-empty-desc">Click "New" to start chatting with AI.</div>' +
+                '</div>') +
+            '</div>' +
           '</div>' +
           '<div class="chat-main">' +
-            '<div class="chat-main-header"><h4 id="chatHeaderTitle">AI Playground</h4></div>' +
+            '<div class="chat-main-header">' +
+              '<button class="chat-sidebar-toggle" id="chatSidebarToggle"><i data-lucide="menu" style="width:18px;height:18px"></i></button>' +
+              '<h4 id="chatHeaderTitle">AI Playground</h4>' +
+              '<span class="chat-model-badge"><i data-lucide="sparkles"></i> Nemotron AI</span>' +
+            '</div>' +
             '<div class="chat-msgs-wrap">' +
               '<div class="chat-welcome" id="chatWelcome">' +
-                '<div class="chat-welcome-icon"><i data-lucide="bot" style="width:28px;height:28px"></i></div>' +
+                '<div class="chat-welcome-icon"><i data-lucide="bot"></i></div>' +
                 '<h2>How can I help you today?</h2>' +
-                '<p>Start a conversation by selecting a chat from the sidebar or creating a new one.</p>' +
+                '<p>Ask anything or choose a suggestion below to get started.</p>' +
                 '<div class="chat-suggestions">' +
-                  '<button class="chat-suggestion" data-msg="What can you help me with?">What can you do?</button>' +
-                  '<button class="chat-suggestion" data-msg="Tell me about AI voice calling">AI Voice Calling</button>' +
-                  '<button class="chat-suggestion" data-msg="What are your pricing plans?">Pricing</button>' +
-                  '<button class="chat-suggestion" data-msg="How do I get started?">Getting Started</button>' +
+                  '<button class="chat-suggestion" data-msg="What can you help me with?"><i data-lucide="sparkles"></i> What can you do?</button>' +
+                  '<button class="chat-suggestion" data-msg="Tell me about AI voice calling"><i data-lucide="phone"></i> AI Voice Calling</button>' +
+                  '<button class="chat-suggestion" data-msg="What are your pricing plans?"><i data-lucide="credit-card"></i> Pricing</button>' +
+                  '<button class="chat-suggestion" data-msg="How do I get started?"><i data-lucide="rocket"></i> Getting Started</button>' +
                 '</div>' +
               '</div>' +
               '<div class="chat-messages" id="chatMessages" style="display:none"></div>' +
               '<div class="chat-typing-fixed" id="chatTyping">' +
-                '<div class="chat-typing-avatar"><img src="/assets/favicon.png" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>' +
+                '<div class="chat-typing-avatar">AI</div>' +
                 '<div class="chat-typing-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>' +
               '</div>' +
             '</div>' +
             '<div class="chat-input-area" id="chatInputArea">' +
               '<div class="chat-input-wrap">' +
                 '<textarea id="chatMsgInput" class="chat-input" rows="1" placeholder="Type a message..." autocomplete="off"></textarea>' +
-                '<button class="chat-send-btn" id="chatSendBtn" disabled><i data-lucide="arrow-up" style="width:18px;height:18px"></i></button>' +
+                '<button class="chat-send-btn" id="chatSendBtn" disabled><i data-lucide="arrow-up"></i></button>' +
               '</div>' +
             '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="chat-delete-confirm" id="chatDeleteConfirm">' +
+          '<h4>Delete Conversation?</h4>' +
+          '<p>This will permanently delete this chat and all its messages.</p>' +
+          '<div class="chat-delete-confirm-actions">' +
+            '<button class="chat-delete-cancel" id="chatDeleteCancel">Cancel</button>' +
+            '<button class="chat-delete-ok" id="chatDeleteOk">Delete</button>' +
           '</div>' +
         '</div>';
       if (window.lucide) lucide.createIcons();
@@ -253,34 +286,75 @@ var Tak2aiDashboard = {
     }).catch(function () { self._showError('Failed to load chat.'); });
   },
 
-  _attachChatEvents: function (sessions) {
+  _attachChatEvents: function () {
     var self = this;
     var list = document.getElementById('chatSessionList');
     var newBtn = document.getElementById('newChatBtn');
     var textarea = document.getElementById('chatMsgInput');
     var sendBtn = document.getElementById('chatSendBtn');
     var searchInput = document.getElementById('chatSearch');
+    var sidebarToggle = document.getElementById('chatSidebarToggle');
+    var sidebarOverlay = document.getElementById('chatSidebarOverlay');
+    var chatSidebar = document.getElementById('chatSidebar');
+    var deleteConfirm = document.getElementById('chatDeleteConfirm');
+    var deleteCancel = document.getElementById('chatDeleteCancel');
+    var deleteOk = document.getElementById('chatDeleteOk');
+    self._pendingDeleteId = null;
 
+    // Mobile sidebar toggle
+    function openMobileSidebar() {
+      if (chatSidebar) chatSidebar.classList.add('open');
+      if (sidebarOverlay) sidebarOverlay.classList.add('show');
+    }
+    function closeMobileSidebar() {
+      if (chatSidebar) chatSidebar.classList.remove('open');
+      if (sidebarOverlay) sidebarOverlay.classList.remove('show');
+    }
+    if (sidebarToggle) sidebarToggle.addEventListener('click', openMobileSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+    // Session list clicks
     if (list) {
       list.addEventListener('click', function (e) {
-        var item = e.target.closest('.chat-session-item');
         var delBtn = e.target.closest('.chat-session-del');
         if (delBtn) {
-          var id = delBtn.getAttribute('data-id');
-          fetch('/api/chat/sessions/' + id, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }).then(function (r) { return r.json(); }).then(function (d) {
-            if (d.success) self.renderChat();
-          });
+          e.stopPropagation();
+          self._pendingDeleteId = delBtn.getAttribute('data-id');
+          if (deleteConfirm) deleteConfirm.classList.add('show');
           return;
         }
+        var item = e.target.closest('.chat-session-item');
         if (item) {
           var id = item.getAttribute('data-id');
           self._loadSession(id);
-          list.querySelectorAll('.chat-session-item').forEach(function (e) { e.classList.remove('active'); });
+          list.querySelectorAll('.chat-session-item').forEach(function (el) { el.classList.remove('active'); });
           item.classList.add('active');
+          closeMobileSidebar();
         }
       });
     }
 
+    // Delete confirm
+    if (deleteCancel) deleteCancel.addEventListener('click', function () {
+      if (deleteConfirm) deleteConfirm.classList.remove('show');
+      self._pendingDeleteId = null;
+    });
+    if (deleteOk) deleteOk.addEventListener('click', function () {
+      if (!self._pendingDeleteId) return;
+      var id = self._pendingDeleteId;
+      if (deleteConfirm) deleteConfirm.classList.remove('show');
+      fetch('/api/chat/sessions/' + id, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d.success) {
+            if (self.currentSessionId === id) self.currentSessionId = null;
+            self.renderChat();
+          }
+        });
+      self._pendingDeleteId = null;
+    });
+
+    // Search
     if (searchInput) {
       var searchTimer;
       searchInput.addEventListener('input', function () {
@@ -291,50 +365,60 @@ var Tak2aiDashboard = {
             var title = el.querySelector('.chat-session-title');
             var match = title && title.textContent.toLowerCase().includes(q);
             el.style.display = match ? 'flex' : 'none';
-            el.style.opacity = match ? '1' : '0.4';
           });
         }, 150);
       });
     }
 
+    // New chat
     if (newBtn) {
       newBtn.addEventListener('click', function () {
-        fetch('/api/chat/sessions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: 'New Chat' }) }).then(function (r) { return r.json(); }).then(function (d) {
-          if (d.success) {
-            self.currentSessionId = d.data.id;
-            self.renderChat();
-          }
-        });
+        fetch('/api/chat/sessions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: 'New Chat' }) })
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (d.success) {
+              self.currentSessionId = d.data.id;
+              self.renderChat();
+            }
+          });
       });
     }
 
+    // Textarea auto-resize + send
     if (textarea) {
       textarea.addEventListener('input', function () {
         this.style.height = 'auto';
-        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         if (sendBtn) sendBtn.disabled = !this.value.trim();
       });
       textarea.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); self._sendMessage(); }
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          self._sendMessage();
+        }
       });
     }
 
+    // Send button
     if (sendBtn) {
       sendBtn.addEventListener('click', function () { self._sendMessage(); });
     }
 
+    // Suggestion chips
     document.querySelectorAll('.chat-suggestion').forEach(function (el) {
       el.addEventListener('click', function () {
         var msg = this.getAttribute('data-msg');
         var input = document.getElementById('chatMsgInput');
         if (input) { input.value = msg; input.dispatchEvent(new Event('input')); }
         if (!self.currentSessionId) {
-          fetch('/api/chat/sessions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: msg.substring(0, 40) }) }).then(function (r) { return r.json(); }).then(function (d) {
-            if (d.success) {
-              self.currentSessionId = d.data.id;
-              self._sendMessage();
-            }
-          });
+          fetch('/api/chat/sessions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: msg.substring(0, 40) }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              if (d.success) {
+                self.currentSessionId = d.data.id;
+                self._sendMessage();
+              }
+            });
         } else {
           self._sendMessage();
         }
@@ -348,7 +432,7 @@ var Tak2aiDashboard = {
     var msgContainer = document.getElementById('chatMessages');
     var headerTitle = document.getElementById('chatHeaderTitle');
     if (welcome) welcome.style.display = 'none';
-    if (msgContainer) { msgContainer.style.display = 'flex'; msgContainer.innerHTML = '<div class="dash-loading"><div class="spinner"></div></div>'; }
+    if (msgContainer) { msgContainer.style.display = 'flex'; msgContainer.innerHTML = '<div class="dash-loading" style="min-height:200px"><div class="spinner"></div></div>'; }
     var self = this;
     fetch('/api/chat/sessions/' + sessionId + '/messages').then(function (r) { return r.json(); }).then(function (data) {
       if (!data.success) { if (msgContainer) msgContainer.innerHTML = '<div class="dash-empty">Failed to load messages</div>'; return; }
@@ -371,51 +455,67 @@ var Tak2aiDashboard = {
   },
 
   _createMsgEl: function (role, content) {
+    var normalizedRole = (role === 'assistant') ? 'ai' : role;
     var row = document.createElement('div');
-    row.className = 'chat-msg-row ' + role;
+    row.className = 'chat-msg-row ' + normalizedRole;
+
     var avatar = document.createElement('div');
-    avatar.className = 'chat-msg-avatar ' + role;
-    if (role === 'user') {
+    avatar.className = 'chat-msg-avatar ' + normalizedRole;
+    if (normalizedRole === 'user') {
       var userImg = document.getElementById('dashAvatar');
       if (userImg && userImg.src && userImg.src.indexOf('default-avatar') === -1) {
-        avatar.innerHTML = '<img src="' + userImg.src + '" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
+        avatar.innerHTML = '<img src="' + userImg.src + '" alt="">';
       } else {
-        avatar.textContent = 'U';
+        var name = (document.getElementById('dashUserName') || {}).textContent || 'U';
+        avatar.textContent = name.charAt(0).toUpperCase();
       }
     } else {
-      avatar.innerHTML = '<img src="/assets/favicon.png" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
+      avatar.textContent = 'AI';
     }
+
     var wrap = document.createElement('div');
     wrap.className = 'chat-msg-wrap';
+
     var bubble = document.createElement('div');
-    bubble.className = 'chat-msg ' + role;
-    if (role === 'assistant' || role === 'ai') {
+    bubble.className = 'chat-msg ' + normalizedRole;
+    if (normalizedRole === 'ai') {
       bubble.innerHTML = this._renderMarkdown(content);
     } else {
       bubble.textContent = content;
     }
+
+    var actions = document.createElement('div');
+    actions.className = 'chat-msg-actions';
+
     var time = document.createElement('div');
     time.className = 'chat-msg-time';
     time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    var actions = document.createElement('div');
-    actions.className = 'chat-msg-actions';
-    if (role === 'assistant' || role === 'ai') {
+
+    if (normalizedRole === 'ai') {
       var copyBtn = document.createElement('button');
       copyBtn.className = 'chat-msg-action';
       copyBtn.title = 'Copy';
       copyBtn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px"></i>';
       copyBtn.addEventListener('click', function () {
-        navigator.clipboard.writeText(content);
-        copyBtn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px"></i>';
-        setTimeout(function () { copyBtn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px"></i>'; }, 2000);
+        navigator.clipboard.writeText(content).then(function () {
+          copyBtn.classList.add('copied');
+          copyBtn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px"></i>';
+          if (window.lucide) lucide.createIcons();
+          setTimeout(function () {
+            copyBtn.classList.remove('copied');
+            copyBtn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px"></i>';
+            if (window.lucide) lucide.createIcons();
+          }, 2000);
+        });
       });
       actions.appendChild(copyBtn);
     }
+
     wrap.appendChild(bubble);
     wrap.appendChild(actions);
     wrap.appendChild(time);
-    row.appendChild(role === 'user' ? wrap : avatar);
-    row.appendChild(role === 'user' ? avatar : wrap);
+    row.appendChild(normalizedRole === 'user' ? wrap : avatar);
+    row.appendChild(normalizedRole === 'user' ? avatar : wrap);
     return row;
   },
 
@@ -427,14 +527,16 @@ var Tak2aiDashboard = {
     if (!msgContainer) return;
     if (!this.currentSessionId) {
       var self = this;
-      fetch('/api/chat/sessions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: input.value.substring(0, 40) }) }).then(function (r) { return r.json(); }).then(function (d) {
-        if (d.success) {
-          self.currentSessionId = d.data.id;
-          if (welcome) welcome.style.display = 'none';
-          msgContainer.style.display = 'flex';
-          self._doSendMessage();
-        }
-      });
+      fetch('/api/chat/sessions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: input.value.substring(0, 40) }) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d.success) {
+            self.currentSessionId = d.data.id;
+            if (welcome) welcome.style.display = 'none';
+            msgContainer.style.display = 'flex';
+            self._doSendMessage();
+          }
+        });
       return;
     }
     if (welcome) welcome.style.display = 'none';
@@ -452,7 +554,7 @@ var Tak2aiDashboard = {
     if (!content) return;
     input.value = '';
     input.style.height = 'auto';
-    if (sendBtn) sendBtn.disabled = true;
+    if (sendBtn) { sendBtn.disabled = true; sendBtn.classList.add('sending'); setTimeout(function () { sendBtn.classList.remove('sending'); }, 600); }
     var self = this;
     msgContainer.appendChild(self._createMsgEl('user', content));
     msgContainer.scrollTop = msgContainer.scrollHeight;
@@ -498,7 +600,7 @@ var Tak2aiDashboard = {
     retryBtn.className = 'chat-msg-action';
     retryBtn.title = 'Retry';
     retryBtn.innerHTML = '<i data-lucide="refresh-cw" style="width:13px;height:13px"></i>';
-    retryBtn.addEventListener('click', function () { errRow.remove(); this._doSendMessage(); }.bind(this));
+    retryBtn.addEventListener('click', function () { errRow.remove(); Tak2aiDashboard._doSendMessage(); });
     errBtns.appendChild(retryBtn);
     errWrap.appendChild(errBubble);
     errWrap.appendChild(errBtns);
@@ -506,6 +608,47 @@ var Tak2aiDashboard = {
     errRow.appendChild(errWrap);
     container.appendChild(errRow);
     container.scrollTop = container.scrollHeight;
+    if (window.lucide) lucide.createIcons();
+  },
+
+  _updateSidebarTitle: function (id) {
+    var titleEl = document.querySelector('.chat-msg-row.user:last-child .chat-msg');
+    if (!titleEl) return;
+    var newTitle = titleEl.textContent.substring(0, 40);
+    var sessionTitle = document.querySelector('.chat-session-item[data-id="' + id + '"] .chat-session-title');
+    if (sessionTitle) sessionTitle.textContent = newTitle;
+    var sessionIcon = document.querySelector('.chat-session-item[data-id="' + id + '"] .chat-session-icon span');
+    if (sessionIcon) sessionIcon.textContent = newTitle.charAt(0).toUpperCase();
+  },
+
+  _renderMarkdown: function (text) {
+    if (!text) return '';
+    var html = text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+      .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^# (.+)$/gm, '<h2>$1</h2>')
+      .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+      .replace(/^- (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>[\s\S]*?<\/li>)/g, function (match) {
+        if (match.indexOf('<ul>') !== -1) return match;
+        return '<ul>' + match + '</ul>';
+      })
+      .replace(/<\/ul>\s*<ul>/g, '')
+      .replace(/^(\d+)\. (.+)$/gm, '<oli>$2</oli>')
+      .replace(/(<oli>[\s\S]*?<\/oli>)/g, function (match) {
+        return '<ol>' + match.replace(/<\/?oli>/g, function (tag) {
+          return tag === '<oli>' ? '<li>' : '</li>';
+        }) + '</ol>';
+      })
+      .replace(/<\/ol>\s*<ol>/g, '')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>');
+    return '<p>' + html + '</p>';
   },
 
   _animateCountUp: function () {
@@ -532,26 +675,6 @@ var Tak2aiDashboard = {
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
   },
 
-  _renameSession: function (id, title) {
-    var self = this;
-    fetch('/api/chat/sessions/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: title }) }).then(function () {});
-  },
-
-  _updateSidebarTitle: function (id) {
-    fetch('/api/chat/sessions').then(function (r) { return r.json(); }).then(function (data) {
-      if (!data.success) return;
-      var found = null;
-      (data.data || []).forEach(function (s) { if (s.id === id) found = s; });
-      if (!found) return;
-      var el = document.querySelector('.chat-session-item[data-id="' + id + '"] .chat-session-title');
-      if (el) {
-        el.textContent = found.title || 'New Chat';
-        var icon = el.closest('.chat-session-item')?.querySelector('.chat-session-icon span');
-        if (icon) icon.textContent = (found.title && found.title !== 'New Chat') ? found.title.charAt(0).toUpperCase() : '#';
-      }
-    });
-  },
-
   _setupRipple: function () {
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('.btn, .dash-nav-item, .chat-suggestion');
@@ -566,25 +689,6 @@ var Tak2aiDashboard = {
       btn.appendChild(ripple);
       setTimeout(function () { ripple.remove(); }, 600);
     });
-  },
-
-  _renderMarkdown: function (text) {
-    var html = text
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/^### (.+)$/gm, '<h4>$1</h4>')
-      .replace(/^## (.+)$/gm, '<h3>$1</h3>')
-      .replace(/^# (.+)$/gm, '<h2>$1</h2>')
-      .replace(/^- (.+)$/gm, '<li>$1</li>')
-      .replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>')
-      .replace(/<\/ul>\s*<ul>/g, '')
-      .replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>');
-    return '<p>' + html + '</p>';
   },
 
   renderVoice: function () {

@@ -4,94 +4,173 @@
 
 <%- include('../partials/navbar', { currentPage: 'home' }) %>
 
-<section class="hero-modern" id="hero">
+<button class="float-btn" id="openGsModalFloat">Get Started <i data-lucide="arrow-right"></i></button>
+
+<!-- ════════════ Hero ════════════ -->
+<section class="hero" id="hero">
   <div class="hero-bg">
     <canvas id="three-canvas"></canvas>
   </div>
+  <div class="hero-glow hero-glow--1"></div>
+  <div class="hero-glow hero-glow--2"></div>
   <div class="container">
-    <span class="hero-subtitle animate-on-scroll" style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px 6px 8px;background:var(--bg-glass);border:1px solid var(--border-color);border-radius:var(--radius-pill);font-size:0.8125rem;color:var(--text-secondary);margin-bottom:24px">
-      <span style="width:8px;height:8px;border-radius:50%;background:var(--primary);box-shadow:0 0 12px rgba(0,229,255,0.4);animation:pulse-dot 2s ease-in-out infinite"></span>
-      AI Automation Platform
-    </span>
-    <h1 class="hero-title animate-on-scroll">
-      <span class="heading-gradient">AI That Talks.<br>Automates & Creates.</span>
-    </h1>
-    <p class="hero-subtitle animate-on-scroll">Build AI-powered voice agents and intelligent chatbots — all in one platform.</p>
-    <div class="hero-buttons animate-on-scroll">
-      <button class="btn btn-primary" id="openGsModalBtn"><i data-lucide="arrow-right"></i> Get Started</button>
-      <a href="https://wa.me/917001234567" target="_blank" class="btn btn-secondary"><i data-lucide="message-circle"></i> Book Demo</a>
-    </div>
-    <div class="stats-strip-modern animate-on-scroll">
-      <div class="stat-item"><div class="stat-number">10K+</div><div class="stat-label">AI Calls</div></div>
-      <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Businesses</div></div>
-      <div class="stat-item"><div class="stat-number">98%</div><div class="stat-label">Satisfaction</div></div>
-      <div class="stat-item"><div class="stat-number">3 Min</div><div class="stat-label">Setup Time</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="services">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">Our Services</span>
-      <h2 class="section-title">One Platform, <span class="heading-gradient">Infinite Possibilities</span></h2>
-      <p class="section-desc">Four powerful AI tools to automate your communication and content creation.</p>
-    </div>
-    <div class="service-grid-2x2 animate-on-scroll">
-      <div class="glass-card" style="--primary-rgb:0,229,255">
-        <div class="card-glow"></div>
-        <div class="card-icon"><i data-lucide="phone"></i></div>
-        <h3>AI Voice Calling</h3>
-        <p>Indian virtual numbers, natural conversations, 24/7 operation. Handle lead follow-ups and customer support at scale.</p>
-        <a href="/voice-ai" class="card-link">Explore Voice AI <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+    <div class="hero-flex">
+      <div class="hero-left">
+        <div class="hero-badge animate-on-scroll">
+          <span class="hero-badge-dot"></span>
+          AI Automation Platform
+        </div>
+        <h1 class="hero-title animate-on-scroll">
+          <span class="heading-gradient">AI That Talks.<br>Automates & Creates.</span>
+        </h1>
+        <p class="hero-desc animate-on-scroll">Build AI-powered voice agents, WhatsApp automation, intelligent chatbots, and marketing videos — all in one platform.</p>
+        <div class="hero-actions animate-on-scroll">
+          <button class="btn btn-primary" id="openGsModalBtn"><i data-lucide="arrow-right"></i> Get Started</button>
+          <a href="https://wa.me/919088011999" target="_blank" class="btn btn-secondary"><i data-lucide="message-circle"></i> Book Demo</a>
+        </div>
       </div>
-
-      <div class="glass-card" style="--primary-rgb:124,255,107">
-        <div class="card-glow" style="background:radial-gradient(circle,transparent,rgba(124,255,107,0.03))"></div>
-        <div class="card-icon" style="background:rgba(124,255,107,0.08);color:#7CFF6B"><i data-lucide="bot"></i></div>
-        <h3>AI Chatbots</h3>
-        <p>ChatGPT-like interface, custom training on your data, embed anywhere. Intelligent conversations 24/7.</p>
-        <a href="/chatbot" class="card-link" style="color:#7CFF6B">Explore Chatbots <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+      <div class="hero-right animate-on-scroll">
+        <dotlottie-player src="https://lottie.host/fbe2d508-a59e-4502-8f04-2b8f1ee829f2/X2dfaHDGjm.lottie" background="transparent" speed="1" style="width:100%;max-width:480px;height:auto" loop autoplay></dotlottie-player>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section-dark section-contained">
+<!-- ════════════ Services ════════════ -->
+<section class="section services" id="services">
   <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">Why Tak2ai?</span>
-      <h2 class="section-title">Built for <span class="heading-gradient">Modern Business</span></h2>
-      <p class="section-desc">Everything you need to automate, scale, and grow.</p>
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Our Services</span>
+      <h2 class="s-title">One Platform, <span class="heading-gradient">Infinite Possibilities</span></h2>
+      <p class="s-desc">Powerful AI tools to automate your communication, leads, and content creation.</p>
     </div>
-    <div class="features-grid-3x2 animate-on-scroll">
-      <div class="glass-card feature-mini">
-        <div class="feature-icon"><i data-lucide="clock"></i></div>
+    <div class="services-grid animate-on-scroll">
+      <div class="service-card" style="--accent:#00E5FF">
+        <div class="service-card-accent"></div>
+        <div class="service-card-inner">
+          <div class="service-card-icon"><i data-lucide="phone"></i></div>
+          <div class="service-card-content">
+            <h3 class="service-card-title">AI Voice Calling</h3>
+            <p class="service-card-desc">Indian virtual numbers, natural conversations, 24/7 operation. Handle lead follow-ups and customer support at scale.</p>
+            <a href="/voice-ai" class="service-card-link">Explore Voice AI <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="service-card" style="--accent:#7CFF6B">
+        <div class="service-card-accent"></div>
+        <div class="service-card-inner">
+          <div class="service-card-icon"><i data-lucide="bot"></i></div>
+          <div class="service-card-content">
+            <h3 class="service-card-title">AI Chatbots</h3>
+            <p class="service-card-desc">ChatGPT-like interface, custom training on your data, embed anywhere. Intelligent conversations 24/7.</p>
+            <a href="/chatbot" class="service-card-link">Explore Chatbots <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="service-card" style="--accent:#25D366">
+        <div class="service-card-accent"></div>
+        <div class="service-card-inner">
+          <div class="service-card-icon"><i data-lucide="message-circle"></i></div>
+          <div class="service-card-content">
+            <h3 class="service-card-title">WhatsApp AI</h3>
+            <p class="service-card-desc">Smart replies, lead capture, CRM integration. Turn WhatsApp into your AI-powered sales and support agent.</p>
+            <a href="/whatsapp-ai" class="service-card-link">Explore WhatsApp AI <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="service-card" style="--accent:#F59E0B">
+        <div class="service-card-accent"></div>
+        <div class="service-card-inner">
+          <div class="service-card-icon"><i data-lucide="video"></i></div>
+          <div class="service-card-content">
+            <h3 class="service-card-title">AI Video Generation</h3>
+            <p class="service-card-desc">Create professional videos with realistic AI avatars, voiceovers, and auto-editing. No camera or studio needed.</p>
+            <a href="/video-ai" class="service-card-link">Explore Video AI <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="service-card" style="--accent:#A78BFA">
+        <div class="service-card-accent"></div>
+        <div class="service-card-inner">
+          <div class="service-card-icon"><i data-lucide="users"></i></div>
+          <div class="service-card-content">
+            <h3 class="service-card-title">Automate Leads</h3>
+            <p class="service-card-desc">AI-powered lead qualification, instant follow-ups, and smart routing. Capture and convert every lead automatically.</p>
+            <a href="/automate-leads" class="service-card-link">Explore Lead Automation <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ Hero Stats ════════════ -->
+<section class="hero-stats-section">
+  <div class="container">
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Trusted Across India</span>
+      <h2 class="s-title">Numbers That <span class="heading-gradient">Speak for Themselves</span></h2>
+    </div>
+    <div class="hero-stats animate-on-scroll">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10K+</span>
+        <span class="hero-stat-label">AI Calls</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">500+</span>
+        <span class="hero-stat-label">Businesses</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">98%</span>
+        <span class="hero-stat-label">Satisfaction</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">3 Min</span>
+        <span class="hero-stat-label">Setup Time</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ Features ════════════ -->
+<section class="section features">
+  <div class="container">
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Why Tak2ai?</span>
+      <h2 class="s-title">Built for <span class="heading-gradient">Modern Business</span></h2>
+      <p class="s-desc">Everything you need to automate, scale, and grow.</p>
+    </div>
+    <div class="features-grid animate-on-scroll">
+      <div class="feature-card">
+        <div class="feature-card-icon"><i data-lucide="clock"></i></div>
         <h4>24/7 Automation</h4>
         <p>Your AI never sleeps. Works round the clock handling calls, chats, and videos.</p>
       </div>
-      <div class="glass-card feature-mini">
-        <div class="feature-icon"><i data-lucide="message-square"></i></div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><i data-lucide="message-square"></i></div>
         <h4>Human-like Conversations</h4>
         <p>Natural language AI that understands intent, context, and responds with empathy.</p>
       </div>
-      <div class="glass-card feature-mini">
-        <div class="feature-icon"><i data-lucide="phone"></i></div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><i data-lucide="phone"></i></div>
         <h4>Indian Number Support</h4>
         <p>Local virtual numbers with multi-language support — Hindi, English, Bengali & more.</p>
       </div>
-      <div class="glass-card feature-mini">
-        <div class="feature-icon"><i data-lucide="rocket"></i></div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><i data-lucide="rocket"></i></div>
         <h4>Fast Deployment</h4>
         <p>Go live in days, not months. Zero coding required for most use cases.</p>
       </div>
-      <div class="glass-card feature-mini">
-        <div class="feature-icon"><i data-lucide="brain"></i></div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><i data-lucide="brain"></i></div>
         <h4>AI Powered</h4>
         <p>Cutting-edge LLMs and voice models that deliver accurate, contextual responses.</p>
       </div>
-      <div class="glass-card feature-mini">
-        <div class="feature-icon"><i data-lucide="link"></i></div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><i data-lucide="link"></i></div>
         <h4>Easy Integration</h4>
         <p>Connects with your CRM, calendar, and payment systems seamlessly.</p>
       </div>
@@ -99,183 +178,237 @@
   </div>
 </section>
 
-<section class="section">
+<!-- ════════════ How It Works ════════════ -->
+<section class="section steps">
   <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">How It Works</span>
-      <h2 class="section-title">Get Started in <span class="heading-gradient">3 Simple Steps</span></h2>
-      <p class="section-desc">From zero to AI-powered automation in no time.</p>
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">How It Works</span>
+      <h2 class="s-title">Get Started in <span class="heading-gradient">3 Simple Steps</span></h2>
+      <p class="s-desc">From zero to AI-powered automation in no time.</p>
     </div>
-    <div class="steps-modern animate-on-scroll">
-      <div class="step-card-modern">
-        <div class="step-num">1</div>
+    <div class="steps-track animate-on-scroll">
+      <div class="step-card">
+        <div class="step-card-num">01</div>
+        <div class="step-card-line"></div>
         <h4>Tell Us Your Needs</h4>
-        <p>Share your business requirements — voice or chat. We'll recommend the right solution.</p>
+        <p>Share your business requirements — voice, chat, or video. We'll recommend the right solution.</p>
       </div>
-      <div class="step-card-modern">
-        <div class="step-num">2</div>
+      <div class="step-card">
+        <div class="step-card-num">02</div>
+        <div class="step-card-line"></div>
         <h4>We Set Up Your AI</h4>
         <p>Our team configures and deploys your AI system with your data, scripts, and brand voice.</p>
       </div>
-      <div class="step-card-modern">
-        <div class="step-num">3</div>
+      <div class="step-card">
+        <div class="step-card-num">03</div>
+        <div class="step-card-line"></div>
         <h4>Watch Your Business Grow</h4>
-        <p>Your AI starts working immediately — handling calls and chats while you focus on business.</p>
+        <p>Your AI starts working immediately — handling calls, chats, and videos while you focus on business.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- ════════════ Comparison ════════════ -->
+<section class="section comparison">
   <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">Testimonials</span>
-      <h2 class="section-title">Trusted by <span class="heading-gradient">Business Owners</span></h2>
-      <p class="section-desc">Hear from businesses already using Tak2ai to automate and grow.</p>
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">See the Difference</span>
+      <h2 class="s-title">Before & After <span class="heading-gradient">Tak2ai</span></h2>
+      <p class="s-desc">Manual operations drain your time and money. Here is what changes.</p>
     </div>
-    <div class="testimonial-rotater animate-on-scroll" id="testRotater">
-      <div class="t-card active">
-        <div class="t-quote">"Tak2ai's voice calling system transformed our real estate lead follow-ups. We're now handling 3x more inquiries without hiring extra staff."</div>
-        <div class="t-author">Rahul Kapoor</div>
-        <div class="t-company">Real Estate Developer, Mumbai</div>
+    <div class="comparison-grid animate-on-scroll">
+      <div class="comparison-card comparison-card--before">
+        <div class="comparison-card-label">Without Tak2ai</div>
+        <ul class="comparison-list">
+          <li><span class="comparison-icon comparison-icon--bad"><i data-lucide="x"></i></span> Missed calls & lost leads</li>
+          <li><span class="comparison-icon comparison-icon--bad"><i data-lucide="x"></i></span> Late responses — leads go cold</li>
+          <li><span class="comparison-icon comparison-icon--bad"><i data-lucide="x"></i></span> Manual follow-ups, human errors</li>
+          <li><span class="comparison-icon comparison-icon--bad"><i data-lucide="x"></i></span> High staff costs & attrition</li>
+          <li><span class="comparison-icon comparison-icon--bad"><i data-lucide="x"></i></span> Limited to business hours only</li>
+        </ul>
       </div>
-      <div class="t-card">
-        <div class="t-quote">"The WhatsApp AI bot answers 90% of parent queries instantly. Our admissions team only handles high-intent conversations now. Game changer."</div>
-        <div class="t-author">Sunita Patel</div>
-        <div class="t-company">Director, Bright Future Academy</div>
+      <div class="comparison-vs">
+        <span>VS</span>
       </div>
-      <div class="t-card">
-        <div class="t-quote">"We went from zero to publishing AI-generated videos weekly. The quality is incredible and our engagement has gone up 40%."</div>
-        <div class="t-author">Arjun Mehta</div>
-        <div class="t-company">Founder, GrowthStack India</div>
+      <div class="comparison-card comparison-card--after">
+        <div class="comparison-card-label">With Tak2ai</div>
+        <ul class="comparison-list">
+          <li><span class="comparison-icon comparison-icon--good"><i data-lucide="check"></i></span> 24/7 answering — never miss a call</li>
+          <li><span class="comparison-icon comparison-icon--good"><i data-lucide="check"></i></span> Instant replies in under 2 seconds</li>
+          <li><span class="comparison-icon comparison-icon--good"><i data-lucide="check"></i></span> Auto follow-ups, zero errors</li>
+          <li><span class="comparison-icon comparison-icon--good"><i data-lucide="check"></i></span> 60% cost reduction on operations</li>
+          <li><span class="comparison-icon comparison-icon--good"><i data-lucide="check"></i></span> Round-the-clock automation</li>
+        </ul>
       </div>
-      <div class="t-dots"></div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- ════════════ Industries ════════════ -->
+<section class="section industries">
   <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">Industries</span>
-      <h2 class="section-title">Built for <span class="heading-gradient">Every Industry</span></h2>
-      <p class="section-desc">Tak2ai adapts to your business — no matter the domain.</p>
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Industries</span>
+      <h2 class="s-title">Built for <span class="heading-gradient">Every Industry</span></h2>
+      <p class="s-desc">Tak2ai adapts to your business — no matter the domain.</p>
     </div>
     <div class="industries-grid animate-on-scroll">
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="building-2"></i></div><h4>Real Estate</h4><p>Property inquiries, site visits, listing updates</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="heart-pulse"></i></div><h4>Healthcare</h4><p>Appointments, reminders, patient follow-ups</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="book-open"></i></div><h4>Education</h4><p>Admissions, parent comms, class reminders</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="shopping-cart"></i></div><h4>E-Commerce</h4><p>Orders, delivery updates, cart recovery</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="landmark"></i></div><h4>Banking & Finance</h4><p>Outreach, EMI reminders, fraud alerts</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="plane"></i></div><h4>Travel</h4><p>Bookings, confirmations, itinerary updates</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="store"></i></div><h4>Retail</h4><p>Inquiries, orders, customer support</p></div>
-      <div class="industry-card"><div class="ind-icon"><i data-lucide="trending-up"></i></div><h4>Startups</h4><p>Lead gen, onboarding, feedback collection</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="building-2"></i></div><h4>Real Estate</h4><p>Property inquiries, site visits, listing updates</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="heart-pulse"></i></div><h4>Healthcare</h4><p>Appointments, reminders, patient follow-ups</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="book-open"></i></div><h4>Education</h4><p>Admissions, parent comms, class reminders</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="shopping-cart"></i></div><h4>E-Commerce</h4><p>Orders, delivery updates, cart recovery</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="landmark"></i></div><h4>Banking & Finance</h4><p>Outreach, EMI reminders, fraud alerts</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="plane"></i></div><h4>Travel</h4><p>Bookings, confirmations, itinerary updates</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="store"></i></div><h4>Retail</h4><p>Inquiries, orders, customer support</p></div>
+      <div class="ind-card"><div class="ind-card-icon"><i data-lucide="trending-up"></i></div><h4>Startups</h4><p>Lead gen, onboarding, feedback collection</p></div>
     </div>
   </div>
 </section>
 
-<section class="section section-dark section-contained">
+<!-- ════════════ Testimonials ════════════ -->
+<section class="section testimonials">
   <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">See the Difference</span>
-      <h2 class="section-title">Before & After <span class="heading-gradient">Tak2ai</span></h2>
-      <p class="section-desc">Manual operations drain your time and money. Here is what changes.</p>
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Testimonials</span>
+      <h2 class="s-title">Trusted by <span class="heading-gradient">Business Owners</span></h2>
+      <p class="s-desc">Hear from businesses already using Tak2ai to automate and grow.</p>
     </div>
-    <div class="compare-modern animate-on-scroll">
-      <div class="cmp-side before">
-        <h3><span class="cmp-badge">Before</span> Without Tak2ai</h3>
-        <div class="cmp-item"><span class="cmp-icon red"><i data-lucide="x" style="width:12px;height:12px"></i></span> Missed calls & lost leads</div>
-        <div class="cmp-item"><span class="cmp-icon red"><i data-lucide="x" style="width:12px;height:12px"></i></span> Late responses — leads go cold</div>
-        <div class="cmp-item"><span class="cmp-icon red"><i data-lucide="x" style="width:12px;height:12px"></i></span> Manual follow-ups, human errors</div>
-        <div class="cmp-item"><span class="cmp-icon red"><i data-lucide="x" style="width:12px;height:12px"></i></span> High staff costs & attrition</div>
-        <div class="cmp-item"><span class="cmp-icon red"><i data-lucide="x" style="width:12px;height:12px"></i></span> Limited to business hours only</div>
+    <div class="testimonials-rotater animate-on-scroll" id="testRotater">
+      <div class="testi-card active">
+        <div class="testi-quote">"Tak2ai's voice calling system transformed our real estate lead follow-ups. We're now handling 3x more inquiries without hiring extra staff."</div>
+        <div class="testi-author">Rahul Kapoor</div>
+        <div class="testi-role">Real Estate Developer, Mumbai</div>
       </div>
-      <div class="cmp-side after">
-        <h3><span class="cmp-badge">After</span> With Tak2ai</h3>
-        <div class="cmp-item"><span class="cmp-icon green"><i data-lucide="check" style="width:12px;height:12px"></i></span> 24/7 answering — never miss a call</div>
-        <div class="cmp-item"><span class="cmp-icon green"><i data-lucide="check" style="width:12px;height:12px"></i></span> Instant replies in under 2 seconds</div>
-        <div class="cmp-item"><span class="cmp-icon green"><i data-lucide="check" style="width:12px;height:12px"></i></span> Auto follow-ups, zero errors</div>
-        <div class="cmp-item"><span class="cmp-icon green"><i data-lucide="check" style="width:12px;height:12px"></i></span> 60% cost reduction on operations</div>
-        <div class="cmp-item"><span class="cmp-icon green"><i data-lucide="check" style="width:12px;height:12px"></i></span> Round-the-clock automation</div>
+      <div class="testi-card">
+        <div class="testi-quote">"The WhatsApp AI bot answers 90% of parent queries instantly. Our admissions team only handles high-intent conversations now. Game changer."</div>
+        <div class="testi-author">Sunita Patel</div>
+        <div class="testi-role">Director, Bright Future Academy</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"We went from zero to publishing AI-generated videos weekly. The quality is incredible and our engagement has gone up 40%."</div>
+        <div class="testi-author">Arjun Mehta</div>
+        <div class="testi-role">Founder, GrowthStack India</div>
+      </div>
+      <div class="testi-dots"></div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Tak2ai and how does it work?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai is an AI automation platform that helps businesses handle voice calls, WhatsApp chats, and video creation automatically. You tell us what you need, we set up the AI with your scripts and data, and it starts working — calling leads, answering messages, and generating videos without human involvement." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which services does Tak2ai offer?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai offers AI Voice Calling with Indian virtual numbers for 24/7 outbound calls, WhatsApp AI automation with smart replies and lead capture, AI Video Creation that turns scripts into professional videos in minutes, and intelligent AI Chatbots with a ChatGPT-like interface that you can train on your data and embed anywhere." }
+    },
+    {
+      "@type": "Question",
+      "name": "How quickly can I get started with Tak2ai?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Most businesses go live within 2-5 days. Simple WhatsApp bot setups can be ready in under 48 hours. Voice AI systems typically take 3-5 days including script setup and testing. Video generation starts working immediately after onboarding." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need technical skills to use Tak2ai?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. We handle all the technical setup including AI training, script configuration, and integrations. You just provide your requirements and we take care of the rest. A simple dashboard lets you monitor performance and tweak settings anytime." }
+    },
+    {
+      "@type": "Question",
+      "name": "What languages does Tak2ai support?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai supports Hindi, English, Bengali, Tamil, Telugu, Kannada, Marathi, Gujarati, and more. Our AI understands and responds naturally in the language your customers prefer, including Hinglish code-mixing common in Indian conversations." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data safe and secure with Tak2ai?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. All data is encrypted in transit and at rest. We host on Indian servers compliant with local data residency requirements. We never share or sell your data. Custom NDAs and enterprise security agreements are available on request." }
+    }
+  ]
+}
+</script>
+
+<!-- ════════════ FAQ ════════════ -->
+<section class="section faq">
+  <div class="container">
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">FAQs</span>
+      <h2 class="s-title">Common Questions <span class="heading-gradient">About Tak2ai</span></h2>
+      <p class="s-desc">Everything you need to know before getting started.</p>
+    </div>
+    <div class="faq-list animate-on-scroll">
+      <div class="faq-item">
+        <button class="faq-q">What is Tak2ai and how does it work?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
+        <div class="faq-a"><p>Tak2ai is an AI automation platform that helps businesses handle voice calls, WhatsApp chats, and video creation automatically. You tell us what you need, we set up the AI with your scripts and data, and it starts working — calling leads, answering messages, and generating videos without human involvement.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Which services does Tak2ai offer?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
+        <div class="faq-a"><p>Tak2ai offers AI Voice Calling with Indian virtual numbers for 24/7 outbound calls, WhatsApp AI automation with smart replies and lead capture, AI Video Creation that turns scripts into professional videos in minutes, and intelligent AI Chatbots with a ChatGPT-like interface that you can train on your data and embed anywhere.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How quickly can I get started?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
+        <div class="faq-a"><p>Most businesses go live within 2-5 days. Simple WhatsApp bot setups can be ready in under 48 hours. Voice AI systems typically take 3-5 days including script setup and testing. Video generation starts working immediately after onboarding.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do I need technical skills to use it?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
+        <div class="faq-a"><p>No. We handle all the technical setup including AI training, script configuration, and integrations. You just provide your requirements and we take care of the rest. A simple dashboard lets you monitor performance and tweak settings anytime.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What languages does Tak2ai support?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
+        <div class="faq-a"><p>Tak2ai supports Hindi, English, Bengali, Tamil, Telugu, Kannada, Marathi, Gujarati, and more. Our AI understands and responds naturally in the language your customers prefer, including Hinglish code-mixing common in Indian conversations.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is my data safe and secure?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
+        <div class="faq-a"><p>Absolutely. All data is encrypted in transit and at rest. We host on Indian servers compliant with local data residency requirements. We never share or sell your data. Custom NDAs and enterprise security agreements are available on request.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- ════════════ Live Chat Demo ════════════ -->
+<section class="section chatdemo">
   <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">FAQs</span>
-      <h2 class="section-title">Common Questions <span class="heading-gradient">About Tak2ai</span></h2>
-      <p class="section-desc">Everything you need to know before getting started.</p>
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Try It Yourself</span>
+      <h2 class="s-title">Experience Our <span class="heading-gradient">AI Live</span></h2>
+      <p class="s-desc">Chat with our AI assistant and see how Tak2ai can automate your business.</p>
     </div>
-    <div class="faq-accordion animate-on-scroll">
-      <div class="faq-item">
-        <button class="faq-question">What is Tak2ai and how does it work?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
-        <div class="faq-answer"><p>Tak2ai is an AI automation platform that helps businesses handle voice calls and chats automatically. You tell us what you need, we set up the AI with your scripts and data, and it starts working — calling leads and answering messages without human involvement.</p></div>
+    <div class="chatbox animate-on-scroll" id="chat-demo">
+      <div class="chatbox-header">
+        <div class="chatbox-avatar"><i data-lucide="bot"></i></div>
+        <div><div class="chatbox-name">Tak2ai AI</div><div class="chatbox-status">Online</div></div>
       </div>
-      <div class="faq-item">
-        <button class="faq-question">Which services does Tak2ai offer?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
-        <div class="faq-answer"><p>Tak2ai offers AI Voice Calling with Indian virtual numbers and intelligent AI Chatbots with a ChatGPT-like interface you can embed anywhere.</p></div>
+      <div class="chatbox-body" id="chat-demo-messages">
+        <div class="chatbox-msg chatbox-msg--ai">Hi! I'm Tak2ai's AI assistant. Ask me about our services — voice calling, WhatsApp bots, AI video, chatbots, pricing, or anything else!</div>
       </div>
-      <div class="faq-item">
-        <button class="faq-question">How quickly can I get started?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
-        <div class="faq-answer"><p>Most businesses go live within 2-5 days. Simple WhatsApp bot setups can be ready in under 48 hours. Voice AI systems typically take 3-5 days including script setup and testing. Video generation starts working immediately after onboarding.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Do I need technical skills to use it?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
-        <div class="faq-answer"><p>No. We handle all the technical setup including AI training, script configuration, and integrations. You just provide your requirements and we take care of the rest. A simple dashboard lets you monitor performance and tweak settings anytime.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">What languages does Tak2ai support?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
-        <div class="faq-answer"><p>Tak2ai supports Hindi, English, Bengali, Tamil, Telugu, Kannada, Marathi, Gujarati, and more. Our AI understands and responds naturally in the language your customers prefer, including Hinglish code-mixing common in Indian conversations.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Is my data safe and secure?<span class="faq-icon"><i data-lucide="plus" style="width:20px;height:20px"></i></span></button>
-        <div class="faq-answer"><p>Absolutely. All data is encrypted in transit and at rest. We host on Indian servers compliant with local data residency requirements. We never share or sell your data. Custom NDAs and enterprise security agreements are available on request.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section-dark section-contained">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">Try It Yourself</span>
-      <h2 class="section-title">Experience Our <span class="heading-gradient">AI Live</span></h2>
-      <p class="section-desc">Chat with our AI assistant and see how Tak2ai can automate your business.</p>
-    </div>
-    <div class="chat-demo-modern animate-on-scroll" id="chat-demo">
-      <div class="cd-header">
-        <div class="cd-avatar"><i data-lucide="bot" style="width:18px;height:18px"></i></div>
-        <div>
-          <div class="cd-name">Tak2ai AI</div>
-          <div class="cd-status">Online</div>
-        </div>
-      </div>
-      <div class="cd-body" id="chat-demo-messages">
-        <div class="cd-msg ai">Hi! I'm Tak2ai's AI assistant. Ask me about our services — voice calling, AI chatbots, pricing, or anything else!</div>
-      </div>
-      <div class="cd-suggestions">
+      <div class="chatbox-suggestions">
         <button data-msg="What services do you offer?">What services do you offer?</button>
         <button data-msg="How does AI voice calling work?">How does AI voice calling work?</button>
-        <button data-msg="How does AI chatbot work?">How does AI chatbot work?</button>
+        <button data-msg="Tell me about WhatsApp AI">Tell me about WhatsApp AI</button>
         <button data-msg="How much does it cost?">How much does it cost?</button>
       </div>
-      <div class="cd-foot">
+      <div class="chatbox-foot">
         <input type="text" id="chat-demo-input" placeholder="Type your message..." autocomplete="off">
-        <button id="chat-demo-send"><i data-lucide="send" style="width:18px;height:18px"></i></button>
+        <button id="chat-demo-send"><i data-lucide="send"></i></button>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta-section">
+<!-- ════════════ CTA ════════════ -->
+<section class="cta">
+  <div class="cta-glow"></div>
   <div class="container">
     <div class="animate-on-scroll">
-      <h2>Ready to Automate <span class="heading-gradient">Your Business</span>?</h2>
-      <p>Join 500+ businesses using Tak2ai to automate calls and chats — and never miss a lead again.</p>
-      <div class="cta-buttons">
+      <h2 class="cta-title">Ready to Automate <span class="heading-gradient">Your Business</span>?</h2>
+      <p class="cta-desc">Join 500+ businesses using Tak2ai to automate calls, chats, and videos — and never miss a lead again.</p>
+      <div class="cta-actions">
         <button class="btn btn-primary" id="openGsModalCta"><i data-lucide="arrow-right"></i> Get Started</button>
         <a href="mailto:connect@tak2ai.com" class="btn btn-secondary"><i data-lucide="mail"></i> Email Us</a>
       </div>

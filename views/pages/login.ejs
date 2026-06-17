@@ -21,7 +21,7 @@
         <div class="form-group">
           <label for="loginEmail">Email Address</label>
           <div class="input-group">
-            <span class="input-icon"><i data-lucide="mail" style="width:18px;height:18px"></i></span>
+            <span class="input-icon"><i data-lucide="mail"></i></span>
             <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required autocomplete="email">
           </div>
         </div>
@@ -29,10 +29,10 @@
         <div class="form-group">
           <label for="loginPassword">Password</label>
           <div class="input-group">
-            <span class="input-icon"><i data-lucide="lock" style="width:18px;height:18px"></i></span>
+            <span class="input-icon"><i data-lucide="lock"></i></span>
             <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required autocomplete="current-password">
             <button type="button" class="password-toggle" id="pwToggle" aria-label="Toggle password visibility" tabindex="-1">
-              <i data-lucide="eye" style="width:18px;height:18px"></i>
+              <i data-lucide="eye"></i>
             </button>
           </div>
         </div>
@@ -48,7 +48,7 @@
 
         <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
           <span class="btn-text">Sign In</span>
-          <span class="btn-loader" style="display:none"><i data-lucide="loader-2" class="spin" style="width:18px;height:18px"></i></span>
+          <span class="btn-loader" style="display:none"><i data-lucide="loader-2" class="spin"></i></span>
         </button>
         <div class="auth-error" id="loginError" style="display:none"></div>
       </form>
@@ -61,7 +61,7 @@
           Continue with Google
         </a>
         <button type="button" class="btn btn-social btn-magic" id="magicLinkBtn">
-          <i data-lucide="wand-2" style="width:18px;height:18px"></i>
+          <i data-lucide="wand-2"></i>
           Send Magic Link
         </button>
       </div>
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     this.disabled = true;
-    this.innerHTML = '<i data-lucide="loader-2" class="spin" style="width:18px;height:18px"></i> Sending...';
+    this.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Sending...';
     lucide.createIcons();
     try {
       const res = await fetch('/api/auth/magic-link', {
@@ -144,15 +144,15 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       const data = await res.json();
       if (data.success) {
-        this.innerHTML = '<i data-lucide="check" style="width:18px;height:18px"></i> Magic link sent!';
+        this.innerHTML = '<i data-lucide="check"></i> Magic link sent!';
       } else {
-        this.innerHTML = '<i data-lucide="wand-2" style="width:18px;height:18px"></i> Try Again';
+        this.innerHTML = '<i data-lucide="wand-2"></i> Try Again';
         loginError.textContent = data.error || 'Failed to send magic link';
         loginError.style.display = 'block';
       }
       lucide.createIcons();
     } catch {
-      this.innerHTML = '<i data-lucide="wand-2" style="width:18px;height:18px"></i> Try Again';
+      this.innerHTML = '<i data-lucide="wand-2"></i> Try Again';
       loginError.textContent = 'Something went wrong';
       loginError.style.display = 'block';
       lucide.createIcons();
