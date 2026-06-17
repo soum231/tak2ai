@@ -74,7 +74,18 @@
             <label for="cMessage">Message <span class="optional">(optional)</span></label>
             <textarea id="cMessage" name="message" class="form-textarea" rows="3" placeholder="Tell us about your automation needs..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-block"><i data-lucide="send"></i> Submit Enquiry</button>
+          <div class="otp-section" id="contactOtpSection">
+            <p>We've sent a 6-digit code to <strong id="contactOtpPhoneDisplay"></strong></p>
+            <div class="otp-row">
+              <input type="text" id="contactOtpInput" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" autocomplete="one-time-code">
+              <button type="button" class="btn btn-primary otp-btn" id="contactOtpVerifyBtn">Verify</button>
+            </div>
+            <div class="otp-error" id="contactOtpError"></div>
+            <div class="otp-countdown" id="contactOtpCountdown">
+              Didn't receive? <a id="contactOtpResend">Resend</a>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="contactSubmitBtn"><i data-lucide="send"></i> Submit Enquiry</button>
         </form>
       </div>
       <div class="contact-info-grid">

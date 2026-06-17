@@ -19,62 +19,52 @@
         <input type="tel" id="leadPhone" name="phone" placeholder="+91 98765 43210" required>
       </div>
       <div class="form-group">
-        <label for="leadCategory">I'm interested in <span class="required">*</span></label>
+        <label for="leadCategory">Your Business Category <span class="required">*</span></label>
         <select id="leadCategory" name="category" required>
-          <option value="" disabled selected>Select a category</option>
-          <option value="AI Voice Calling">AI Voice Calling</option>
-          <option value="WhatsApp AI Bot">WhatsApp AI Bot</option>
-          <option value="AI Video Generation">AI Video Generation</option>
-          <option value="AI Chatbot">AI Chatbot</option>
-          <option value="Lead Generation">Lead Generation</option>
-          <option value="Customer Support">Customer Support</option>
-          <option value="Sales Automation">Sales Automation</option>
-          <option value="Marketing Automation">Marketing Automation</option>
-          <option value="HR Automation">HR Automation</option>
-          <option value="Healthcare AI">Healthcare AI</option>
-          <option value="Education AI">Education AI</option>
-          <option value="E-commerce AI">E-commerce AI</option>
-          <option value="Real Estate AI">Real Estate AI</option>
-          <option value="Hospitality AI">Hospitality AI</option>
-          <option value="Finance AI">Finance AI</option>
-          <option value="Legal AI">Legal AI</option>
-          <option value="Logistics AI">Logistics AI</option>
-          <option value="Manufacturing AI">Manufacturing AI</option>
-          <option value="Agriculture AI">Agriculture AI</option>
-          <option value="Travel AI">Travel AI</option>
-          <option value="Travel & Tourism">Travel & Tourism</option>
-          <option value="School">School</option>
-          <option value="Telecommunications">Telecommunications</option>
-          <option value="Jewellery">Jewellery</option>
-          <option value="Manufacturing">Manufacturing</option>
-          <option value="IT & ITES">IT & ITES</option>
-          <option value="Shops & Showrooms">Shops & Showrooms</option>
-          <option value="Automobile Sales">Automobile Sales</option>
-          <option value="Automobile Service">Automobile Service</option>
-          <option value="Life Insurance">Life Insurance</option>
-          <option value="Health Insurance">Health Insurance</option>
-          <option value="Astrology">Astrology</option>
-          <option value="Solicitor Firm">Solicitor Firm</option>
-          <option value="Sports">Sports</option>
-          <option value="Driver Centre">Driver Centre</option>
-          <option value="Nursing Centre">Nursing Centre</option>
-          <option value="Garments">Garments</option>
-          <option value="Mobile Sales & Service">Mobile Sales & Service</option>
-          <option value="Digital Marketing">Digital Marketing</option>
-          <option value="Banquet Hall">Banquet Hall</option>
-          <option value="Wedding Planners">Wedding Planners</option>
-          <option value="Decorators">Decorators</option>
-          <option value="Catering Services">Catering Services</option>
-          <option value="Production House">Production House</option>
-          <option value="Clubs & Memberships">Clubs & Memberships</option>
-          <option value="House Keeping Agency">House Keeping Agency</option>
-          <option value="Security Guard">Security Guard</option>
-          <option value="Other">Other</option>
+          <option value="" disabled selected>Business Category</option>
+          <option>Travel &amp; Tourism</option>
+          <option>School</option>
+          <option>Telecommunications</option>
+          <option>Jewellery</option>
+          <option>Manufacturing</option>
+          <option>IT &amp; ITES</option>
+          <option>Shops &amp; Showrooms</option>
+          <option>Automobile Sales</option>
+          <option>Automobile Service</option>
+          <option>Life Insurance</option>
+          <option>Health Insurance</option>
+          <option>Astrology</option>
+          <option>Solicitor Firm</option>
+          <option>Sports</option>
+          <option>Driver Centre</option>
+          <option>Nursing Centre</option>
+          <option>Garments</option>
+          <option>Mobile Sales &amp; Service</option>
+          <option>Digital Marketing</option>
+          <option>Banquet Hall</option>
+          <option>Wedding Planners</option>
+          <option>Decorators</option>
+          <option>Catering Services</option>
+          <option>Production House</option>
+          <option>Clubs &amp; Memberships</option>
+          <option>House Keeping Agency</option>
+          <option>Security Guard</option>
         </select>
       </div>
       <div class="form-group">
         <label for="leadMessage">Message (optional)</label>
         <textarea id="leadMessage" name="message" rows="3" placeholder="Tell us about your automation needs..."></textarea>
+      </div>
+      <div class="otp-section" id="otpSection">
+        <p>We've sent a 6-digit code to <strong id="otpPhoneDisplay"></strong></p>
+        <div class="otp-row">
+          <input type="text" id="otpInput" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" autocomplete="one-time-code">
+          <button type="button" class="btn btn-primary otp-btn" id="otpVerifyBtn">Verify</button>
+        </div>
+        <div class="otp-error" id="otpError"></div>
+        <div class="otp-countdown" id="otpCountdown">
+          Didn't receive? <a id="otpResend">Resend</a>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary btn-block modal-submit">
         <span class="modal-submit-text">Submit</span>

@@ -42,10 +42,7 @@ router.post('/signup', async (req, res) => {
     }
 
     req.session.userId = authUser.user.id;
-    req.session.save((err) => {
-      if (err) console.error('Session save error:', err);
-      res.status(201).json({ success: true, redirect: '/dashboard' });
-    });
+    res.status(201).json({ success: true, redirect: '/dashboard' });
   } catch (err) {
     console.error('Signup error:', err);
     res.status(500).json({ success: false, error: 'Server error. Please try again.' });
@@ -68,10 +65,7 @@ router.post('/signin', async (req, res) => {
 
     req.session.userId = data.user.id;
     req.session.accessToken = data.session?.access_token;
-    req.session.save((err) => {
-      if (err) console.error('Session save error:', err);
-      res.json({ success: true, redirect: '/dashboard' });
-    });
+    res.json({ success: true, redirect: '/dashboard' });
   } catch (err) {
     console.error('Signin error:', err);
     res.status(500).json({ success: false, error: 'Server error. Please try again.' });
@@ -79,13 +73,9 @@ router.post('/signin', async (req, res) => {
 });
 
 router.all('/signout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ success: false, error: 'Failed to sign out' });
-    }
-    res.clearCookie('connect.sid');
-    res.redirect('/');
-  });
+  req.session = null;
+  res.clearCookie('tak2ai_session');
+  res.redirect('/');
 });
 
 router.post('/magic-link', async (req, res) => {
@@ -193,10 +183,7 @@ router.get('/callback', async (req, res) => {
 
     req.session.userId = data.user.id;
     req.session.accessToken = data.session?.access_token;
-    req.session.save((err) => {
-      if (err) console.error('Session save error:', err);
-      res.redirect('/dashboard');
-    });
+    res.redirect('/dashboard');
   } catch (err) {
     console.error('Callback error:', err);
     res.redirect('/login?error=Authentication failed');

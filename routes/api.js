@@ -5,6 +5,7 @@ const { supabaseAdmin } = require('../config/supabase');
 const { requireAuth, requireAdmin } = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
 router.get('/dashboard/stats', requireAuth, async (req, res) => {
@@ -109,6 +110,12 @@ router.post('/leads', async (req, res) => {
     if (error) {
       return res.status(500).json({ success: false, error: 'Failed to submit lead' });
     }
+
+    console.log('[Lead] New submission:', { name, email, phone, category, message });
+    fs.appendFileSync('leads.log', JSON.stringify({ name, email, phone, category, message, time: new Date().toISOString() }) + '\n');
+
+    const { sendLeadNotification } = require('../services/mail');
+    sendLeadNotification({ name, email, phone, category, message });
 
     res.status(201).json({ success: true, data });
   } catch (err) {
@@ -742,6 +749,70 @@ router.post('/profile/upload-avatar', requireAuth, upload.single('logo'), async 
     res.json({ success: true, data: { url: publicUrl } });
   } catch (err) {
     console.error('Avatar upload error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+// ===== OTP Verification =====
+const { sendOTP } = require('../services/whatsapp');
+const otpStore = {};
+
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+router.post('/otp/send', async (req, res) => {
+  try {
+    const { phone } = req.body;
+    if (!phone) {
+      return res.status(400).json({ success: false, error: 'Phone number is required' });
+    }
+
+    const otp = generateOTP();
+    const key = phone.replace(/[^0-9]/g, '');
+
+    otpStore[key] = { otp, expires: Date.now() + 5 * 60 * 1000 };
+
+    const result = await sendOTP(phone, otp);
+
+    if (!result.success) {
+      console.error('[OTP Send] Failed:', result.error);
+    }
+
+    res.json({ success: true, simulated: !!result.simulated || !result.success, otp: result.otp || null });
+  } catch (err) {
+    console.error('Send OTP error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.post('/otp/verify', async (req, res) => {
+  try {
+    const { phone, otp } = req.body;
+    if (!phone || !otp) {
+      return res.status(400).json({ success: false, error: 'Phone and OTP are required' });
+    }
+
+    const key = phone.replace(/[^0-9]/g, '');
+    const stored = otpStore[key];
+
+    if (!stored) {
+      return res.status(400).json({ success: false, error: 'No OTP sent to this number' });
+    }
+
+    if (Date.now() > stored.expires) {
+      delete otpStore[key];
+      return res.status(400).json({ success: false, error: 'OTP has expired' });
+    }
+
+    if (stored.otp !== otp) {
+      return res.status(400).json({ success: false, error: 'Invalid OTP' });
+    }
+
+    delete otpStore[key];
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Verify OTP error:', err);
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });

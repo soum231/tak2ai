@@ -139,75 +139,236 @@
 
   var leadForm = document.getElementById('leadForm');
   if (leadForm) {
-    leadForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var fd = new FormData(leadForm);
-      var submitBtn = leadForm.querySelector('.modal-submit');
-      var textEl = leadForm.querySelector('.modal-submit-text');
-      var loaderEl = leadForm.querySelector('.modal-submit-loader');
-      if (submitBtn) submitBtn.disabled = true;
-      if (textEl) textEl.style.display = 'none';
-      if (loaderEl) loaderEl.style.display = 'inline-flex';
-      fetch('/api/leads', {
+    var leadFormData = null;
+    var leadSubmitBtn = leadForm.querySelector('.modal-submit');
+    var leadTextEl = leadForm.querySelector('.modal-submit-text');
+    var leadLoaderEl = leadForm.querySelector('.modal-submit-loader');
+    var otpSection = document.getElementById('otpSection');
+    var otpInput = document.getElementById('otpInput');
+    var otpVerifyBtn = document.getElementById('otpVerifyBtn');
+    var otpError = document.getElementById('otpError');
+    var otpPhoneDisplay = document.getElementById('otpPhoneDisplay');
+    var otpResend = document.getElementById('otpResend');
+
+    function showOtpError(msg) {
+      otpError.textContent = msg;
+      otpError.classList.add('open');
+    }
+    function hideOtpError() {
+      otpError.classList.remove('open');
+    }
+    function sendOtp(phone) {
+      hideOtpError();
+      otpPhoneDisplay.textContent = phone;
+      fetch('/api/otp/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: fd.get('name') || fd.get('Name'),
-          email: fd.get('email') || fd.get('Email'),
-          phone: fd.get('phone') || fd.get('Phone'),
-          category: fd.get('category') || fd.get('Industry'),
-          message: fd.get('message') || fd.get('Message')
-        })
+        body: JSON.stringify({ phone: phone })
       }).then(function (r) { return r.json(); }).then(function (data) {
         if (data.success) {
-          leadForm.innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="font-size:48px;margin-bottom:16px;">🎉</div><h3 style="margin-bottom:8px;">Thank You!</h3><p style="color:var(--text-secondary);">We\'ll get back to you within 24 hours.</p></div>';
+          otpSection.classList.add('open');
+          otpInput.value = '';
+          otpInput.focus();
+          if (data.otp) {
+            var m = document.createElement('p');
+            m.style.cssText = 'font-size:.75rem;color:var(--text-tertiary);margin-top:4px';
+            m.textContent = 'Dev mode — OTP: ' + data.otp;
+            otpSection.querySelector('p').after(m);
+          }
         } else {
-          if (textEl) textEl.textContent = 'Error — try again';
-          if (textEl) textEl.style.display = 'inline';
-          if (loaderEl) loaderEl.style.display = 'none';
-          if (submitBtn) submitBtn.disabled = false;
+          showOtpError(data.error || 'Failed to send OTP');
+          if (leadSubmitBtn) { leadSubmitBtn.disabled = false; }
+          if (leadTextEl) leadTextEl.style.display = 'inline';
+          if (leadLoaderEl) leadLoaderEl.style.display = 'none';
         }
       }).catch(function () {
-        if (textEl) textEl.textContent = 'Something went wrong';
-        if (textEl) textEl.style.display = 'inline';
-        if (loaderEl) loaderEl.style.display = 'none';
-        if (submitBtn) submitBtn.disabled = false;
+        showOtpError('Something went wrong');
+        if (leadSubmitBtn) { leadSubmitBtn.disabled = false; }
+        if (leadTextEl) leadTextEl.style.display = 'inline';
+        if (leadLoaderEl) leadLoaderEl.style.display = 'none';
       });
+    }
+    leadForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      hideOtpError();
+      var fd = new FormData(leadForm);
+      leadFormData = {
+        name: fd.get('name') || fd.get('Name'),
+        email: fd.get('email') || fd.get('Email'),
+        phone: fd.get('phone') || fd.get('Phone'),
+        category: fd.get('category') || fd.get('Industry'),
+        message: fd.get('message') || fd.get('Message')
+      };
+      if (leadSubmitBtn) leadSubmitBtn.disabled = true;
+      if (leadTextEl) leadTextEl.style.display = 'none';
+      if (leadLoaderEl) leadLoaderEl.style.display = 'inline-flex';
+      sendOtp(leadFormData.phone);
     });
+    if (otpVerifyBtn) {
+      otpVerifyBtn.addEventListener('click', function () {
+        var otp = otpInput.value.trim();
+        if (!otp || otp.length < 4) { showOtpError('Please enter the OTP'); return; }
+        hideOtpError();
+        otpVerifyBtn.disabled = true;
+        otpVerifyBtn.textContent = 'Verifying...';
+        fetch('/api/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: leadFormData.phone, otp: otp })
+        }).then(function (r) { return r.json(); }).then(function (data) {
+          if (data.success) {
+            otpVerifyBtn.textContent = 'Verified';
+            otpSection.innerHTML = '<div class="otp-success">Phone verified! Submitting...</div>';
+            fetch('/api/leads', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(leadFormData)
+            }).then(function (r) { return r.json(); }).then(function (res) {
+              if (res.success) {
+                leadForm.innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="font-size:48px;margin-bottom:16px;">🎉</div><h3 style="margin-bottom:8px;">Thank You!</h3><p style="color:var(--text-secondary);">We\'ll get back to you within 24 hours.</p></div>';
+              } else {
+                otpSection.innerHTML = '<div class="otp-error open">Submission failed. Please try again.</div>';
+                if (leadSubmitBtn) { leadSubmitBtn.disabled = false; }
+                if (leadTextEl) leadTextEl.style.display = 'inline';
+                if (leadLoaderEl) leadLoaderEl.style.display = 'none';
+              }
+            }).catch(function () {
+              otpSection.innerHTML = '<div class="otp-error open">Something went wrong.</div>';
+              if (leadSubmitBtn) { leadSubmitBtn.disabled = false; }
+              if (leadTextEl) leadTextEl.style.display = 'inline';
+              if (leadLoaderEl) leadLoaderEl.style.display = 'none';
+            });
+          } else {
+            showOtpError(data.error || 'Invalid OTP');
+            otpVerifyBtn.disabled = false;
+            otpVerifyBtn.textContent = 'Verify';
+            otpInput.value = '';
+            otpInput.focus();
+          }
+        }).catch(function () {
+          showOtpError('Something went wrong');
+          otpVerifyBtn.disabled = false;
+          otpVerifyBtn.textContent = 'Verify';
+        });
+      });
+    }
+    if (otpResend) {
+      otpResend.addEventListener('click', function (e) { e.preventDefault(); sendOtp(leadFormData.phone); });
+    }
   }
 
   var contactForm = document.getElementById('contactForm');
   if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var fd = new FormData(contactForm);
-      var btn = contactForm.querySelector('button[type="submit"]');
-      var orig = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<i data-lucide="loader-2" class="spin" style="width:16px;height:16px"></i> Sending...';
-      if (window.lucide) lucide.createIcons();
-      fetch('/api/leads', {
+    var contactFormData = null;
+    var contactBtn = document.getElementById('contactSubmitBtn');
+    var contactOrigHtml = null;
+    var contactOtpSection = document.getElementById('contactOtpSection');
+    var contactOtpInput = document.getElementById('contactOtpInput');
+    var contactOtpVerifyBtn = document.getElementById('contactOtpVerifyBtn');
+    var contactOtpError = document.getElementById('contactOtpError');
+    var contactOtpPhoneDisplay = document.getElementById('contactOtpPhoneDisplay');
+    var contactOtpResend = document.getElementById('contactOtpResend');
+
+    function showContactOtpError(msg) {
+      contactOtpError.textContent = msg;
+      contactOtpError.classList.add('open');
+    }
+    function hideContactOtpError() {
+      contactOtpError.classList.remove('open');
+    }
+    function sendContactOtp(phone) {
+      hideContactOtpError();
+      contactOtpPhoneDisplay.textContent = phone;
+      fetch('/api/otp/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: fd.get('name') || fd.get('Name'),
-          email: fd.get('email') || fd.get('Email'),
-          phone: fd.get('phone') || fd.get('Phone'),
-          category: fd.get('category') || fd.get('Industry'),
-          message: fd.get('message') || fd.get('Message')
-        })
+        body: JSON.stringify({ phone: phone })
       }).then(function (r) { return r.json(); }).then(function (data) {
         if (data.success) {
-          contactForm.innerHTML = '<div style="text-align:center;padding:20px;"><h3 style="margin-bottom:8px;">Message Sent!</h3><p style="color:var(--text-secondary);">We\'ll reply within 24 hours.</p></div>';
+          contactOtpSection.classList.add('open');
+          contactOtpInput.value = '';
+          contactOtpInput.focus();
+          if (data.otp) {
+            var m = document.createElement('p');
+            m.style.cssText = 'font-size:.75rem;color:var(--text-tertiary);margin-top:4px';
+            m.textContent = 'Dev mode — OTP: ' + data.otp;
+            contactOtpSection.querySelector('p').after(m);
+          }
         } else {
-          btn.disabled = false;
-          btn.innerHTML = orig;
+          showContactOtpError(data.error || 'Failed to send OTP');
+          if (contactBtn) { contactBtn.disabled = false; contactBtn.innerHTML = contactOrigHtml; }
         }
       }).catch(function () {
-        btn.disabled = false;
-        btn.innerHTML = orig;
+        showContactOtpError('Something went wrong');
+        if (contactBtn) { contactBtn.disabled = false; contactBtn.innerHTML = contactOrigHtml; }
       });
+    }
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      hideContactOtpError();
+      var fd = new FormData(contactForm);
+      contactFormData = {
+        name: fd.get('name') || fd.get('Name'),
+        email: fd.get('email') || fd.get('Email'),
+        phone: fd.get('phone') || fd.get('Phone'),
+        category: fd.get('category') || fd.get('Industry'),
+        message: fd.get('message') || fd.get('Message')
+      };
+      if (contactBtn) {
+        contactOrigHtml = contactBtn.innerHTML;
+        contactBtn.disabled = true;
+        contactBtn.innerHTML = '<i data-lucide="loader-2" class="spin" style="width:16px;height:16px"></i> Sending OTP...';
+        if (window.lucide) lucide.createIcons();
+      }
+      sendContactOtp(contactFormData.phone);
     });
+    if (contactOtpVerifyBtn) {
+      contactOtpVerifyBtn.addEventListener('click', function () {
+        var otp = contactOtpInput.value.trim();
+        if (!otp || otp.length < 4) { showContactOtpError('Please enter the OTP'); return; }
+        hideContactOtpError();
+        contactOtpVerifyBtn.disabled = true;
+        contactOtpVerifyBtn.textContent = 'Verifying...';
+        fetch('/api/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: contactFormData.phone, otp: otp })
+        }).then(function (r) { return r.json(); }).then(function (data) {
+          if (data.success) {
+            contactOtpVerifyBtn.textContent = 'Verified';
+            contactOtpSection.innerHTML = '<div class="otp-success">Phone verified! Submitting...</div>';
+            fetch('/api/leads', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(contactFormData)
+            }).then(function (r) { return r.json(); }).then(function (res) {
+              if (res.success) {
+                contactForm.innerHTML = '<div style="text-align:center;padding:20px;"><h3 style="margin-bottom:8px;">Message Sent!</h3><p style="color:var(--text-secondary);">We\'ll reply within 24 hours.</p></div>';
+              } else {
+                contactOtpSection.innerHTML = '<div class="otp-error open">Submission failed.</div>';
+                if (contactBtn) { contactBtn.disabled = false; contactBtn.innerHTML = contactOrigHtml; }
+              }
+            }).catch(function () {
+              contactOtpSection.innerHTML = '<div class="otp-error open">Something went wrong.</div>';
+              if (contactBtn) { contactBtn.disabled = false; contactBtn.innerHTML = contactOrigHtml; }
+            });
+          } else {
+            showContactOtpError(data.error || 'Invalid OTP');
+            contactOtpVerifyBtn.disabled = false;
+            contactOtpVerifyBtn.textContent = 'Verify';
+            contactOtpInput.value = '';
+            contactOtpInput.focus();
+          }
+        }).catch(function () {
+          showContactOtpError('Something went wrong');
+          contactOtpVerifyBtn.disabled = false;
+          contactOtpVerifyBtn.textContent = 'Verify';
+        });
+      });
+    }
+    if (contactOtpResend) {
+      contactOtpResend.addEventListener('click', function (e) { e.preventDefault(); sendContactOtp(contactFormData.phone); });
+    }
   }
 
   var chatDemos = [
@@ -441,6 +602,15 @@
       }, 5000);
     }
     if (cards.length > 1) resetInterval();
+  }
+
+  var floatBtn = document.getElementById('openGsModalFloat');
+  if (floatBtn && window.innerWidth <= 768) {
+    function onScroll() {
+      floatBtn.classList.toggle('visible', window.scrollY > 150);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 
   if (window.lucide) lucide.createIcons();

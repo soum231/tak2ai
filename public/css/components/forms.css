@@ -29,3 +29,86 @@
 
 .required{color:#EF4444}
 .optional{color:var(--text-tertiary);font-weight:400}
+
+/* ─── OTP Verification ─── */
+.otp-section {
+  display: none;
+  margin-top: 12px;
+}
+.otp-section.open {
+  display: block;
+}
+.otp-section p {
+  font-size: .82rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+.otp-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.otp-row input {
+  flex: 1;
+  padding: 12px 14px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-align: center;
+  outline: none;
+  transition: border-color .2s;
+}
+.otp-row input:focus {
+  border-color: var(--primary);
+}
+.otp-row input::placeholder {
+  font-size: .85rem;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.otp-btn {
+  padding: 12px 20px !important;
+  font-size: .82rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+}
+.otp-error {
+  display: none;
+  margin-top: 10px;
+  background: rgba(239,68,68,.1);
+  border: 1px solid rgba(239,68,68,.2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: .8rem;
+  color: #EF4444;
+  text-align: center;
+}
+.otp-error.open {
+  display: block;
+}
+.otp-countdown {
+  font-size: .78rem;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+}
+.otp-countdown a {
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 500;
+}
+.otp-countdown a:hover {
+  text-decoration: underline;
+}
+.otp-success {
+  text-align: center;
+  padding: 12px;
+  color: #7CFF6B;
+  font-size: .85rem;
+  font-weight: 500;
+}

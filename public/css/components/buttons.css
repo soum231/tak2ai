@@ -13,5 +13,26 @@
 .btn-block{width:100%;justify-content:center}
 .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 
-.float-btn{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;align-items:center;gap:8px;padding:14px 24px;background:var(--primary);color:#050816;border:none;border-radius:var(--radius-pill);font-weight:600;font-size:.875rem;cursor:pointer;box-shadow:0 4px 20px rgba(0,229,255,.4);transition:all .3s cubic-bezier(0.16,1,0.3,1)}
-.float-btn:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,229,255,.5)}
+.float-btn {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    background: #0eff00;
+    color: #050816;
+    width: 85%;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px #0eff0000;
+    transition: all .3s cubic-bezier(0.16,1,0.3,1);
+}
+.float-btn:hover{transform:translateX(-50%) translateY(-3px);box-shadow:0 8px 30px rgba(0,229,255,.5)}

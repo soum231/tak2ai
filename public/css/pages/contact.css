@@ -12,13 +12,48 @@
 
 /* ─── Form Card ─── */
 .contact-wrap .glass-card {
-  padding: 32px;
+  padding: 40px 36px;
+  border-radius: var(--radius-2xl);
 }
 
 .contact-wrap .glass-card h3 {
-  font-size: 1.15rem;
-  margin-bottom: 24px;
+  font-size: 1.35rem;
+  margin-bottom: 28px;
   font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+/* ─── Form Layout ─── */
+.contact-wrap form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-wrap .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* ─── Form Labels ─── */
+.contact-wrap .form-group label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: -.005em;
+}
+
+.contact-wrap .form-group label .required {
+  color: var(--primary);
+}
+
+.contact-wrap .form-group label .optional {
+  color: var(--text-tertiary);
+  font-weight: 400;
 }
 
 /* ─── Form Controls ─── */
@@ -37,6 +72,11 @@
   font-size: .9rem;
 }
 
+.contact-wrap .form-group input::placeholder,
+.contact-wrap .form-group textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
 .contact-wrap .form-group input:focus,
 .contact-wrap .form-group select:focus,
 .contact-wrap .form-group textarea:focus {
@@ -46,16 +86,42 @@
 
 .contact-wrap .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 110px;
+  line-height: 1.6;
 }
 
 .contact-wrap .form-group select {
   appearance: none;
+  color-scheme: dark;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 40px;
   cursor: pointer;
+}
+
+.contact-wrap .form-group select option {
+  background: #0B0F1A;
+  color: #F1F5F9;
+  padding: 10px;
+}
+
+/* ─── Submit Button ─── */
+.contact-wrap .btn-block {
+  margin-top: 8px;
+  padding: 16px 24px;
+  font-size: .95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.contact-wrap .btn-block i {
+  width: 18px;
+  height: 18px;
 }
 
 /* ─── Info Cards Grid ─── */
@@ -195,10 +261,18 @@
 
 @media (max-width: 768px) {
   .contact-wrap .glass-card {
-    padding: 24px 16px;
+    padding: 28px 20px;
   }
   .contact-wrap .glass-card h3 {
-    font-size: 1rem;
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+  }
+  .contact-wrap form {
+    gap: 14px;
+  }
+  .contact-wrap .form-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
   .contact-info-grid {
     grid-template-columns: 1fr;
@@ -212,6 +286,10 @@
 }
 
 @media (max-width: 480px) {
+  .contact-wrap .glass-card {
+    padding: 24px 16px;
+    border-radius: var(--radius-xl);
+  }
   .contact-wrap .form-group input,
   .contact-wrap .form-group select,
   .contact-wrap .form-group textarea {

@@ -388,3 +388,12 @@
   /* Particles (reduce motion) */
   .particle{display:none}
 }
+
+/* 768px — float-btn hidden initially, shows after scroll */
+@media(max-width:768px){
+  .float-btn{opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .float-btn.visible{opacity:1;visibility:visible}
+}
+@media(min-width:769px){
+  .float-btn{display:none}
+}

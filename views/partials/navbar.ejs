@@ -19,9 +19,6 @@
           <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>">
             <i data-lucide="bot" class="nav-dd-item-icon"></i> AI Chatbot
           </a>
-          <a href="/whatsapp-ai" class="nav-link <%= currentPage === 'whatsapp-ai' ? 'active' : '' %>">
-            <i data-lucide="message-circle" class="nav-dd-item-icon"></i> WhatsApp AI
-          </a>
           <a href="/video-ai" class="nav-link <%= currentPage === 'video-ai' ? 'active' : '' %>">
             <i data-lucide="video" class="nav-dd-item-icon"></i> AI Video
           </a>
@@ -37,10 +34,6 @@
 
     <!-- Right actions -->
     <div class="nav-actions">
-      <button class="nav-theme" id="themeToggle" aria-label="Toggle theme">
-        <i data-lucide="moon"></i>
-      </button>
-
       <% if (locals.user) { %>
         <div class="nav-user">
           <button class="nav-user-btn" aria-haspopup="true">
@@ -50,7 +43,7 @@
             <a href="/dashboard" class="nav-user-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
             <a href="/profile" class="nav-user-link"><i data-lucide="user"></i> Profile</a>
             <hr class="nav-user-divider">
-            <a href="/api/auth/logout" class="nav-user-link nav-user-logout"><i data-lucide="log-out"></i> Logout</a>
+            <a href="/api/auth/signout" class="nav-user-link nav-user-logout"><i data-lucide="log-out"></i> Logout</a>
           </div>
         </div>
       <% } else { %>
@@ -73,9 +66,6 @@
     <div class="nav-drawer-body">
       <div class="nav-drawer-header">
         <img src="/assets/final logo dark.png" alt="Tak2ai" class="nav-logo-img">
-        <button class="nav-drawer-theme" id="themeToggleDrawer" aria-label="Toggle theme">
-          <i data-lucide="moon"></i>
-        </button>
         <button class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">
           <i data-lucide="x"></i>
         </button>
@@ -93,9 +83,6 @@
             <a href="/chatbot" class="nav-link <%= currentPage === 'chatbot' ? 'active' : '' %>">
               <i data-lucide="bot" class="nav-dd-item-icon"></i> AI Chatbot
             </a>
-            <a href="/whatsapp-ai" class="nav-link <%= currentPage === 'whatsapp-ai' ? 'active' : '' %>">
-              <i data-lucide="message-circle" class="nav-dd-item-icon"></i> WhatsApp AI
-            </a>
             <a href="/video-ai" class="nav-link <%= currentPage === 'video-ai' ? 'active' : '' %>">
               <i data-lucide="video" class="nav-dd-item-icon"></i> AI Video
             </a>
@@ -111,7 +98,7 @@
       <div class="nav-drawer-footer">
         <% if (locals.user) { %>
           <a href="/dashboard" class="nav-btn nav-btn-primary"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-          <a href="/api/auth/logout" class="nav-btn nav-btn-outline"><i data-lucide="log-out"></i> Logout</a>
+          <a href="/api/auth/signout" class="nav-btn nav-btn-outline"><i data-lucide="log-out"></i> Logout</a>
         <% } else { %>
           <a href="/login" class="nav-btn nav-btn-outline">Login</a>
           <a href="/register" class="nav-btn nav-btn-primary">Get Started</a>

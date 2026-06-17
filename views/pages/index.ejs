@@ -1,4 +1,4 @@
-<%- include('../partials/head', { title: 'AI That Talks, Automates & Creates', description: 'Build AI-powered voice agents, WhatsApp automation, intelligent chatbots, and marketing videos. India\'s AI automation platform for modern businesses.', canonical: '/' }) %>
+<%- include('../partials/head', { title: 'AI That Talks, Automates & Creates', description: 'Build AI-powered voice agents, intelligent chatbots, and marketing videos. India\'s AI automation platform for modern businesses.', canonical: '/' }) %>
 </head>
 <body>
 
@@ -9,6 +9,10 @@
 <!-- ════════════ Hero ════════════ -->
 <section class="hero" id="hero">
   <div class="hero-bg">
+    <div class="hero-bg-video-wrap">
+      <video class="hero-bg-video" src="/assets/home-bg-v.mp4" autoplay muted loop playsinline></video>
+      <div class="hero-bg-video-overlay"></div>
+    </div>
     <canvas id="three-canvas"></canvas>
   </div>
   <div class="hero-glow hero-glow--1"></div>
@@ -23,7 +27,7 @@
         <h1 class="hero-title animate-on-scroll">
           <span class="heading-gradient">AI That Talks.<br>Automates & Creates.</span>
         </h1>
-        <p class="hero-desc animate-on-scroll">Build AI-powered voice agents, WhatsApp automation, intelligent chatbots, and marketing videos — all in one platform.</p>
+        <p class="hero-desc animate-on-scroll">Build AI-powered voice agents, intelligent chatbots, and marketing videos — all in one platform.</p>
         <div class="hero-actions animate-on-scroll">
           <button class="btn btn-primary" id="openGsModalBtn"><i data-lucide="arrow-right"></i> Get Started</button>
           <a href="https://wa.me/919088011999" target="_blank" class="btn btn-secondary"><i data-lucide="message-circle"></i> Book Demo</a>
@@ -64,17 +68,6 @@
             <h3 class="service-card-title">AI Chatbots</h3>
             <p class="service-card-desc">ChatGPT-like interface, custom training on your data, embed anywhere. Intelligent conversations 24/7.</p>
             <a href="/chatbot" class="service-card-link">Explore Chatbots <i data-lucide="arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="service-card" style="--accent:#25D366">
-        <div class="service-card-accent"></div>
-        <div class="service-card-inner">
-          <div class="service-card-icon"><i data-lucide="message-circle"></i></div>
-          <div class="service-card-content">
-            <h3 class="service-card-title">WhatsApp AI</h3>
-            <p class="service-card-desc">Smart replies, lead capture, CRM integration. Turn WhatsApp into your AI-powered sales and support agent.</p>
-            <a href="/whatsapp-ai" class="service-card-link">Explore WhatsApp AI <i data-lucide="arrow-right"></i></a>
           </div>
         </div>
       </div>
@@ -178,6 +171,27 @@
   </div>
 </section>
 
+<!-- ════════════ Integrations ════════════ -->
+<section class="section integrations-section">
+  <div class="container">
+    <div class="s-head animate-on-scroll">
+      <span class="s-label">Integrations</span>
+      <h2 class="s-title">Connects With <span class="heading-gradient">Your Stack</span></h2>
+      <p class="s-desc">Tak2ai plugs into the tools you already use — no migration needed.</p>
+    </div>
+  </div>
+  <div class="int-visual animate-on-scroll" id="intVisual">
+    <svg id="intSvg" class="int-svg"></svg>
+    <div class="int-cards" id="intCards"></div>
+    <div class="int-glow"></div>
+    <div class="int-visual-hub" id="intVisualHub">
+      <div class="int-visual-hub-inner">
+        <img src="/assets/final logo dark.png" alt="Tak2ai" style="width:110px;height:auto;">
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════ How It Works ════════════ -->
 <section class="section steps">
   <div class="container">
@@ -266,6 +280,48 @@
   </div>
 </section>
 
+<!-- ════════════ Platform Stats Hero ════════════ -->
+<section class="hero hero-card">
+  <div class="hero-bg">
+    <div class="hero-orb-bg pointer-events-none">
+      <canvas id="heroOrbCanvas2"></canvas>
+    </div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hc-left">
+        <span class="hero-badge animate-on-scroll"><span class="hero-badge-dot"></span> Platform Reach</span>
+        <h1 class="hero-title animate-on-scroll">Indian Businesses Are<br><span class="heading-gradient">Switching to AI</span></h1>
+        <p class="hero-desc animate-on-scroll">From real estate to education, healthcare to e-commerce — companies across India trust Tak2ai to automate their calls, chats, and video content at scale.</p>
+        <div class="hero-actions animate-on-scroll">
+          <button class="btn btn-primary" id="openGsModalBtn"><i data-lucide="bar-chart-3"></i> See Your Savings</button>
+          <a href="/#services" class="btn btn-secondary"><i data-lucide="play-circle"></i> Watch Demo</a>
+        </div>
+      </div>
+      <div class="hc-right">
+        <div class="hc-stat-grid">
+          <div class="hc-stat">
+            <span class="hc-stat-num">50K+</span>
+            <span class="hc-stat-label">Calls Handled Daily</span>
+          </div>
+          <div class="hc-stat">
+            <span class="hc-stat-num">500+</span>
+            <span class="hc-stat-label">Businesses Served</span>
+          </div>
+          <div class="hc-stat">
+            <span class="hc-stat-num">98%</span>
+            <span class="hc-stat-label">Client Satisfaction</span>
+          </div>
+          <div class="hc-stat">
+            <span class="hc-stat-num">3 min</span>
+            <span class="hc-stat-label">Average Setup Time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════ Testimonials ════════════ -->
 <section class="section testimonials">
   <div class="container">
@@ -281,7 +337,7 @@
         <div class="testi-role">Real Estate Developer, Mumbai</div>
       </div>
       <div class="testi-card">
-        <div class="testi-quote">"The WhatsApp AI bot answers 90% of parent queries instantly. Our admissions team only handles high-intent conversations now. Game changer."</div>
+        <div class="testi-quote">"The AI bot answers 90% of parent queries instantly. Our admissions team only handles high-intent conversations now. Game changer."</div>
         <div class="testi-author">Sunita Patel</div>
         <div class="testi-role">Director, Bright Future Academy</div>
       </div>
@@ -303,17 +359,17 @@
     {
       "@type": "Question",
       "name": "What is Tak2ai and how does it work?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai is an AI automation platform that helps businesses handle voice calls, WhatsApp chats, and video creation automatically. You tell us what you need, we set up the AI with your scripts and data, and it starts working — calling leads, answering messages, and generating videos without human involvement." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai is an AI automation platform that helps businesses handle voice calls and video creation automatically. You tell us what you need, we set up the AI with your scripts and data, and it starts working — calling leads, answering messages, and generating videos without human involvement." }
     },
     {
       "@type": "Question",
       "name": "Which services does Tak2ai offer?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai offers AI Voice Calling with Indian virtual numbers for 24/7 outbound calls, WhatsApp AI automation with smart replies and lead capture, AI Video Creation that turns scripts into professional videos in minutes, and intelligent AI Chatbots with a ChatGPT-like interface that you can train on your data and embed anywhere." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Tak2ai offers AI Voice Calling with Indian virtual numbers for 24/7 outbound calls, AI Video Creation that turns scripts into professional videos in minutes, and intelligent AI Chatbots with a ChatGPT-like interface that you can train on your data and embed anywhere." }
     },
     {
       "@type": "Question",
       "name": "How quickly can I get started with Tak2ai?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Most businesses go live within 2-5 days. Simple WhatsApp bot setups can be ready in under 48 hours. Voice AI systems typically take 3-5 days including script setup and testing. Video generation starts working immediately after onboarding." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Most businesses go live within 2-5 days. Voice AI systems typically take 3-5 days including script setup and testing. AI chatbots can be ready in under 48 hours. Video generation starts working immediately after onboarding." }
     },
     {
       "@type": "Question",
@@ -349,11 +405,11 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Which services does Tak2ai offer?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>Tak2ai offers AI Voice Calling with Indian virtual numbers for 24/7 outbound calls, WhatsApp AI automation with smart replies and lead capture, AI Video Creation that turns scripts into professional videos in minutes, and intelligent AI Chatbots with a ChatGPT-like interface that you can train on your data and embed anywhere.</p></div>
+        <div class="faq-a"><p>Tak2ai offers AI Voice Calling with Indian virtual numbers for 24/7 outbound calls, AI Video Creation that turns scripts into professional videos in minutes, and intelligent AI Chatbots with a ChatGPT-like interface that you can train on your data and embed anywhere.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">How quickly can I get started?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>Most businesses go live within 2-5 days. Simple WhatsApp bot setups can be ready in under 48 hours. Voice AI systems typically take 3-5 days including script setup and testing. Video generation starts working immediately after onboarding.</p></div>
+        <div class="faq-a"><p>Most businesses go live within 2-5 days. Voice AI systems typically take 3-5 days including script setup and testing. AI chatbots can be ready in under 48 hours. Video generation starts working immediately after onboarding.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Do I need technical skills to use it?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
@@ -385,12 +441,11 @@
         <div><div class="chatbox-name">Tak2ai AI</div><div class="chatbox-status">Online</div></div>
       </div>
       <div class="chatbox-body" id="chat-demo-messages">
-        <div class="chatbox-msg chatbox-msg--ai">Hi! I'm Tak2ai's AI assistant. Ask me about our services — voice calling, WhatsApp bots, AI video, chatbots, pricing, or anything else!</div>
+        <div class="chatbox-msg chatbox-msg--ai">Hi! I'm Tak2ai's AI assistant. Ask me about our services — voice calling, AI chatbots, AI video, pricing, or anything else!</div>
       </div>
       <div class="chatbox-suggestions">
         <button data-msg="What services do you offer?">What services do you offer?</button>
         <button data-msg="How does AI voice calling work?">How does AI voice calling work?</button>
-        <button data-msg="Tell me about WhatsApp AI">Tell me about WhatsApp AI</button>
         <button data-msg="How much does it cost?">How much does it cost?</button>
       </div>
       <div class="chatbox-foot">
@@ -418,6 +473,103 @@
 
 <%- include('../partials/modal') %>
 <%- include('../partials/footer') %>
+
+<script>
+(function() {
+  var integrations = [
+    { name: 'WhatsApp', id: 'whatsapp', color: '#25D366' },
+    { name: 'HubSpot', id: 'hubspot', color: '#FF7A59' },
+    { name: 'Salesforce', id: 'salesforce', color: '#00A1E0' },
+    { name: 'Google Sheets', id: 'googlesheets', color: '#0F9D58' },
+    { name: 'Zapier', id: 'zapier', color: '#FF4A00' },
+    { name: 'Stripe', id: 'stripe', color: '#635BFF' },
+    { name: 'Calendly', id: 'calendly', color: '#006BFF' },
+    { name: 'PostgreSQL', id: 'postgresql', color: '#336791' }
+  ];
+
+  var visual = document.getElementById('intVisual');
+  var cardsContainer = document.getElementById('intCards');
+  var svg = document.getElementById('intSvg');
+  if (!visual || !cardsContainer || !svg) return;
+
+  var cardEls = [];
+  integrations.forEach(function(item) {
+    var card = document.createElement('div');
+    card.className = 'int-card';
+    card.innerHTML = '<img src="https://cdn.simpleicons.org/' + item.id + '/' + encodeURIComponent(item.color) + '" alt="' + item.name + '" onerror="this.style.display=\'none\'">' + item.name;
+    cardsContainer.appendChild(card);
+    cardEls.push(card);
+  });
+
+  function layout() {
+    var rect = visual.getBoundingClientRect();
+    var cx = rect.width / 2;
+    var n = cardEls.length;
+    var isMobile = rect.width < 768;
+    var totalWidth = isMobile ? rect.width * 0.94 : Math.min(rect.width * 0.88, 900);
+    var spacing = totalWidth / (n - 1);
+    var startX = (rect.width - totalWidth) / 2;
+    var cardY = isMobile ? 10 : rect.height * 0.06;
+    var hubY = isMobile ? rect.height * 0.82 : rect.height * 0.80;
+    var zigzagAmt = isMobile ? 32 : 55;
+
+    svg.innerHTML = '';
+
+    var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    var grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+    grad.id = 'intGrad';
+    grad.setAttribute('x1', '0');
+    grad.setAttribute('y1', '0');
+    grad.setAttribute('x2', '0');
+    grad.setAttribute('y2', '1');
+    var stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop1.setAttribute('offset', '0%');
+    stop1.setAttribute('stop-color', 'rgba(0,229,255,0.25)');
+    var stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+    stop2.setAttribute('offset', '100%');
+    stop2.setAttribute('stop-color', 'rgba(0,229,255,0.05)');
+    grad.appendChild(stop1);
+    grad.appendChild(stop2);
+    defs.appendChild(grad);
+    svg.appendChild(defs);
+
+    cardEls.forEach(function(card, i) {
+      var cardW = card.offsetWidth || 140;
+      var cardH = card.offsetHeight || 48;
+      var x = startX + i * spacing;
+      var zigzag = (i % 2 === 0) ? 0 : zigzagAmt;
+      var cy = cardY + zigzag;
+      card.style.left = (x - cardW / 2) + 'px';
+      card.style.top = cy + 'px';
+
+      var x1 = x;
+      var y1 = cy + cardH + 6;
+      var x2 = cx;
+      var y2 = hubY;
+      var cpx1 = x1 + (x2 - x1) * 0.3;
+      var cpy1 = y1 + (y2 - y1) * 0.25;
+      var cpx2 = x1 + (x2 - x1) * 0.7;
+      var cpy2 = y2 - (y2 - y1) * 0.15;
+
+      var d = 'M' + x1 + ',' + y1 + ' C' + cpx1 + ',' + cpy1 + ' ' + cpx2 + ',' + cpy2 + ' ' + x2 + ',' + y2;
+
+      var glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      glow.setAttribute('d', d);
+      glow.classList.add('int-connector-glow');
+      svg.appendChild(glow);
+
+      var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.classList.add('int-connector');
+      svg.appendChild(path);
+    });
+  }
+
+  setTimeout(layout, 100);
+  window.addEventListener('resize', layout);
+})();
+</script>
+
 <%- include('../partials/scripts') %>
 
 </body>
