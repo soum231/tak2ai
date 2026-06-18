@@ -1,4 +1,4 @@
-<%- include('../partials/head', { title: 'Simple, Transparent Pricing', description: 'Start free, scale as you grow. Transparent pricing for AI voice calling, WhatsApp bots, and AI video generation. No hidden fees, cancel anytime.', canonical: '/pricing' }) %>
+<%- include('../partials/head', { title: 'Pricing - Tak2ai', description: 'Transparent voice calling pricing. Recharge once, use forever. The more you recharge, the lower your per-minute rate.', canonical: '/pricing' }) %>
 </head>
 <body>
 
@@ -10,93 +10,60 @@
   </div>
   <div class="container">
     <span class="hero-subtitle animate-on-scroll">Pricing</span>
-    <h1 class="page-hero-title animate-on-scroll">Simple, <span class="heading-gradient">transparent</span> pricing</h1>
-    <p class="page-hero-text animate-on-scroll">Start free, scale as you grow. No hidden fees, no surprises.</p>
+    <h1 class="page-hero-title animate-on-scroll">Simple, <span class="heading-gradient">Transparent</span> Pricing</h1>
+    <p class="page-hero-text animate-on-scroll">Recharge once, use forever. The more you recharge, the lower your per-minute rate.</p>
   </div>
 </section>
 
 <section class="section section--no-pad-top">
   <div class="container">
-    <div class="pricing-toggle animate-on-scroll">
-      <span class="toggle-label active" data-period="monthly">Monthly</span>
-      <div class="toggle-switch"></div>
-      <span class="toggle-label" data-period="annual">Annual</span>
-      <span class="save-badge">Save 20%</span>
-    </div>
-    <div class="pricing-grid">
-      <div class="pricing-card animate-on-scroll">
-        <h3>Starter</h3>
-        <p>Perfect for small businesses exploring AI automation</p>
-        <div class="price"><span class="price-amount">Free</span></div>
-        <ul class="pricing-features">
-          <li>100 AI chat messages / mo</li>
-          <li>10 min voice calling</li>
-          <li>Email support</li>
-          <li>Basic analytics</li>
-        </ul>
-        <button class="btn btn-outline btn-block" id="openGsModalBtn"><i data-lucide="rocket"></i> Get Started Free</button>
+    <div class="pricing-table-wrap animate-on-scroll">
+      <div class="pricing-table-header">
+        <div class="pricing-table-icon"><i data-lucide="phone-call"></i></div>
+        <h2>Voice Calling Plans</h2>
+        <p>Pay per recharge — no monthly commitments, no hidden fees.</p>
       </div>
-      <div class="pricing-card featured animate-on-scroll delay-100">
-        <h3>Growth</h3>
-        <p>For growing teams that need serious AI automation</p>
-        <div class="price">
-          <span class="price-amount">₹2,999</span>
-          <span class="price-period">/month</span>
-        </div>
-        <ul class="pricing-features">
-          <li>5,000 AI chat messages / mo</li>
-          <li>500 min voice calling</li>
-          <li>Priority support</li>
-          <li>Advanced analytics</li>
-          <li>Custom integrations</li>
-        </ul>
-        <button class="btn btn-primary btn-block" id="openGsModalBtn"><i data-lucide="zap"></i> Start Free Trial</button>
+      <div class="pricing-table-scroll">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Total Recharge (₹)</th>
+              <th>Total Minutes</th>
+              <th>Pricing Per Min (₹)</th>
+              <th>Earned Extra (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="plan-badge">Best Value</span> ₹25,000</td>
+              <td>4,545</td>
+              <td><span class="rate-highlight">₹5.5</span></td>
+              <td class="earned">₹345</td>
+            </tr>
+            <tr>
+              <td>₹12,500</td>
+              <td>2,100</td>
+              <td><span class="rate-highlight">₹6</span></td>
+              <td class="earned">₹180</td>
+            </tr>
+            <tr>
+              <td>₹6,250</td>
+              <td>960</td>
+              <td><span class="rate-highlight">₹6.5</span></td>
+              <td class="earned">₹128</td>
+            </tr>
+            <tr>
+              <td>₹3,125</td>
+              <td>416</td>
+              <td><span class="rate-highlight">₹7.5</span></td>
+              <td class="earned">—</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="pricing-card animate-on-scroll delay-200">
-        <h3>Enterprise</h3>
-        <p>Custom solutions for large-scale operations</p>
-        <div class="price"><span class="price-amount">Custom</span></div>
-        <ul class="pricing-features">
-          <li>Unlimited messages</li>
-          <li>Unlimited voice calling</li>
-          <li>Dedicated support</li>
-          <li>SLA guarantee</li>
-          <li>White-label option</li>
-          <li>Custom AI training</li>
-        </ul>
-        <a href="/contact" class="btn btn-secondary btn-block"><i data-lucide="headphones"></i> Contact Sales</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-label">FAQs</span>
-      <h2 class="section-title">Pricing & Billing <span class="heading-gradient">Questions</span></h2>
-      <p class="section-desc">Everything you need to know about our plans and billing.</p>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item animate-on-scroll">
-        <button class="faq-q">Can I switch plans anytime?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>Yes, you can upgrade or downgrade your plan at any time. Upgrades take effect immediately, and we prorate the billing. Downgrades apply at the start of your next billing cycle.</p></div>
-      </div>
-      <div class="faq-item animate-on-scroll">
-        <button class="faq-q">Is there a free trial for paid plans?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>Absolutely. You can start a 14-day free trial of the Growth plan with no credit card required. Experience all features before committing.</p></div>
-      </div>
-      <div class="faq-item animate-on-scroll">
-        <button class="faq-q">What happens when I exceed my usage limits?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>We'll notify you before you hit your limits. You can purchase additional usage at affordable rates or upgrade to a higher plan. No service interruptions without prior notice.</p></div>
-      </div>
-      <div class="faq-item animate-on-scroll">
-        <button class="faq-q">Do you offer refunds?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>Yes, we offer a 7-day money-back guarantee on all paid plans. If you are not satisfied, we'll provide a full refund within the first week.</p></div>
-      </div>
-      <div class="faq-item animate-on-scroll">
-        <button class="faq-q">Can I use Tak2ai for my agency or multiple clients?<span class="faq-q-icon"><i data-lucide="plus"></i></span></button>
-        <div class="faq-a"><p>Yes, our Enterprise plan includes white-label options and multi-tenant support for agencies. Contact our sales team for custom pricing based on your scale.</p></div>
+      <div class="pricing-table-footer">
+        <p><i data-lucide="info"></i> All recharges are one-time. Minutes never expire. GST additional.</p>
+        <button class="btn btn-primary btn-block" id="openGsModalBtn"><i data-lucide="rocket"></i> Get Started Now</button>
       </div>
     </div>
   </div>
@@ -107,10 +74,10 @@
   <div class="container">
     <div class="animate-on-scroll">
       <h2 class="cta-title">Ready to transform <span class="heading-gradient">your business</span>?</h2>
-      <p class="cta-desc">Start your AI automation journey today with a free trial.</p>
+      <p class="cta-desc">Start your AI automation journey today.</p>
       <div class="cta-buttons">
-        <a href="https://wa.me/917001234567" target="_blank" class="btn btn-whatsapp"><i data-lucide="message-circle"></i> Chat on WhatsApp</a>
-        <a href="mailto:connect@tak2ai.com" class="btn btn-secondary"><i data-lucide="mail"></i> Email Us</a>
+        <a href="https://wa.me/919088011999" target="_blank" class="btn btn-whatsapp"><i data-lucide="message-circle"></i> Chat on WhatsApp</a>
+        <a href="/contact" class="btn btn-secondary"><i data-lucide="mail"></i> Contact Us</a>
       </div>
     </div>
   </div>
