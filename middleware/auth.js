@@ -1,45 +1,78 @@
-const { supabaseAdmin } = require('../config/supabase');
+const { supabase, supabaseAdmin } = require('../config/supabase');
+
+async function verifyBearerToken(req) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
+  const token = authHeader.slice(7);
+  const { data, error } = await supabase.auth.getUser(token);
+  if (error || !data?.user) return null;
+  return data.user;
+}
 
 async function requireAuth(req, res, next) {
-  if (!req.session.userId) return res.redirect('/login');
-  
-  const { data: profile } = await supabaseAdmin
-    .from('profiles')
-    .select('*')
-    .eq('id', req.session.userId)
-    .single();
-  
-  if (!profile) {
-    req.session.destroy();
-    return res.redirect('/login');
+  if (!req.session.userId) {
+    const bearerUser = await verifyBearerToken(req);
+    if (bearerUser) {
+      req.session.userId = bearerUser.id;
+      const ADMIN_EMAIL = 'rasoumindia@gmail.com';
+      if (bearerUser.email === ADMIN_EMAIL) req.session.isAdmin = true;
+    } else {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
   }
   
-  req.user = profile;
+  const [profileResult, authResult] = await Promise.all([
+    supabaseAdmin.from('profiles').select('*').eq('id', req.session.userId).single(),
+    supabaseAdmin.auth.admin.getUserById(req.session.userId)
+  ]);
+  
+  if (!profileResult.data) {
+    req.session = null;
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+  
+  req.user = { ...profileResult.data, email: authResult.data?.user?.email || '' };
   next();
 }
 
 async function requireAdmin(req, res, next) {
-  if (!req.session.userId) return res.redirect('/login');
-  
-  const { data: profile } = await supabaseAdmin
-    .from('profiles')
-    .select('role')
-    .eq('id', req.session.userId)
-    .single();
-  
-  if (!profile || profile.role !== 'admin') return res.redirect('/dashboard');
-  req.user = profile;
+  if (!req.session.userId) {
+    const bearerUser = await verifyBearerToken(req);
+    if (bearerUser) {
+      req.session.userId = bearerUser.id;
+      const ADMIN_EMAIL = 'rasoumindia@gmail.com';
+      if (bearerUser.email === ADMIN_EMAIL) req.session.isAdmin = true;
+    }
+  }
+
+  if (!req.session.isAdmin) return res.status(401).json({ success: false, error: 'Unauthorized' });
+  if (!req.session.userId) return res.status(401).json({ success: false, error: 'Unauthorized' });
+
+  const [profileResult, authResult] = await Promise.all([
+    supabaseAdmin.from('profiles').select('*').eq('id', req.session.userId).single(),
+    supabaseAdmin.auth.admin.getUserById(req.session.userId)
+  ]);
+
+  if (!profileResult.data) {
+    req.session = null;
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+
+  req.user = { ...profileResult.data, email: authResult.data?.user?.email || '' };
   next();
 }
 
 async function optionalAuth(req, res, next) {
   if (req.session.userId) {
-    const { data: profile } = await supabaseAdmin
-      .from('profiles')
-      .select('*')
-      .eq('id', req.session.userId)
-      .single();
-    req.user = profile || null;
+    const [profileResult, authResult] = await Promise.all([
+      supabaseAdmin.from('profiles').select('*').eq('id', req.session.userId).single(),
+      supabaseAdmin.auth.admin.getUserById(req.session.userId)
+    ]);
+    if (profileResult.data) {
+      req.user = { ...profileResult.data, email: authResult.data?.user?.email || '' };
+    } else {
+      req.user = null;
+    }
   }
   next();
 }

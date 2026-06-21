@@ -1,0 +1,18 @@
+{
+  "appId": "com.tak2ai.app",
+  "appName": "Tak2ai",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#050816"
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "DARK"
+    }
+  }
+}
