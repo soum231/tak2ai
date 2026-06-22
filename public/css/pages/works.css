@@ -1,0 +1,114 @@
+/* ============================================
+   Works Page
+   ============================================ */
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.work-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+}
+.work-card:hover {
+  border-color: transparent;
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,229,255,.08), 0 4px 16px rgba(0,0,0,.25);
+  position: relative;
+}
+.work-card:hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0,229,255,.4), rgba(0,229,255,.05), rgba(124,255,107,.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.work-card-preview {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-card-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.06);
+  border-radius: 16px;
+  color: var(--primary);
+  backdrop-filter: blur(4px);
+}
+.work-card-icon i { width: 24px; height: 24px; }
+
+.work-card-body {
+  padding: 20px 22px 24px;
+}
+.work-card-tag {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(0,229,255,.08);
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.work-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.work-card-desc {
+  font-size: .82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.work-card-stats {
+  display: flex;
+  gap: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+}
+.work-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.work-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.work-stat-label {
+  font-size: .72rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 1024px) {
+  .works-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+@media (max-width: 640px) {
+  .works-grid { grid-template-columns: 1fr; }
+  .work-card-body { padding: 16px 18px 20px; }
+  .work-card-preview { height: 120px; }
+}

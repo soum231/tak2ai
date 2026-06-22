@@ -7,6 +7,7 @@ const cookieSession = require('cookie-session');
 const pagesRouter = require('./routes/pages');
 const authRouter = require('./routes/auth');
 const apiRouter = require('./routes/api');
+const { seedAdmin } = require('./setup/seed-admin');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,7 +37,6 @@ app.use(cookieParser());
 app.use(cookieSession({
   name: 'tak2ai_session',
   secret: process.env.SESSION_SECRET || 'tak2ai-secret',
-  maxAge: 7 * 24 * 60 * 60 * 1000,
   httpOnly: true,
   sameSite: 'lax'
 }));
@@ -61,6 +61,11 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke! ' + err.message);
 });
+
+// Seed admin user on startup
+if (require.main === module) {
+  seedAdmin();
+}
 
 // Only listen when run directly (not as Vercel serverless function)
 if (require.main === module) {

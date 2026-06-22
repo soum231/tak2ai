@@ -57,6 +57,17 @@ router.get('/dashboard/stats', requireAuth, async (req, res) => {
   }
 });
 
+router.get('/dashboard/balance', requireAuth, async (req, res) => {
+  try {
+    const { getRemainingBalance } = require('../services/recharges');
+    const balance = await getRemainingBalance(req.session.userId, supabaseAdmin);
+    res.json({ success: true, data: balance });
+  } catch (err) {
+    console.error('Balance error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
 router.get('/leads', requireAdmin, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -399,7 +410,9 @@ router.post('/chat/ai', requireAuth, async (req, res) => {
     ];
 
     const models = [
-      'nvidia/nemotron-3-super-120b-a12b:free'
+      'nvidia/nemotron-3-nano-30b-a3b:free',
+      'nvidia/nemotron-nano-9b-v2:free',
+      'liquid/lfm-2.5-1.2b-instruct:free'
     ];
 
     let aiContent = null;
@@ -414,7 +427,8 @@ router.post('/chat/ai', requireAuth, async (req, res) => {
             'HTTP-Referer': process.env.SITE_URL || 'http://localhost:3000',
             'X-Title': 'Tak2ai Chat'
           },
-          body: JSON.stringify({ model: models[i], messages: chatMessages, max_tokens: 500 })
+          body: JSON.stringify({ model: models[i], messages: chatMessages, max_tokens: 500 }),
+          signal: AbortSignal.timeout(15000)
         });
 
         if (response.ok) {
@@ -488,13 +502,39 @@ router.post('/webhooks/omnidim', async (req, res) => {
     const userId = tokenData.user_id;
     const payload = req.body;
 
+    const rawDuration = payload.duration_seconds ?? payload.durationSeconds ?? payload.duration ?? payload.call_duration ?? payload.call_duration_in_seconds ?? null;
+    const rawDurationMin = payload.call_duration_in_minutes ?? null;
+    let finalDuration = null;
+    if (rawDuration != null) {
+      if (typeof rawDuration === 'number' && !isNaN(rawDuration)) {
+        finalDuration = rawDuration;
+      } else if (typeof rawDuration === 'string') {
+        const tm = rawDuration.match(/(\d+)\s*m(?:in)?[\s,]*(\d+)\s*s(?:ec)?/i);
+        if (tm) {
+          finalDuration = parseInt(tm[1]) * 60 + parseInt(tm[2]);
+        } else {
+          const tc = rawDuration.match(/^(\d+):(\d{1,2})$/);
+          if (tc) {
+            finalDuration = parseInt(tc[1]) * 60 + parseInt(tc[2]);
+          } else {
+            const tn = parseFloat(rawDuration);
+            if (!isNaN(tn)) finalDuration = tn;
+          }
+        }
+      }
+    }
+    if (finalDuration == null && rawDurationMin != null) {
+      const tn = parseFloat(rawDurationMin);
+      if (!isNaN(tn)) finalDuration = Math.round(tn * 60);
+    }
+
     const report = {
       user_id: userId,
       agent_id: payload.agent_id || payload.agentId || null,
       agent_name: payload.agent_name || payload.agentName || null,
       caller_number: payload.caller_number || payload.callerNumber || payload.from || null,
       callee_number: payload.callee_number || payload.calleeNumber || payload.to || null,
-      duration_seconds: payload.duration_seconds || payload.durationSeconds || payload.duration || null,
+      duration_seconds: finalDuration,
       status: payload.status || payload.call_status || payload.callStatus || 'unknown',
       transcript: payload.transcript || null,
       recording_url: payload.recording_url || payload.recordingUrl || null,
@@ -684,7 +724,8 @@ var callReportCacheTime = 0;
 
 router.get('/call-reports', requireAuth, async (req, res) => {
   try {
-    if (callReportCache && Date.now() - callReportCacheTime < 60000) {
+    const fresh = req.query._t || '';
+    if (!fresh && callReportCache && Date.now() - callReportCacheTime < 15000) {
       return res.json({ success: true, data: callReportCache });
     }
 
@@ -749,6 +790,145 @@ router.post('/profile/upload-avatar', requireAuth, upload.single('logo'), async 
     res.json({ success: true, data: { url: publicUrl } });
   } catch (err) {
     console.error('Avatar upload error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+// ===== ADMIN SETUP =====
+
+router.post('/setup/admin', async (req, res) => {
+  try {
+    const { key } = req.body;
+    if (key !== process.env.SESSION_SECRET) {
+      return res.status(403).json({ success: false, error: 'Invalid setup key' });
+    }
+    const { seedAdmin } = require('../setup/seed-admin');
+    await seedAdmin();
+    res.json({ success: true, message: 'Admin user seeded successfully' });
+  } catch (err) {
+    console.error('Admin setup error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+// ===== ADMIN RECHARGES =====
+
+const { addRecharge, getUserRecharges, getAllRecharges, getAllUsersWithBalance } = require('../services/recharges');
+
+router.get('/admin/users', requireAdmin, async (req, res) => {
+  try {
+    const [profileResult, authResult] = await Promise.all([
+      supabaseAdmin.from('profiles').select('id, name, company_name, phone, created_at'),
+      supabaseAdmin.auth.admin.listUsers()
+    ]);
+
+    if (profileResult.error) {
+      return res.status(500).json({ success: false, error: 'Failed to fetch users' });
+    }
+
+    const emailMap = {};
+    if (authResult.data?.users) {
+      for (const u of authResult.data.users) {
+        emailMap[u.id] = u.email;
+      }
+    }
+
+    const balances = getAllUsersWithBalance();
+    const balanceMap = {};
+    for (const b of balances) {
+      balanceMap[b.user_id] = b;
+    }
+
+    const adminUserId = req.session.userId;
+    const users = await Promise.all((profileResult.data || []).map(async (p) => {
+      const { getRemainingBalance, getUsedAdjustment } = require('../services/recharges');
+    const balance = await getRemainingBalance(p.id, supabaseAdmin);
+    return {
+      id: p.id,
+      name: p.name,
+      email: emailMap[p.id] || '',
+      company: p.company_name,
+      phone: p.phone,
+      joined: p.created_at,
+      is_admin: p.id === adminUserId,
+      balance_minutes: balance.remaining_minutes,
+      recharged_minutes: balance.recharged_minutes,
+      used_minutes: balance.used_minutes,
+      used_adjustment: getUsedAdjustment(p.id),
+      total_recharged: balanceMap[p.id]?.total_amount || 0,
+      recharge_count: balanceMap[p.id]?.recharge_count || 0,
+      last_recharge: balanceMap[p.id]?.last_recharge || null
+    };
+    }));
+
+    res.json({ success: true, data: users });
+  } catch (err) {
+    console.error('Get admin users error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.get('/admin/recharges', requireAdmin, async (req, res) => {
+  try {
+    const userId = req.query.user_id || null;
+    const data = userId ? getUserRecharges(userId) : getAllRecharges();
+    res.json({ success: true, data });
+  } catch (err) {
+    console.error('Get recharges error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.post('/admin/recharges', requireAdmin, async (req, res) => {
+  try {
+    const { user_id, user_name, user_email, minutes, amount, notes } = req.body;
+
+    if (!user_id || !minutes) {
+      return res.status(400).json({ success: false, error: 'User ID and minutes are required' });
+    }
+
+    const entry = addRecharge({
+      user_id,
+      user_name: user_name || '',
+      user_email: user_email || '',
+      minutes: parseInt(minutes),
+      amount: parseFloat(amount) || 0,
+      notes: notes || '',
+      created_by: req.session.userId || 'admin'
+    });
+
+    res.status(201).json({ success: true, data: entry });
+  } catch (err) {
+    console.error('Add recharge error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.post('/admin/users/adjustment', requireAdmin, async (req, res) => {
+  try {
+    const { user_id, minutes, user_name, notes } = req.body;
+    if (!user_id || minutes === undefined || minutes === null) {
+      return res.status(400).json({ success: false, error: 'User ID and minutes are required' });
+    }
+    const { setUsedAdjustment } = require('../services/recharges');
+    setUsedAdjustment(user_id, parseFloat(minutes) || 0, { user_name: user_name || 'Unknown', notes, created_by: 'admin' });
+    const { getRemainingBalance } = require('../services/recharges');
+    const balance = await getRemainingBalance(user_id, supabaseAdmin);
+    res.json({ success: true, data: { adjustment_minutes: parseFloat(minutes) || 0, ...balance } });
+  } catch (err) {
+    console.error('Set adjustment error:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.get('/admin/activities', requireAdmin, async (req, res) => {
+  try {
+    const userId = req.query.user_id || null;
+    const { getUserActivities, getAllActivities } = require('../services/activity');
+    const data = userId ? getUserActivities(userId) : getAllActivities();
+    res.json({ success: true, data });
+  } catch (err) {
+    console.error('Get activities error:', err);
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });

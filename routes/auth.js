@@ -51,7 +51,7 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, remember } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ success: false, error: 'Email and password are required' });
@@ -65,7 +65,18 @@ router.post('/signin', async (req, res) => {
 
     req.session.userId = data.user.id;
     req.session.accessToken = data.session?.access_token;
-    res.json({ success: true, redirect: '/dashboard' });
+
+    const ADMIN_EMAIL = 'rasoumindia@gmail.com';
+    if (data.user.email === ADMIN_EMAIL) {
+      req.session.isAdmin = true;
+    }
+
+    if (remember) {
+      req.sessionOptions.maxAge = 30 * 24 * 60 * 60 * 1000;
+    }
+
+    const redirect = req.session.isAdmin ? '/admin' : '/dashboard';
+    res.json({ success: true, redirect });
   } catch (err) {
     console.error('Signin error:', err);
     res.status(500).json({ success: false, error: 'Server error. Please try again.' });
@@ -74,7 +85,6 @@ router.post('/signin', async (req, res) => {
 
 router.all('/signout', (req, res) => {
   req.session = null;
-  res.clearCookie('tak2ai_session');
   res.redirect('/');
 });
 

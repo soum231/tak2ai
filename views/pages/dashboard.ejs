@@ -52,9 +52,6 @@
 
   <div class="dash-main">
     <header class="dash-header">
-      <button class="dash-toggle" id="dashToggle" aria-label="Toggle sidebar">
-        <i data-lucide="menu"></i>
-      </button>
       <h2 class="dash-page-title" id="dashPageTitle">Dashboard</h2>
       <div class="dash-header-right">
         <div class="dash-status"><span class="dash-status-dot"></span> System Status : Running</div>
@@ -84,6 +81,23 @@
     </div>
   </div>
 </div>
+
+<nav class="dash-bottom-nav" id="dashBottomNav">
+  <div class="dash-bottom-nav-inner">
+    <a href="/dashboard" data-page="dashboard">
+      <i data-lucide="layout-dashboard"></i><span>Home</span>
+    </a>
+    <a href="/dashboard/ai-chat" data-page="ai-chat">
+      <i data-lucide="sparkles"></i><span>AI Chat</span>
+    </a>
+    <a href="/dashboard/call-reports" data-page="call-reports">
+      <i data-lucide="phone-call"></i><span>Calls</span>
+    </a>
+    <a href="/dashboard/settings" data-page="settings">
+      <i data-lucide="settings"></i><span>Settings</span>
+    </a>
+  </div>
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

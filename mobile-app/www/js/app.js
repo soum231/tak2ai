@@ -128,9 +128,11 @@
 
   // ===== SCREENS =====
   function showScreen(name) {
+    var loadingScreen = $('#loadingScreen');
     var loginScreen = $('#loginScreen');
     var registerScreen = $('#registerScreen');
     var dashboardScreen = $('#dashboardScreen');
+    if (loadingScreen) loadingScreen.style.display = 'none';
     if (loginScreen) loginScreen.style.display = 'none';
     if (registerScreen) registerScreen.style.display = 'none';
     if (dashboardScreen) dashboardScreen.style.display = 'none';

@@ -106,7 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: formData.get('email'),
-          password: formData.get('password')
+          password: formData.get('password'),
+          remember: !!formData.get('remember')
         })
       });
       const data = await res.json();

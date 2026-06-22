@@ -19,6 +19,7 @@ var Tak2aiDashboard = {
   _route: function () {
     var path = window.location.pathname.replace(/^\/dashboard/, '') || '/';
     var title = 'Dashboard';
+    this._stopCallReportsPolling();
     if (path === '/' || path === '') {
       title = 'Dashboard';
       this.renderHome();
@@ -46,15 +47,17 @@ var Tak2aiDashboard = {
       if (href === '/dashboard' + path) isActive = true;
       a.classList.toggle('active', isActive);
     });
+    document.querySelectorAll('#dashBottomNav a').forEach(function (a) {
+      var href = a.getAttribute('href');
+      var isActive = href === '/dashboard' && (path === '/' || path === '');
+      if (href === '/dashboard' + path) isActive = true;
+      a.classList.toggle('active', isActive);
+    });
   },
 
   _setupSidebar: function () {
-    var toggle = document.getElementById('dashToggle');
     var sidebar = document.getElementById('dashSidebar');
     var closeBtn = document.getElementById('dashSidebarClose');
-    if (toggle && sidebar) {
-      toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
-    }
     if (closeBtn && sidebar) {
       closeBtn.addEventListener('click', function () { sidebar.classList.remove('open'); });
     }
@@ -65,6 +68,16 @@ var Tak2aiDashboard = {
           e.preventDefault();
           var sub = href.replace('/dashboard', '') || '/';
           if (sidebar) sidebar.classList.remove('open');
+          window.history.pushState(null, '', href);
+          Tak2aiDashboard._route();
+        }
+      });
+    });
+    document.querySelectorAll('#dashBottomNav a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var href = a.getAttribute('href');
+        if (href && href.indexOf('/dashboard') === 0) {
+          e.preventDefault();
           window.history.pushState(null, '', href);
           Tak2aiDashboard._route();
         }
@@ -146,15 +159,21 @@ var Tak2aiDashboard = {
       }
       body.innerHTML =
         '<div class="dash-section"><div class="dash-grid-3">' +
-          '<div class="dash-stat-card"><div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(0,229,255,.05));color:#00E5FF"><i data-lucide="message-square" style="width:22px;height:22px"></i></div><div class="dash-stat-info"><span class="dash-stat-value"><span class="dash-countup" data-target="' + (d.chat_sessions || 0) + '">0</span></span><span class="dash-stat-label">Chat Sessions</span></div></div>' +
-          '<div class="dash-stat-card"><div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(37,211,102,.15),rgba(37,211,102,.05));color:#25D366"><i data-lucide="message-circle" style="width:22px;height:22px"></i></div><div class="dash-stat-info"><span class="dash-stat-value"><span class="dash-countup" data-target="' + (d.total_messages || 0) + '">0</span></span><span class="dash-stat-label">Total Messages</span></div></div>' +
-          '<div class="dash-stat-card"><div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(167,139,250,.05));color:#A78BFA"><i data-lucide="zap" style="width:22px;height:22px"></i></div><div class="dash-stat-info"><span class="dash-stat-value"><span class="dash-countup" data-target="' + ((d.voice_minutes || 0) + (d.video_count || 0)) + '">0</span></span><span class="dash-stat-label">Active Services</span></div></div>' +
+          '<div class="dash-stat-card dash-stat-teal"><div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(0,229,255,.05));color:#00E5FF"><i data-lucide="wallet" style="width:22px;height:22px"></i></div><div class="dash-stat-info"><span class="dash-stat-value" id="dashBalance">—</span><span class="dash-stat-label">Balance (min)</span></div></div>' +
+          '<div class="dash-stat-card dash-stat-green"><div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(37,211,102,.15),rgba(37,211,102,.05));color:#25D366"><i data-lucide="message-square" style="width:22px;height:22px"></i></div><div class="dash-stat-info"><span class="dash-stat-value"><span class="dash-countup" data-target="' + (d.chat_sessions || 0) + '">0</span></span><span class="dash-stat-label">Chat Sessions</span></div></div>' +
+          '<div class="dash-stat-card dash-stat-purple"><div class="dash-stat-icon" style="background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(167,139,250,.05));color:#A78BFA"><i data-lucide="message-circle" style="width:22px;height:22px"></i></div><div class="dash-stat-info"><span class="dash-stat-value"><span class="dash-countup" data-target="' + (d.total_messages || 0) + '">0</span></span><span class="dash-stat-label">Total Messages</span></div></div>' +
         '</div></div>' +
         '<div class="dash-section"><h3 class="dash-section-title">Recent Activity</h3><div class="dash-activity-list">' + sessionsHtml + '</div></div>' +
         '<div class="dash-section" id="dashCallReportsWidget"><h3 class="dash-section-title">Call Reports</h3><div class="dash-loading" style="min-height:80px"><div class="spinner"></div></div></div>';
       if (window.lucide) lucide.createIcons();
       self._animateCountUp();
-      fetch('/api/call-reports').then(function (r) { return r.json(); }).then(function (cr) {
+      fetch('/api/dashboard/balance').then(function (r) { return r.json(); }).then(function (b) {
+        if (b.success && b.data) {
+          var balEl = document.getElementById('dashBalance');
+          if (balEl) balEl.textContent = Math.round(b.data.remaining_minutes).toLocaleString();
+        }
+      }).catch(function () {});
+      fetch('/api/call-reports?_t=' + Date.now()).then(function (r) { return r.json(); }).then(function (cr) {
         var w = document.getElementById('dashCallReportsWidget');
         if (!w) return;
         if (!cr.success || !cr.data || !cr.data.length) {
@@ -180,12 +199,12 @@ var Tak2aiDashboard = {
         });
         w.innerHTML =
           '<div class="dash-section" style="margin-bottom:0"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px"><h3 class="dash-section-title" style="margin:0">Call Reports</h3><a href="/dashboard/call-reports" class="btn btn-sm btn-primary" onclick="event.preventDefault();Tak2aiDashboard.navTo(\'call-reports\')"><i data-lucide="phone-call" style="width:14px;height:14px"></i> View All</a></div>' +
-          '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">' +
+          '<div class="dash-home-stats">' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(0,229,255,0.1);color:#00E5FF"><i data-lucide="phone" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + total + '</span><span class="cr-stat-label">Total Calls</span></div></div>' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(37,211,102,0.1);color:#25D366"><i data-lucide="thumbs-up" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + positive + '</span><span class="cr-stat-label">Positive</span></div></div>' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(167,139,250,0.1);color:#A78BFA"><i data-lucide="calendar-check" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + siteVisits + '</span><span class="cr-stat-label">Site Visits</span></div></div>' +
           '</div>' +
-          '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">' + recentHtml + '</div></div>';
+          '<div class="dash-home-recent">' + recentHtml + '</div></div>';
         if (window.lucide) lucide.createIcons();
       }).catch(function () {});
     }).catch(function () { self._showError('Failed to load dashboard stats.'); });
@@ -495,16 +514,14 @@ var Tak2aiDashboard = {
       var copyBtn = document.createElement('button');
       copyBtn.className = 'chat-msg-action';
       copyBtn.title = 'Copy';
-      copyBtn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px"></i>';
+      copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
       copyBtn.addEventListener('click', function () {
         navigator.clipboard.writeText(content).then(function () {
           copyBtn.classList.add('copied');
-          copyBtn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px"></i>';
-          if (window.lucide) lucide.createIcons();
+          copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
           setTimeout(function () {
             copyBtn.classList.remove('copied');
-            copyBtn.innerHTML = '<i data-lucide="copy" style="width:13px;height:13px"></i>';
-            if (window.lucide) lucide.createIcons();
+            copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
           }, 2000);
         });
       });
@@ -1119,7 +1136,7 @@ var Tak2aiDashboard = {
     body.classList.remove('dash-body-chat');
     var self = this;
     body.innerHTML = '<div class="dash-loading" style="min-height:40vh"><div class="spinner"></div><p>Loading call reports...</p></div>';
-    fetch('/api/call-reports').then(function (r) { return r.json(); }).then(function (data) {
+    fetch('/api/call-reports?_t=' + Date.now()).then(function (r) { return r.json(); }).then(function (data) {
       if (!data.success) { body.innerHTML = '<div class="dash-empty" style="padding:60px"><div class="dash-empty-icon"><i data-lucide="phone-call"></i></div><div class="dash-empty-title">Failed to load</div><div class="dash-empty-desc">' + (data.error || 'Could not fetch call reports.') + '</div></div>'; if (window.lucide) lucide.createIcons(); return; }
       self._calls = data.data || [];
       var calls = self._calls;
@@ -1189,7 +1206,7 @@ var Tak2aiDashboard = {
       });
       body.innerHTML =
         '<div class="cr-page">' +
-          '<div class="cr-header"><div><h3 class="dash-section-title" style="margin:0">Call Reports</h3><p class="cr-subtitle">' + total + ' total calls</p></div></div>' +
+          '<div class="cr-header"><div><h3 class="dash-section-title" style="margin:0">Call Reports</h3><p class="cr-subtitle">' + total + ' total calls</p></div><div style="display:flex;gap:8px;align-items:center"><span class="cr-live-dot" id="crLiveDot"></span><span style="font-size:.75rem;color:var(--text-tertiary)" id="crLiveLabel">Live</span><button class="btn btn-sm btn-ghost" onclick="Tak2aiDashboard.refreshCallReports()" style="padding:6px 12px;font-size:.8rem" title="Refresh"><i data-lucide="refresh-cw" style="width:14px;height:14px"></i> Refresh</button></div></div>' +
           '<div class="cr-stats">' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(0,229,255,0.1);color:#00E5FF"><i data-lucide="phone" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + total + '</span><span class="cr-stat-label">Total Calls</span></div></div>' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(37,211,102,0.1);color:#25D366"><i data-lucide="thumbs-up" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + positive + '</span><span class="cr-stat-label">Positive</span></div></div>' +
@@ -1228,9 +1245,87 @@ var Tak2aiDashboard = {
       document.addEventListener('keydown', function cls(e) {
         if (e.key === 'Escape') { self.closeCallDetail(); document.removeEventListener('keydown', cls); }
       });
+      self._startCallReportsPolling();
     }).catch(function () {
       body.innerHTML = '<div class="dash-empty" style="padding:60px">Failed to load call reports.</div>';
     });
+  },
+
+  refreshCallReports: function () {
+    this._stopCallReportsPolling();
+    this.renderCallReports();
+  },
+
+  _startCallReportsPolling: function () {
+    this._stopCallReportsPolling();
+    var self = this;
+    var dot = document.getElementById('crLiveDot');
+    var label = document.getElementById('crLiveLabel');
+    this._crPollCount = 0;
+    this._crInterval = setInterval(function () {
+      self._crPollCount++;
+      if (dot) dot.style.animation = 'none'; void dot.offsetWidth; dot.style.animation = '';
+      if (label) label.textContent = 'Updating\u2026';
+      fetch('/api/call-reports?_t=' + Date.now()).then(function (r) { return r.json(); }).then(function (data) {
+        if (!data.success) return;
+        self._calls = data.data || [];
+        var total = self._calls.length;
+        var statEls = document.querySelectorAll('.cr-stat-value');
+        if (statEls[0]) statEls[0].textContent = total;
+        var countEl = document.querySelector('.cr-count');
+        if (countEl) countEl.textContent = total + ' calls';
+        var subtitle = document.querySelector('.cr-subtitle');
+        if (subtitle) subtitle.textContent = total + ' total calls';
+        if (label) label.textContent = 'Live';
+        self._rebuildCallCards();
+      }).catch(function () {
+        if (label) label.textContent = 'Live';
+      });
+    }, 30000);
+  },
+
+  _stopCallReportsPolling: function () {
+    if (this._crInterval) {
+      clearInterval(this._crInterval);
+      this._crInterval = null;
+    }
+  },
+
+  _rebuildCallCards: function () {
+    var list = document.getElementById('crList');
+    if (!list) return;
+    var calls = this._calls || [];
+    var cardsHtml = '';
+    calls.forEach(function (c, i) {
+      var name = c.customer_name || 'Unknown';
+      var phone = c.customer_mobile || '\u2014';
+      var project = c.interested_project || '\u2014';
+      var sentiment = c.sentiment || '\u2014';
+      var sentimentBadge = sentiment === 'Positive' ? 'badge-success' : sentiment === 'Negative' ? 'badge-danger' : 'badge-warning';
+      cardsHtml +=
+        '<div class="cr-card" data-index="' + i + '" data-name="' + (name.toLowerCase()) + '" data-phone="' + phone + '" data-project="' + (project.toLowerCase()) + '">' +
+          '<div class="cr-card-header">' +
+            '<div class="cr-card-user"><div class="cr-avatar">' + (name !== 'Unknown' ? name.charAt(0).toUpperCase() : '?') + '</div><div><div class="cr-name">' + name + '</div><div class="cr-phone">' + phone + '</div></div></div>' +
+            '<span class="badge ' + sentimentBadge + '">' + sentiment + '</span>' +
+          '</div>' +
+          '<div class="cr-card-body">' +
+            '<div class="cr-grid"><div class="cr-field"><span class="cr-label">Project</span><span class="cr-value">' + project + '</span></div></div>' +
+          '</div>' +
+        '</div>';
+    });
+    list.innerHTML = cardsHtml || '<div class="dash-empty" style="padding:40px">No calls found.</div>';
+    document.querySelectorAll('.cr-card').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-index'));
+        Tak2aiDashboard.showCallDetail(idx);
+      });
+    });
+    var q = document.getElementById('crSearch');
+    if (q && q.value) {
+      var evt = document.createEvent('Event');
+      evt.initEvent('input', true, true);
+      q.dispatchEvent(evt);
+    }
   },
 
   showCallDetail: function (index) {

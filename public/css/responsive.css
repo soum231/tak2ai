@@ -54,7 +54,8 @@
   .section{padding:48px 0}
 
   /* Hero sections */
-  .page-hero{padding:80px 0 48px}
+  .hero, .page-hero{padding-top: 90px}
+  .page-hero{padding-bottom:48px}
   .page-hero-title{font-size:clamp(1.5rem,4.5vw,2.2rem)}
   .page-hero-text{font-size:.95rem}
 
@@ -97,7 +98,6 @@
   .dash-sidebar-header{padding:16px 12px;justify-content:center}
   .dash-nav{padding:8px}
   .dash-nav-item{justify-content:center;padding:10px}
-  .dash-main{margin-left:56px}
   .dash-body{padding:16px}
   .dash-header{padding:12px 16px}
   .dash-toggle{display:flex}
@@ -112,7 +112,7 @@
   .chat-messages{min-height:0;flex:1}
   .chat-mobile-toggle{display:flex}
   .chat-main-header .chat-sidebar-toggle{display:flex}
-  .auth-hero{padding:100px 16px 60px}
+  .auth-hero{padding:80px 16px 60px}
   .auth-card{padding:32px 24px}
   .template-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:1fr}
@@ -123,9 +123,14 @@
   .steps-modern{grid-template-columns:1fr}
   .footer{margin:12px;padding:24px 16px 16px;border-radius:24px}
   .form-row,.form-row-2{flex-direction:column}
-  .page-hero{padding:70px 0 40px}
+  .hero, .page-hero{padding-top: 80px}
+  .page-hero{padding-bottom:40px}
   .page-hero-title{font-size:1.6rem}
   .page-hero-text{font-size:.9rem;max-width:100%}
+
+  /* Home hero — prevent lottie overflow */
+  .hero-right { max-width: 100%; width: 100%; }
+  .hero-right dotlottie-player { max-width: 100% !important; }
 
   /* Dark sections on home page */
   .section-contained{margin:0 16px!important;padding:40px 20px!important;border-radius:var(--radius-xl)!important}
@@ -144,6 +149,8 @@
   .cta-section{padding:48px 16px}
   .cta-title{font-size:1.25rem}
   .cta-desc{font-size:.85rem}
+  .cta-actions, .cta-buttons { flex-direction: column; align-items: center; gap: 10px; }
+  .cta-actions .btn, .cta-buttons .btn { width: 100%; max-width: 320px; justify-content: center; }
 
   /* Pricing card */
   .pricing-card{padding:24px 20px}
@@ -155,10 +162,15 @@
   .code-block code{font-size:.72rem}
   .copy-btn{top:20px;right:20px;padding:4px 10px;font-size:.7rem}
 
-  /* Chat demo */
+  /* Chat demo on home */
   .chat-demo-modern{max-width:100%;margin:0 0}
   .cd-suggestions{flex-wrap:nowrap;overflow-x:auto;padding:0 12px 10px;gap:6px}
   .cd-suggestions button{white-space:nowrap;flex-shrink:0;font-size:.72rem;padding:5px 10px}
+  .chatbox { border-radius: var(--radius-lg); }
+  .chatbox-body { min-height: 160px; max-height: 200px; padding: 12px 14px; }
+  .chatbox-suggestions { flex-wrap: nowrap; overflow-x: auto; padding: 0 14px 10px; gap: 6px; }
+  .chatbox-suggestions button { white-space: nowrap; flex-shrink: 0; font-size: .72rem; padding: 5px 10px; }
+  .chatbox-foot { padding: 10px 14px; }
 
   /* Chatbot page demo */
   #chatbot-demo-container{border-radius:var(--radius-lg)!important}
@@ -176,6 +188,29 @@
 
   /* Industry cards */
   .industry-card{padding:20px 12px}
+
+  /* Modal mobile */
+  .modal-overlay { padding: 16px; align-items: flex-end; }
+  .modal { max-width: 100%; border-radius: var(--radius-xl) var(--radius-xl) 0 0; max-height: 85vh; }
+  .modal-header { padding: 28px 24px 0; }
+  .modal-title { font-size: 1.2rem; }
+  .modal-form { padding: 0 24px 28px; gap: 14px; }
+  .modal-close { top: 18px; right: 18px; }
+
+  /* Testimonials */
+  .testi-card { padding: 28px 20px !important; }
+  .testi-quote { font-size: .9rem !important; }
+
+  /* FAQ */
+  .faq-q { padding: 14px 16px !important; font-size: .88rem !important; }
+
+  /* Comparison VS */
+  .comparison-vs { margin: 0 auto; }
+
+  /* S-head spacing */
+  .s-head { margin-bottom: 28px !important; }
+  .s-title { font-size: clamp(1.3rem, 5vw, 1.6rem) !important; }
+  .s-desc { font-size: .85rem !important; }
 }
 
 /* === 640px (small phone) === */
@@ -187,7 +222,8 @@
   .hero-modern .hero-buttons .btn{width:100%;max-width:280px;justify-content:center}
   .section-title{font-size:1.35rem}
   .section{padding:36px 0}
-  .page-hero{padding:64px 0 32px}
+  .hero, .page-hero{padding-top: 72px}
+  .page-hero{padding-bottom:32px}
   .page-hero-title{font-size:1.4rem}
   .page-hero-text{font-size:.85rem}
 
@@ -283,7 +319,8 @@
   .team-grid{grid-template-columns:1fr}
   .stats-grid{grid-template-columns:1fr}
   .section-title{font-size:1.2rem}
-  .page-hero{padding:56px 0 28px}
+  .hero, .page-hero{padding-top: 80px}
+  .page-hero{padding-bottom:28px}
   .page-hero-title{font-size:1.25rem}
   .page-hero-text{font-size:.8rem}
   .page-hero .hero-subtitle{font-size:.65rem;padding:3px 10px}
@@ -318,6 +355,8 @@
   .t-card{padding:24px 16px}
   .t-quote{font-size:.88rem}
   .t-dots{gap:6px}
+  .testi-card { padding: 24px 16px !important; }
+  .testi-quote { font-size: .85rem !important; }
 
   /* Industries */
   .ind-icon{width:32px;height:32px;font-size:.9rem}
@@ -329,11 +368,14 @@
   .cmp-side h3{font-size:.95rem;gap:8px}
   .cmp-badge{font-size:.6rem;padding:2px 8px}
   .cmp-item{font-size:.75rem;gap:8px}
+  .comparison-card { padding: 16px 12px !important; }
+  .comparison-list li { font-size: .78rem !important; padding: 5px 0 !important; }
 
   /* FAQ */
   .faq-item{border-radius:var(--radius-sm)!important}
   .faq-question{padding:10px 12px;font-size:.8rem}
   .faq-answer p{font-size:.78rem}
+  .faq-q { padding: 12px 14px !important; font-size: .82rem !important; }
 
   /* Pricing */
   .price-amount{font-size:1.5rem}
@@ -369,24 +411,51 @@
   .cd-foot input{font-size:.82rem!important;padding:8px 12px!important}
   .cd-foot button{width:32px!important;height:32px!important}
 
-  /* Footer */
-  .footer{margin:24px;padding:20px 12px 12px!important;border-radius:24px 24px 0px 0px!important; margin-bottom:0px;}
-  .footer-brand img{max-width:120px}
-  .footer-desc{font-size:.8rem}
-  .footer-heading{font-size:.85rem}
-  .footer-links li a{font-size:.8rem}
-  .footer-bottom p{font-size:.75rem}
+  /* Home page chatbox */
+  .chatbox-body { min-height: 140px !important; max-height: 180px !important; padding: 10px 12px !important; }
+  .chatbox-msg { font-size: .8rem !important; padding: 8px 12px !important; }
+  .chatbox-suggestions button { font-size: .7rem !important; padding: 4px 8px !important; }
+  .chatbox-foot { padding: 8px 12px !important; }
+  .chatbox-foot input { font-size: .82rem !important; padding: 8px 12px !important; }
 
-  /* About page specific small screens */
-  .about-hero-stats{gap:16px}
-  .about-hero-stats .stat-number{font-size:1.1rem}
+  /* Modal extra small */
+  .modal-header { padding: 24px 20px 0; }
+  .modal-title { font-size: 1.1rem; }
+  .modal-form { padding: 0 20px 24px; gap: 12px; }
+  .modal-form .form-group label { font-size: .8rem; }
+  .modal-form .form-group input,
+  .modal-form .form-group select,
+  .modal-form .form-group textarea { padding: 10px 12px; font-size: .85rem; }
+  .modal-close { top: 14px; right: 14px; width: 28px; height: 28px; }
 
-  /* Voice AI */
-  .waveform-bars{gap:3px!important}
-  .waveform-bar{width:4px!important;min-height:20px!important}
+  /* CTA */
+  .cta-section{padding:40px 14px}
+  .cta-buttons{flex-direction:column;align-items:center;gap:8px}
+  .cta-buttons .btn{width:100%;max-width:300px;justify-content:center}
+  .cta-actions .btn, .cta-buttons .btn { max-width: 100%; }
 
-  /* Particles (reduce motion) */
-  .particle{display:none}
+  /* S-head */
+  .s-title { font-size: clamp(1.1rem, 5vw, 1.3rem) !important; }
+  .s-desc { font-size: .8rem !important; }
+
+  /* Integration code */
+  .code-block{padding:12px;border-radius:var(--radius-lg)!important}
+  .code-block pre{padding:10px}
+  .copy-btn{position:static;margin-bottom:8px}
+
+  /* Chatbot demo */
+  #chatbot-demo-container{margin:0 auto!important;max-width:100%!important}
+  .cd-header{padding:10px 12px!important;gap:8px!important}
+  .cd-header .cd-avatar{width:30px!important;height:30px!important;font-size:.8rem!important}
+  .cd-name{font-size:.8rem!important}
+  .cd-status{font-size:.7rem!important}
+  #chatbot-messages .msg{font-size:.8rem!important;padding:8px 12px!important}
+  .cd-suggestions button{font-size:.72rem!important;padding:4px 10px!important}
+  .cd-input-wrap input{font-size:.8rem!important;padding:8px 12px!important}
+  .cd-input-wrap button{width:32px!important;height:32px!important}
+
+  /* Heart icon in footer */
+  .icon-heart{width:12px;height:12px}
 }
 
 /* 768px — float-btn hidden initially, shows after scroll */
