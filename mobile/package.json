@@ -1,0 +1,25 @@
+{
+  "name": "com.anamika.makover.salon",
+  "displayName": "Anamika Makeover Salon",
+  "version": "1.0.0",
+  "description": "Call Reports Dashboard for Anamika Makeover Salon",
+  "main": "index.js",
+  "scripts": {
+    "build": "cordova build android",
+    "run": "cordova run android",
+    "emulate": "cordova emulate android"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Anamika Makeover Salon",
+  "license": "MIT",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  },
+  "devDependencies": {
+    "cordova-android": "^15.0.0"
+  }
+}

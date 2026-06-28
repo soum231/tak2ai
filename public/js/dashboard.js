@@ -182,27 +182,27 @@ var Tak2aiDashboard = {
         }
         var calls = cr.data;
         var total = calls.length;
-        var positive = 0, siteVisits = 0;
+        var positive = 0, services = 0;
         calls.forEach(function (c) {
           if (c.sentiment === 'Positive') positive++;
-          if (c.site_visit_interest && c.site_visit_interest.toLowerCase() === 'yes') siteVisits++;
+          if (c.service_requested && c.service_requested.trim()) services++;
         });
         var recent = calls.slice(0, 3);
         var recentHtml = '';
         recent.forEach(function (c) {
           var name = c.customer_name || 'Unknown';
-          var phone = c.customer_mobile || '—';
-          var project = c.interested_project || '—';
+          var phone = c.phone_number || '—';
+          var service = c.service_requested || '—';
           var sentiment = c.sentiment || '—';
           var badge = sentiment === 'Positive' ? 'badge-success' : sentiment === 'Negative' ? 'badge-danger' : 'badge-warning';
-          recentHtml += '<div class="cr-card" style="cursor:pointer" onclick="Tak2aiDashboard.navTo(\'call-reports\')"><div class="cr-card-header"><div class="cr-card-user"><div class="cr-avatar">' + (name !== 'Unknown' ? name.charAt(0).toUpperCase() : '?') + '</div><div><div class="cr-name">' + name + '</div><div class="cr-phone">' + phone + '</div></div></div><span class="badge ' + badge + '">' + sentiment + '</span></div><div class="cr-card-body"><div class="cr-grid"><div class="cr-field"><span class="cr-label">Project</span><span class="cr-value">' + project + '</span></div></div></div></div>';
+          recentHtml += '<div class="cr-card" style="cursor:pointer" onclick="Tak2aiDashboard.navTo(\'call-reports\')"><div class="cr-card-header"><div class="cr-card-user"><div class="cr-avatar">' + (name !== 'Unknown' ? name.charAt(0).toUpperCase() : '?') + '</div><div><div class="cr-name">' + name + '</div><div class="cr-phone">' + phone + '</div></div></div><span class="badge ' + badge + '">' + sentiment + '</span></div><div class="cr-card-body"><div class="cr-grid"><div class="cr-field"><span class="cr-label">Service</span><span class="cr-value">' + service + '</span></div></div></div></div>';
         });
         w.innerHTML =
           '<div class="dash-section" style="margin-bottom:0"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px"><h3 class="dash-section-title" style="margin:0">Call Reports</h3><a href="/dashboard/call-reports" class="btn btn-sm btn-primary" onclick="event.preventDefault();Tak2aiDashboard.navTo(\'call-reports\')"><i data-lucide="phone-call" style="width:14px;height:14px"></i> View All</a></div>' +
           '<div class="dash-home-stats">' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(0,229,255,0.1);color:#00E5FF"><i data-lucide="phone" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + total + '</span><span class="cr-stat-label">Total Calls</span></div></div>' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(37,211,102,0.1);color:#25D366"><i data-lucide="thumbs-up" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + positive + '</span><span class="cr-stat-label">Positive</span></div></div>' +
-            '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(167,139,250,0.1);color:#A78BFA"><i data-lucide="calendar-check" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + siteVisits + '</span><span class="cr-stat-label">Site Visits</span></div></div>' +
+            '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(167,139,250,0.1);color:#A78BFA"><i data-lucide="scissors" style="width:20px;height:20px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + services + '</span><span class="cr-stat-label">Services</span></div></div>' +
           '</div>' +
           '<div class="dash-home-recent">' + recentHtml + '</div></div>';
         if (window.lucide) lucide.createIcons();
@@ -1141,10 +1141,10 @@ var Tak2aiDashboard = {
       self._calls = data.data || [];
       var calls = self._calls;
       var total = calls.length;
-      var positive = 0, siteVisits = 0, totalSec = 0;
+      var positive = 0, services = 0, totalSec = 0;
       calls.forEach(function (c) {
         if (c.sentiment === 'Positive') positive++;
-        if (c.site_visit_interest && c.site_visit_interest.toLowerCase() === 'yes') siteVisits++;
+        if (c.service_requested && c.service_requested.trim()) services++;
         var mins = parseInt(parseFloat(c.call_duration_in_minutes)) || 0;
         var sField = c.call_duration_in_seconds;
         var secs;
@@ -1169,13 +1169,12 @@ var Tak2aiDashboard = {
       var cardsHtml = '';
       calls.forEach(function (c, i) {
         var name = c.customer_name || 'Unknown';
-        var phone = c.customer_mobile || '—';
+        var phone = c.phone_number || '—';
         var loc = c.customer_location || '—';
-        var project = c.interested_project || '—';
-        var bhk = c.bhk_type || '—';
-        var budget = c.budget || '—';
+        var service = c.service_requested || '—';
+        var prefDate = c.preferred_date || '—';
+        var prefTime = c.preferred_time || '—';
         var sentiment = c.sentiment || '—';
-        var status = c.call_status || '—';
         var minsVal = c.call_duration_in_minutes;
         var secsVal = c.call_duration_in_seconds;
         var hasMin = minsVal !== undefined && minsVal !== null && minsVal !== '';
@@ -1185,20 +1184,18 @@ var Tak2aiDashboard = {
         var summary = c.summary || '';
         var sentimentBadge = sentiment === 'Positive' ? 'badge-success' : sentiment === 'Negative' ? 'badge-danger' : 'badge-warning';
         cardsHtml +=
-          '<div class="cr-card" data-index="' + i + '" data-name="' + (name.toLowerCase()) + '" data-phone="' + phone + '" data-project="' + (project.toLowerCase()) + '">' +
+          '<div class="cr-card" data-index="' + i + '" data-name="' + (name.toLowerCase()) + '" data-phone="' + phone + '" data-service="' + (service.toLowerCase()) + '">' +
             '<div class="cr-card-header">' +
               '<div class="cr-card-user"><div class="cr-avatar">' + (name !== 'Unknown' ? name.charAt(0).toUpperCase() : '?') + '</div><div><div class="cr-name">' + name + '</div><div class="cr-phone">' + phone + '</div></div></div>' +
               '<span class="badge ' + sentimentBadge + '">' + sentiment + '</span>' +
             '</div>' +
             '<div class="cr-card-body">' +
-              '<div class="cr-grid"><div class="cr-field"><span class="cr-label">Location</span><span class="cr-value">' + loc + '</span></div>' +
-              '<div class="cr-field"><span class="cr-label">Project</span><span class="cr-value">' + project + '</span></div>' +
-              '<div class="cr-field"><span class="cr-label">BHK</span><span class="cr-value">' + bhk + '</span></div>' +
-              '<div class="cr-field"><span class="cr-label">Budget</span><span class="cr-value">' + budget + '</span></div>' +
+              '<div class="cr-grid"><div class="cr-field"><span class="cr-label">Service</span><span class="cr-value">' + service + '</span></div>' +
+              '<div class="cr-field"><span class="cr-label">Location</span><span class="cr-value">' + loc + '</span></div>' +
               '<div class="cr-field"><span class="cr-label">Duration</span><span class="cr-value">' + duration + '</span></div>' +
               '<div class="cr-field"><span class="cr-label">Date</span><span class="cr-value">' + date + '</span></div>' +
-              (c.site_visit_interest ? '<div class="cr-field"><span class="cr-label">Site Visit</span><span class="cr-value">' + c.site_visit_interest + (c.site_visit_date ? ' (' + c.site_visit_date + ')' : '') + '</span></div>' : '') +
-              (c.whatsapp_number ? '<div class="cr-field"><span class="cr-label">WhatsApp</span><span class="cr-value">' + c.whatsapp_number + '</span></div>' : '') +
+              (prefDate !== '—' ? '<div class="cr-field"><span class="cr-label">Preferred Date</span><span class="cr-value">' + prefDate + '</span></div>' : '') +
+              (prefTime !== '—' ? '<div class="cr-field"><span class="cr-label">Preferred Time</span><span class="cr-value">' + prefTime + '</span></div>' : '') +
               '</div>' +
               (summary ? '<div class="cr-summary">' + summary + '</div>' : '') +
             '</div>' +
@@ -1210,10 +1207,10 @@ var Tak2aiDashboard = {
           '<div class="cr-stats">' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(0,229,255,0.1);color:#00E5FF"><i data-lucide="phone" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + total + '</span><span class="cr-stat-label">Total Calls</span></div></div>' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(37,211,102,0.1);color:#25D366"><i data-lucide="thumbs-up" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + positive + '</span><span class="cr-stat-label">Positive</span></div></div>' +
-            '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(167,139,250,0.1);color:#A78BFA"><i data-lucide="calendar-check" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + siteVisits + '</span><span class="cr-stat-label">Site Visits</span></div></div>' +
+            '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(167,139,250,0.1);color:#A78BFA"><i data-lucide="scissors" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + services + '</span><span class="cr-stat-label">Services Requested</span></div></div>' +
             '<div class="cr-stat"><div class="cr-stat-icon" style="background:rgba(234,179,8,0.1);color:#eab308"><i data-lucide="clock" style="width:22px;height:22px"></i></div><div class="cr-stat-info"><span class="cr-stat-value">' + durDisplay + '</span><span class="cr-stat-label">Total Talk Time</span></div></div>' +
           '</div>' +
-          '<div class="cr-toolbar"><input type="text" class="cr-search" id="crSearch" placeholder="Search by name, phone, or project..."><span class="cr-count">' + total + ' calls</span></div>' +
+          '<div class="cr-toolbar"><input type="text" class="cr-search" id="crSearch" placeholder="Search by name, phone, or service..."><span class="cr-count">' + total + ' calls</span></div>' +
           '<div class="cr-list" id="crList">' + cardsHtml + '</div>' +
         '</div>' +
         '<div class="cr-modal" id="crModal"><div class="cr-modal-bg"></div><div class="cr-modal-content"><div class="cr-modal-close">&times;</div><div id="crModalBody"></div></div></div>';
@@ -1229,7 +1226,7 @@ var Tak2aiDashboard = {
         searchInput.addEventListener('input', function () {
           var q = this.value.toLowerCase().trim();
           document.querySelectorAll('.cr-card').forEach(function (el) {
-            var match = el.getAttribute('data-name').includes(q) || el.getAttribute('data-phone').includes(q) || el.getAttribute('data-project').includes(q);
+            var match = el.getAttribute('data-name').includes(q) || el.getAttribute('data-phone').includes(q) || el.getAttribute('data-service').includes(q);
             el.style.display = match ? 'block' : 'none';
           });
           var visible = document.querySelectorAll('.cr-card[style*="display: block"], .cr-card:not([style*="display"])').length;
@@ -1298,18 +1295,18 @@ var Tak2aiDashboard = {
     var cardsHtml = '';
     calls.forEach(function (c, i) {
       var name = c.customer_name || 'Unknown';
-      var phone = c.customer_mobile || '\u2014';
-      var project = c.interested_project || '\u2014';
+      var phone = c.phone_number || '\u2014';
+      var service = c.service_requested || '\u2014';
       var sentiment = c.sentiment || '\u2014';
       var sentimentBadge = sentiment === 'Positive' ? 'badge-success' : sentiment === 'Negative' ? 'badge-danger' : 'badge-warning';
       cardsHtml +=
-        '<div class="cr-card" data-index="' + i + '" data-name="' + (name.toLowerCase()) + '" data-phone="' + phone + '" data-project="' + (project.toLowerCase()) + '">' +
+        '<div class="cr-card" data-index="' + i + '" data-name="' + (name.toLowerCase()) + '" data-phone="' + phone + '" data-service="' + (service.toLowerCase()) + '">' +
           '<div class="cr-card-header">' +
             '<div class="cr-card-user"><div class="cr-avatar">' + (name !== 'Unknown' ? name.charAt(0).toUpperCase() : '?') + '</div><div><div class="cr-name">' + name + '</div><div class="cr-phone">' + phone + '</div></div></div>' +
             '<span class="badge ' + sentimentBadge + '">' + sentiment + '</span>' +
           '</div>' +
           '<div class="cr-card-body">' +
-            '<div class="cr-grid"><div class="cr-field"><span class="cr-label">Project</span><span class="cr-value">' + project + '</span></div></div>' +
+            '<div class="cr-grid"><div class="cr-field"><span class="cr-label">Service</span><span class="cr-value">' + service + '</span></div></div>' +
           '</div>' +
         '</div>';
     });
@@ -1335,11 +1332,11 @@ var Tak2aiDashboard = {
     var body = document.getElementById('crModalBody');
     if (!modal || !body) return;
     var name = c.customer_name || 'Unknown';
-    var phone = c.customer_mobile || '—';
+    var phone = c.phone_number || '—';
     var loc = c.customer_location || '—';
-    var project = c.interested_project || '—';
-    var bhk = c.bhk_type || '—';
-    var budget = c.budget || '—';
+    var service = c.service_requested || '—';
+    var prefDate = c.preferred_date || '—';
+    var prefTime = c.preferred_time || '—';
     var sentiment = c.sentiment || '—';
     var status = c.call_status || '—';
     var minsVal = c.call_duration_in_minutes;
@@ -1352,21 +1349,9 @@ var Tak2aiDashboard = {
     var conversation = c.full_conversation || '';
     var summary = c.summary || '';
     var recording = c.recording_url || '';
-    var notes = c.notes || '';
     var callId = c.call_id || '—';
     var botName = c.bot_name || '—';
     var direction = c.call_direction || '—';
-    var leadScore = c.lead_score || '—';
-    var familySize = c.family_size || '—';
-    var email = c.email_address || '—';
-    var propertyType = c.property_type || '—';
-    var subBhk = c.sub_bhk || '—';
-    var requirementType = c.requirement_type || '—';
-    var additionalReqs = c.additional_requirements || '—';
-    var projectType = c.interested_in_project_type || '—';
-    var preferredTime = c.preferred_contact_time || '—';
-    var purchasePurpose = c.purchase_purpose || '—';
-    var purchaseTimeline = c.purchase_timeline || '—';
     var transferStatus = c.call_transfered_status || '—';
 
     body.innerHTML =
@@ -1389,30 +1374,14 @@ var Tak2aiDashboard = {
           '<div><strong>Name</strong><span>' + name + '</span></div>' +
           '<div><strong>Phone</strong><span>' + phone + '</span></div>' +
           '<div><strong>Location</strong><span>' + loc + '</span></div>' +
-          (email !== '—' ? '<div><strong>Email</strong><span>' + email + '</span></div>' : '') +
-          '<div><strong>Family Size</strong><span>' + familySize + '</span></div>' +
         '</div></div>' +
-        '<div class="cr-detail-section"><h4>Property Interest</h4><div class="cr-detail-fields">' +
-          '<div><strong>Project</strong><span>' + project + '</span></div>' +
-          '<div><strong>BHK</strong><span>' + bhk + '</span></div>' +
-          '<div><strong>Sub BHK</strong><span>' + subBhk + '</span></div>' +
-          '<div><strong>Budget</strong><span>' + budget + '</span></div>' +
-          '<div><strong>Property Type</strong><span>' + propertyType + '</span></div>' +
-          '<div><strong>Project Type</strong><span>' + projectType + '</span></div>' +
-          '<div><strong>Requirement</strong><span>' + requirementType + '</span></div>' +
-          '<div><strong>Additional</strong><span>' + additionalReqs + '</span></div>' +
-        '</div></div>' +
-        '<div class="cr-detail-section"><h4>Lead Info</h4><div class="cr-detail-fields">' +
-          '<div><strong>Lead Score</strong><span>' + leadScore + '</span></div>' +
-          '<div><strong>Purchase Purpose</strong><span>' + purchasePurpose + '</span></div>' +
-          '<div><strong>Purchase Timeline</strong><span>' + purchaseTimeline + '</span></div>' +
-          '<div><strong>Preferred Time</strong><span>' + preferredTime + '</span></div>' +
-          (c.site_visit_interest ? '<div><strong>Site Visit</strong><span>' + c.site_visit_interest + (c.site_visit_date ? ' (' + c.site_visit_date + ')' : '') + '</span></div>' : '') +
-          (c.whatsapp_number ? '<div><strong>WhatsApp</strong><span>' + c.whatsapp_number + '</span></div>' : '') +
+        '<div class="cr-detail-section"><h4>Service Interest</h4><div class="cr-detail-fields">' +
+          '<div><strong>Service Requested</strong><span>' + service + '</span></div>' +
+          '<div><strong>Preferred Date</strong><span>' + prefDate + '</span></div>' +
+          '<div><strong>Preferred Time</strong><span>' + prefTime + '</span></div>' +
         '</div></div>' +
       '</div>' +
       (summary ? '<div class="cr-detail-section"><h4>Summary</h4><p class="cr-detail-text">' + summary + '</p></div>' : '') +
-      (notes ? '<div class="cr-detail-section"><h4>Notes</h4><p class="cr-detail-text">' + notes + '</p></div>' : '') +
       (conversation ? '<div class="cr-detail-section"><h4>Full Conversation</h4><div class="cr-conversation">' + conversation.split('|').map(function (line) { return '<div class="cr-msg' + (line.trim().startsWith('Bot:') ? ' cr-msg-bot' : ' cr-msg-user') + '">' + line.trim() + '</div>'; }).join('') + '</div></div>' : '');
 
     modal.style.display = 'flex';

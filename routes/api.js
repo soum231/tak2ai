@@ -718,7 +718,7 @@ router.get('/voice/reports/stats', requireAuth, async (req, res) => {
 
 // ===== CALL REPORTS (Google Sheet Webhook) =====
 
-const CALL_REPORT_URL = 'https://script.google.com/macros/s/AKfycbyuz00fxXxbee2GuAzh24hkvFRWWbK-Rt0JbyGEz5zYxOPJJTKjotvHDoYAlZ1MG7KY/exec';
+const CALL_REPORT_URL = 'https://script.google.com/macros/s/AKfycbzOWFixc177yeBCVF7C-UzP_NZJFonzjAioSHnsbeAMDPWovNtOfbJAkRezQrn5EoTD/exec?action=api';
 var callReportCache = null;
 var callReportCacheTime = 0;
 

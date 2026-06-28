@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tak2AI Pricing Calculator - Admin Version</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px 12px; }
+.container { max-width: 1150px; width: 100%; }
+h1 { text-align: center; color: #1a73e8; font-size: clamp(18px,4vw,26px); letter-spacing: -0.3px; line-height: 1.3; }
+h1 .admin-label { display: block; font-size: 12px; color: #5f6368; font-weight: 400; margin-top: 2px; }
+.subtitle { text-align: center; color: #5f6368; margin: 6px 0 20px; font-size: clamp(11px,2.5vw,13px); }
+.card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 18px 16px; margin-bottom: 14px; }
+.card h2 { font-size: 14px; color: #1a73e8; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #e8eaed; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+.badge-blue { background: #e8f0fe; color: #1a73e8; }
+.badge-green { background: #e6f4ea; color: #1e8e3e; }
+.badge-gold { background: #fef7e0; color: #ea8600; }
+.badge-red { background: #fce8e6; color: #d93025; }
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.formula-grid .field { display: flex; flex-direction: column; }
+.formula-grid .field label { font-size: 12px; font-weight: 600; color: #5f6368; margin-bottom: 3px; }
+.formula-grid .field .input-wrap { position: relative; }
+.formula-grid .field input { width: 100%; padding: 9px 12px; border: 1.5px solid #dadce0; border-radius: 7px; font-size: 16px; transition: .2s; background: #fff; }
+.formula-grid .field input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,.12); }
+.formula-grid .field input[readonly] { background: #f8f9fa; color: #202124; font-weight: 600; cursor: default; }
+.formula-grid .field .hint { font-size: 11px; color: #80868b; margin-top: 2px; }
+.formula-grid .field .formula { font-size: 11px; color: #1967d2; background: #e8f0fe; padding: 1px 8px; border-radius: 4px; display: inline-block; margin-top: 2px; font-family: 'Consolas','Courier New',monospace; }
+.quick-results { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; margin: 14px 0 0; }
+.quick-results .qr { text-align: center; padding: 10px 4px; border-radius: 8px; background: #f8f9fa; border-left: 3px solid #1a73e8; }
+.quick-results .qr .ql { font-size: 9px; color: #5f6368; text-transform: uppercase; letter-spacing: .3px; word-break: break-word; }
+.quick-results .qr .qv { font-size: clamp(15px,3vw,20px); font-weight: 700; color: #202124; margin-top: 2px; }
+.quick-results .qr .qv.green { color: #1e8e3e; }
+.quick-results .qr .qv.gold { color: #ea8600; }
+.quick-results .qr .qv.red { color: #d93025; }
+.toggle-row { display: flex; align-items: center; gap: 10px; padding: 10px 0 4px; }
+.toggle { position: relative; width: 42px; height: 22px; cursor: pointer; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle .sl { position: absolute; inset: 0; background: #ccc; border-radius: 22px; transition: .25s; }
+.toggle .sl:before { content: ''; position: absolute; left: 3px; bottom: 3px; width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: .25s; }
+.toggle input:checked + .sl { background: #1a73e8; }
+.toggle input:checked + .sl:before { transform: translateX(20px); }
+.reseller-fields { display: none; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 8px; padding: 12px; background: #f8f9fa; border-radius: 8px; }
+.reseller-fields.show { display: grid; }
+.reseller-fields .field { display: flex; flex-direction: column; }
+.reseller-fields .field label { font-size: 12px; font-weight: 600; color: #5f6368; margin-bottom: 3px; }
+.reseller-fields .field input { padding: 9px 12px; border: 1.5px solid #dadce0; border-radius: 7px; font-size: 16px; transition: .2s; }
+.reseller-fields .field input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,.12); }
+.reseller-fields .field .hint { font-size: 11px; color: #80868b; margin-top: 2px; }
+.actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.btn { padding: 8px 18px; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; transition: .2s; }
+.btn-primary { background: #1a73e8; color: #fff; }
+.btn-primary:hover { background: #1557b0; }
+.btn-outline { background: transparent; color: #1a73e8; border: 1.5px solid #dadce0; }
+.btn-outline:hover { border-color: #1a73e8; background: #f8f9fa; }
+.btn-danger { background: #d93025; color: #fff; }
+.btn-danger:hover { background: #b3261e; }
+.table-wrap { overflow-x: auto; margin-top: 10px; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { background: #f8f9fa; padding: 8px 6px; text-align: left; font-weight: 600; color: #5f6368; border-bottom: 2px solid #dadce0; white-space: nowrap; font-size: 11px; }
+td { padding: 7px 6px; border-bottom: 1px solid #e8eaed; white-space: nowrap; }
+tbody tr:hover td { background: #f1f3f4; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.formula-box { margin-top: 14px; padding: 12px; background: #f8f9fa; border-radius: 8px; font-size: 12px; }
+.formula-box .fb-title { color: #1a73e8; font-weight: 600; font-size: 13px; margin-bottom: 8px; }
+.formula-box .fb-row { display: flex; align-items: baseline; gap: 6px; padding: 3px 0; flex-wrap: wrap; }
+.formula-box .fb-row .fb-label { font-weight: 500; color: #202124; min-width: 95px; font-size: 12px; }
+.formula-box .fb-row .fb-formula { color: #5f6368; font-family: 'Consolas','Courier New',monospace; font-size: 11px; word-break: break-all; }
+.formula-box .fb-row .fb-result { color: #1a73e8; font-weight: 600; font-size: 12px; margin-left: auto; text-align: right; min-width: 80px; }
+.formula-box .fb-divider { height: 1px; background: #e8eaed; margin: 4px 0; }
+@media (max-width: 600px) {
+  body { padding: 10px 8px; }
+  .card { padding: 14px 12px; margin-bottom: 10px; }
+  .formula-grid { grid-template-columns: 1fr; gap: 10px; }
+  .quick-results { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .quick-results .qr { padding: 8px 4px; }
+  .reseller-fields.show { grid-template-columns: 1fr; }
+  .actions button { flex: 1; min-width: 0; font-size: 12px; padding: 8px 10px; text-align: center; }
+  .formula-box .fb-row { flex-wrap: wrap; }
+  .formula-box .fb-row .fb-result { margin-left: 0; text-align: left; min-width: 0; width: 100%; padding-left: 101px; }
+}
+@media (max-width: 400px) {
+  .quick-results { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .quick-results .qr .ql { font-size: 8px; letter-spacing: 0; }
+  .quick-results .qr .qv { font-size: 14px; }
+  .card h2 { font-size: 13px; }
+  .formula-box .fb-row .fb-label { min-width: 80px; font-size: 11px; }
+  .formula-box .fb-row .fb-result { padding-left: 86px; font-size: 11px; }
+  .formula-box .fb-row .fb-formula { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Tak2AI Pricing Calculator <span class="admin-label">— Admin Version</span></h1>
+  <p class="subtitle">Our Cost: <strong>4/min</strong> &nbsp;|&nbsp; Investment → Minutes → Revenue Split</p>
+
+  <div class="card">
+    <h2><span>1. Input Values</span></h2>
+    <div class="formula-grid">
+      <div class="field">
+        <label for="inv">Total Recharge (Investment)</label>
+        <input type="number" id="inv" value="25000" step="100" min="0">
+        <span class="hint">Amount the client pays / we invest</span>
+      </div>
+      <div class="field">
+        <label for="cost">Our Cost Per Minute</label>
+        <input type="number" id="cost" value="4" step="0.25" min="0">
+        <span class="formula">Fixed at 4/min (from sheet header)</span>
+      </div>
+      <div class="field">
+        <label for="price">Pricing Per Minute (Sell Rate)</label>
+        <input type="number" id="price" value="5.5" step="0.1" min="0">
+        <span class="hint">Rate we charge the client</span>
+      </div>
+      <div class="field">
+        <label for="extra">Earned Extra (Client) — <em>optional manual entry</em></label>
+        <input type="number" id="extra" value="" step="any" placeholder="Leave blank to auto">
+        <span class="hint">Extra amount from the original sheet (345, 180, 128)</span>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="resToggle"><span class="sl"></span></label>
+      <span style="font-size:14px;font-weight:500">Enable Reseller</span>
+    </div>
+
+    <div class="reseller-fields" id="resFields">
+      <div class="field">
+        <label for="resRate">Reseller Rate (per min)</label>
+        <input type="number" id="resRate" value="6" step="0.1" min="0">
+        <span class="hint">Rate at which reseller buys from us</span>
+      </div>
+      <div class="field">
+        <label for="resPct">Reseller Share of Minutes Gained</label>
+        <input type="number" id="resPct" value="40.7" step="0.1" min="0" max="100">
+        <span class="hint">% of gained minutes assigned to reseller (40.7% matches sheet)</span>
+      </div>
+      <div class="field">
+        <label for="resAmt">Reseller Gets (Amount)</label>
+        <input type="text" id="resAmt" readonly>
+        <span class="hint">Auto: Reseller mins × (Reseller rate − Our cost)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span>2. Results</span></h2>
+    <div class="quick-results">
+      <div class="qr"><div class="ql">Our Minutes</div><div class="qv" id="rOurMins">—</div></div>
+      <div class="qr"><div class="ql">Client Minutes</div><div class="qv" id="rCliMins">—</div></div>
+      <div class="qr"><div class="ql">Minutes Gained</div><div class="qv green" id="rGained">—</div></div>
+      <div class="qr"><div class="ql">Revenue</div><div class="qv gold" id="rRevenue">—</div></div>
+      <div class="qr" id="rResWrap"><div class="ql">Reseller Gets</div><div class="qv red" id="rResGets">—</div></div>
+      <div class="qr"><div class="ql">Our In Hand</div><div class="qv green" id="rOurHand">—</div></div>
+    </div>
+
+    <div class="formula-box">
+      <div class="fb-title">Formula Breakdown</div>
+      <div class="fb-row"><span class="fb-label">Our Minutes</span><span class="fb-formula">= Investment ÷ Cost Rate</span><span class="fb-result" id="fOur">—</span></div>
+      <div class="fb-row"><span class="fb-label">Client Minutes</span><span class="fb-formula">= Investment ÷ Pricing</span><span class="fb-result" id="fCli">—</span></div>
+      <div class="fb-row"><span class="fb-label">Minutes Gained</span><span class="fb-formula">= Our Minutes − Client Minutes</span><span class="fb-result" id="fGain">—</span></div>
+      <div class="fb-row"><span class="fb-label">Revenue</span><span class="fb-formula">= Minutes Gained × (Pricing − Cost)</span><span class="fb-result" id="fRev">—</span></div>
+      <div class="fb-divider"></div>
+      <div class="fb-row" id="fResRow"><span class="fb-label">Reseller Gets</span><span class="fb-formula">= (Mins Gained × Share%) × (Reseller Rate − Cost)</span><span class="fb-result" id="fRes">—</span></div>
+      <div class="fb-row"><span class="fb-label">Our In Hand</span><span class="fb-formula">= Revenue − Reseller Gets</span><span class="fb-result" id="fHand">—</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span>3. Scenario Table</span> <span class="badge badge-blue">Compare rows</span></h2>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="addRow()">+ Add Current Row</button>
+      <button class="btn btn-outline" onclick="loadSheetData()">Load Original Sheet Data</button>
+      <button class="btn btn-danger" onclick="clearTable()">Clear</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fixed Mins (at cost)</th>
+            <th>Total Recharge</th>
+            <th>Total Minutes</th>
+            <th>Pricing/Min</th>
+            <th>Earned Extra</th>
+            <th>Mins Gained</th>
+            <th>Revenue</th>
+            <th>Resell Rate</th>
+            <th>Resell Amt</th>
+            <th>Our In Hand</th>
+          </tr>
+        </thead>
+        <tbody id="tBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const nf = (n) => (n==null||isNaN(n))?'—':Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2});
+const cf = (n) => (n==null||isNaN(n))?'—':Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+function compute(inv, cost, price, resRate, resPct) {
+  if (!inv||inv<=0||!price||price<=0) return null;
+  const ourMin = inv / cost;
+  const cliMin = inv / price;
+  const gained = ourMin - cliMin;
+  const revenue = gained * (price - cost);
+
+  let rAmt = null, ourHand = revenue;
+  if (resRate&&resRate>0&&resPct&&resPct>0) {
+    const s = resPct / 100;
+    const rMinShare = gained * s;
+    const oMinShare = gained - rMinShare;
+    rAmt = rMinShare * (resRate - cost);
+    ourHand = oMinShare * (price - cost) + rMinShare * (price - resRate);
+  }
+
+  return { ourMin, cliMin, gained, revenue, rAmt, ourHand, rMinShare: resRate&&resPct ? gained*(resPct/100) : null };
+}
+
+function update() {
+  const inv = parseFloat(document.getElementById('inv').value)||0;
+  const cost = parseFloat(document.getElementById('cost').value)||4;
+  const price = parseFloat(document.getElementById('price').value)||0;
+  const on = document.getElementById('resToggle').checked;
+  const rRate = on ? (parseFloat(document.getElementById('resRate').value)||0) : null;
+  const rPct = on ? (parseFloat(document.getElementById('resPct').value)||0) : 0;
+
+  const r = compute(inv, cost, price, rRate, rPct);
+  if (!r) {
+    ['rOurMins','rCliMins','rGained','rRevenue','rResGets','rOurHand'].forEach(i=>document.getElementById(i).textContent='—');
+    ['fOur','fCli','fGain','fRev','fRes','fHand'].forEach(i=>document.getElementById(i).textContent='—');
+    document.getElementById('resAmt').value = '—';
+    return;
+  }
+
+  document.getElementById('rOurMins').textContent = nf(r.ourMin);
+  document.getElementById('rCliMins').textContent = nf(r.cliMin);
+  document.getElementById('rGained').textContent = nf(r.gained);
+  document.getElementById('rRevenue').textContent = cf(r.revenue);
+  document.getElementById('rResGets').textContent = r.rAmt!==null ? cf(r.rAmt) : '—';
+  document.getElementById('rOurHand').textContent = cf(r.ourHand);
+  document.getElementById('rResWrap').style.display = r.rAmt!==null ? '' : 'none';
+
+  document.getElementById('resAmt').value = r.rAmt!==null ? cf(r.rAmt) : '—';
+
+  document.getElementById('fOur').textContent = `${nf(r.ourMin)} = ${cf(inv)} ÷ ${cost}`;
+  document.getElementById('fCli').textContent = `${nf(r.cliMin)} = ${cf(inv)} ÷ ${price}`;
+  document.getElementById('fGain').textContent = `${nf(r.gained)} = ${nf(r.ourMin)} − ${nf(r.cliMin)}`;
+  document.getElementById('fRev').textContent = `${cf(r.revenue)} = ${nf(r.gained)} × (${price} − ${cost})`;
+  document.getElementById('fResRow').style.display = r.rAmt!==null ? '' : 'none';
+  if (r.rAmt!==null) {
+    const rms = r.gained * (rPct/100);
+    document.getElementById('fRes').textContent = `${cf(r.rAmt)} = ${nf(rms)} × (${rRate} − ${cost})`;
+    document.getElementById('fHand').textContent = `${cf(r.ourHand)} = ${cf(r.revenue)} − ${cf(r.rAmt)}`;
+  } else {
+    document.getElementById('fHand').textContent = `${cf(r.ourHand)} = ${cf(r.revenue)}`;
+  }
+}
+
+function addRow() {
+  const inv = parseFloat(document.getElementById('inv').value)||0;
+  const cost = parseFloat(document.getElementById('cost').value)||4;
+  const price = parseFloat(document.getElementById('price').value)||0;
+  const on = document.getElementById('resToggle').checked;
+  const rRate = on ? (parseFloat(document.getElementById('resRate').value)||0) : null;
+  const rPct = on ? (parseFloat(document.getElementById('resPct').value)||0) : 0;
+  const extra = document.getElementById('extra').value ? parseFloat(document.getElementById('extra').value) : null;
+  const r = compute(inv, cost, price, rRate, rPct);
+  if (!r) return;
+
+  const tb = document.getElementById('tBody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="num">${nf(r.ourMin)}</td>
+    <td class="num">${cf(inv)}</td>
+    <td class="num">${nf(Math.floor(r.cliMin))}</td>
+    <td class="num">${cf(price)}</td>
+    <td class="num">${extra!==null ? cf(extra) : '—'}</td>
+    <td class="num">${nf(r.gained)}</td>
+    <td class="num">${cf(r.revenue)}</td>
+    <td class="num">${rRate?cf(rRate):'—'}</td>
+    <td class="num">${r.rAmt!==null?cf(r.rAmt):'—'}</td>
+    <td class="num">${cf(r.ourHand)}</td>
+  `;
+  tb.appendChild(tr);
+}
+
+function clearTable() { document.getElementById('tBody').innerHTML = ''; }
+
+function loadSheetData() {
+  clearTable();
+  const data = [
+    { inv:25000, cost:4, price:5.5, extra:345 },
+    { inv:12500, cost:4, price:6,   extra:180 },
+    { inv:6250,  cost:4, price:6.5, extra:128 },
+    { inv:3125,  cost:4, price:7.5, extra:null }
+  ];
+  const tb = document.getElementById('tBody');
+  data.forEach(d => {
+    const r = compute(d.inv, d.cost, d.price, null, 0);
+    if (!r) return;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="num">${nf(r.ourMin)}</td>
+      <td class="num">${cf(d.inv)}</td>
+      <td class="num">${nf(Math.floor(r.cliMin))}</td>
+      <td class="num">${cf(d.price)}</td>
+      <td class="num">${d.extra!==null ? cf(d.extra) : '—'}</td>
+      <td class="num">${nf(r.gained)}</td>
+      <td class="num">${cf(r.revenue)}</td>
+      <td class="num">—</td>
+      <td class="num">—</td>
+      <td class="num">${cf(r.ourHand)}</td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+document.getElementById('resToggle').addEventListener('change', function() {
+  document.getElementById('resFields').classList.toggle('show', this.checked);
+  update();
+});
+
+['inv','cost','price','resRate','resPct'].forEach(id => {
+  document.getElementById(id).addEventListener('input', update);
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadSheetData();
+  update();
+});
+</script>
+</body>
+</html>

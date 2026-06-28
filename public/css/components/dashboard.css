@@ -8,6 +8,7 @@ body.dash-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;b
 .dash-sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--border-color)}
 .dash-logo{display:flex}
 .dash-logo img{height:28px}
+.dash-header-logo{display:none;flex-shrink:0}
 .dash-sidebar-close{display:none;width:28px;height:28px;align-items:center;justify-content:center;border-radius:var(--radius-sm);background:var(--bg-glass);color:var(--text-secondary);font-size:1.2rem;transition:background .2s}
 .dash-sidebar-close:hover{background:var(--border-light)}
 .dash-nav{display:flex;flex-direction:column;gap:2px;padding:12px;flex:1;overflow-y:auto}
@@ -363,6 +364,9 @@ body.dash-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;b
   color:var(--text-secondary);font-size:.62rem;font-weight:500;transition:all .25s;
   position:relative;min-width:56px}
 .dash-bottom-nav a i{width:20px;height:20px;transition:transform .25s}
+.dash-bottom-logo{min-width:unset!important;padding:0!important}
+.dash-bottom-logo img{height:24px;width:auto;opacity:.8;transition:opacity .2s}
+.dash-bottom-logo:hover img{opacity:1}
 .dash-bottom-nav a.active{color:var(--primary);background:rgba(0,229,255,.08)}
 .dash-bottom-nav a.active::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);
   width:16px;height:3px;border-radius:0 0 3px 3px;background:var(--primary);
@@ -377,6 +381,7 @@ body.dash-page::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;b
   .dash-layout{padding-bottom:80px}
   .dash-header{padding:12px 16px}
   .dash-status{display:none}
+  .dash-header-logo{display:flex}
 }
 
 @media(max-width:900px){.settings-grid{grid-template-columns:1fr}}

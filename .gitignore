@@ -20,3 +20,11 @@ mobile-app/android/capacitor-haptics/build/
 mobile-app/android/capacitor-keyboard/build/
 mobile-app/android/capacitor-status-bar/build/
 mobile-app/www/js/supabase.js
+
+# Cordova mobile app
+mobile/node_modules/
+mobile/platforms/
+mobile/plugins/
+mobile/.gradle/
+mobile/build/
+mobile/local.properties
